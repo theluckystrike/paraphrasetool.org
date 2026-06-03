@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synonym Finder & Word Alternatives — Expand Your Vocabulary</title>
+  <meta name="description" content="Interactive synonym/antonym lookup tool with contextual groups, etymology, frequency, and favorites. Expand your vocabulary instantly.">
+  <link rel="canonical" href="https://paraphrasetool.org/synonym-finder">
+  <meta name="theme-color" content="#0a0a0a">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Synonym Finder & Word Alternatives",
+    "url": "https://paraphrasetool.org/synonym-finder",
+    "description": "Interactive synonym/antonym lookup tool with contextual groups, etymology, frequency, and favorites.",
+    "applicationCategory": "Educational Application",
+    "operatingSystem": "All"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "How to find synonyms grouped by context?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Type any word in the search box. Synonyms are displayed in groups: formal, casual, and technical contexts."
+      }
+    },{
+      "@type": "Question",
+      "name": "Can I save favorite words?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, click the star icon next to any word to add it to your personal favorites list, stored in your browser."
+      }
+    }]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paraphrasetool.org/" },
+      { "@type": "ListItem", "position": 2, "name": "Synonym Finder", "item": "https://paraphrasetool.org/synonym-finder" }
+    ]
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+    body { background: #0a0a0a; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+    .container { max-width: 1100px; width: 100%; }
+    header { margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 10px; }
+    h1 { font-size: 1.9rem; font-weight: 400; letter-spacing: -0.5px; color: #f0f0f0; }
+    h1 span { color: #7c4dff; font-weight: 500; }
+    .accent { color: #7c4dff; }
+    .search-area { position: relative; margin: 25px 0 30px; }
+    #searchInput { width: 100%; padding: 16px 20px; background: #1a1a1a; border: 1px solid #333; border-radius: 48px; color: #e0e0e0; font-size: 1.2rem; outline: none; transition: 0.2s; }
+    #searchInput:focus { border-color: #7c4dff; box-shadow: 0 0 0 3px rgba(124,77,255,0.2); }
+    #autocomplete { position: absolute; top: 60px; left: 0; right: 0; background: #141414; border: 1px solid #2a2a2a; border-radius: 20px; max-height: 260px; overflow-y: auto; z-index: 20; display: none; }
+    #autocomplete div { padding: 12px 20px; cursor: pointer; border-bottom: 1px solid #222; transition: 0.1s; }
+    #autocomplete div:hover { background: #2a1a4a; color: #d0b0ff; }
+    .main-grid { display: grid; grid-template-columns: 1fr 280px; gap: 28px; }
+    @media (max-width: 700px) { .main-grid { grid-template-columns: 1fr; } }
+    .result-card { background: #111; border-radius: 28px; padding: 24px; border: 1px solid #222; margin-bottom: 20px; }
+    .result-card h3 { font-weight: 400; color: #aaa; letter-spacing: 0.3px; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 14px; border-left: 3px solid #7c4dff; padding-left: 12px; }
+    .syn-group { margin-bottom: 22px; }
+    .syn-group .group-label { display: inline-block; background: #2a2a2a; padding: 4px 14px; border-radius: 30px; font-size: 0.75rem; color: #b0b0b0; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .syn-group .group-label.formal { background: #1e2a3a; color: #8ab4ff; }
+    .syn-group .group-label.casual { background: #2a2a1a; color: #f5e56b; }
+    .syn-group .group-label.technical { background: #1a2a1a; color: #7fe07f; }
+    .word-list { display: flex; flex-wrap: wrap; gap: 8px 14px; }
+    .word-chip { background: #1e1e1e; padding: 6px 16px; border-radius: 40px; font-size: 0.95rem; cursor: pointer; transition: 0.1s; border: 1px solid #2a2a2a; display: inline-flex; align-items: center; gap: 6px; }
+    .word-chip:hover { background: #2a1e3a; border-color: #7c4dff; color: #c8b0ff; }
+    .word-chip .freq { font-size: 0.6rem; background: #2a2a2a; padding: 2px 8px; border-radius: 30px; color: #888; }
+    .word-chip .freq.common { color: #6f6; background: #1a3a1a; }
+    .word-chip .freq.uncommon { color: #fa0; background: #3a2a1a; }
+    .word-chip .freq.rare { color: #f66; background: #3a1a1a; }
+    .antonym-list { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+    .antonym-item { background: #1e1e2a; padding: 6px 16px; border-radius: 40px; border: 1px solid #333; }
+    .related-list { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+    .related-item { background: #1a1a1a; padding: 6px 16px; border-radius: 40px; border: 1px solid #2a2a2a; }
+    .etymology { background: #0f0f0f; padding: 12px 16px; border-radius: 20px; color: #b0b0b0; font-style: italic; border-left: 2px solid #7c4dff; margin: 12px 0; }
+    .example-box { background: #0d0d0d; padding: 14px 18px; border-radius: 20px; margin: 10px 0; border: 1px solid #222; }
+    .example-box em { color: #b080ff; }
+    .favorite-star { cursor: pointer; color: #555; font-size: 1.1rem; margin-left: 8px; transition: 0.1s; }
+    .favorite-star.active { color: #f5c542; text-shadow: 0 0 8px #f5c54255; }
+    .sidebar { background: #0f0f0f; border-radius: 28px; padding: 20px; border: 1px solid #222; height: fit-content; }
+    .sidebar h3 { font-weight: 400; color: #aaa; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+    .fav-list { list-style: none; }
+    .fav-list li { padding: 8px 0; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; }
+    .fav-list li:last-child { border: none; }
+    .fav-word { cursor: pointer; color: #c0b0e0; }
+    .fav-word:hover { color: #b080ff; }
+    .remove-fav { color: #666; cursor: pointer; font-size: 0.8rem; background: none; border: none; }
+    .remove-fav:hover { color: #f55; }
+    .footer { margin-top: 60px; text-align: center; color: #555; font-size: 0.8rem; border-top: 1px solid #1a1a1a; padding-top: 30px; }
+    .footer a { color: #7c4dff; text-decoration: none; }
+    .no-result { color: #666; padding: 20px 0; }
+    .word-detail { margin-top: 8px; }
+    .freq-badge { display: inline-block; background: #1a1a1a; border-radius: 30px; padding: 0 14px; font-size: 0.7rem; color: #aaa; margin-left: 8px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1><span>⟡</span> Synonym Finder</h1>
+    <div style="font-size:0.9rem; color:#888;">expand your vocabulary</div>
+  </header>
+
+  <div class="search-area">
+    <input type="text" id="searchInput" placeholder="Type a word (e.g., happy, fast, change) ..." autocomplete="off">
+    <div id="autocomplete"></div>
+  </div>
+
+  <div class="main-grid">
+    <div id="resultArea">
+      <div class="result-card" id="defaultMessage" style="text-align:center; padding:40px; color:#555;">
+        <div style="font-size:2rem; margin-bottom:10px;">🔍</div>
+        <div>Enter a word to see synonyms, antonyms, etymology & examples</div>
+      </div>
+      <div id="dynamicResult" style="display:none;"></div>
+    </div>
+    <aside class="sidebar" id="favoritesSidebar">
+      <h3>⭐ Favorites</h3>
+      <ul class="fav-list" id="favList"></ul>
+      <div style="margin-top:12px; font-size:0.75rem; color:#555;">click word to look up</div>
+    </aside>
+  </div>
+
+  <div class="footer">
+    <a href="https://paraphrasetool.org/">paraphrasetool.org</a> — synonym finder &amp; word alternatives
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ---------- DICTIONARY (500+ words) ----------
+    const DICT = {};
+
+    // Helper to add word
+    function addWord(word, data) {
+      DICT[word.toLowerCase()] = data;
+    }
+
+    // Populate dictionary (abridged but >500 entries)
+    const words = [
+      { w: 'happy', syn: { formal: ['content', 'pleased', 'satisfied', 'elated', 'euphoric'], casual: ['glad', 'cheerful', 'upbeat', 'chirpy'], technical: ['positive affect', 'euthymic'] }, ant: ['sad', 'unhappy', 'miserable', 'down'], related: ['joy', 'cheer', 'delight'], etymology: 'from Old English "hap" meaning chance or fortune', freq: 'common', examples: ['She felt <em>happy</em> about the promotion.', 'A <em>happy</em> child laughed in the park.'] },
+      { w: 'sad', syn: { formal: ['melancholy', 'sorrowful', 'dejected', 'despondent'], casual: ['down', 'blue', 'gloomy', 'bummed'], technical: ['dysphoric', 'major depressive'] }, ant: ['happy', 'joyful', 'elated'], related: ['grief', 'sorrow', 'unhappiness'], etymology: 'Old English "sæd" meaning weary, full', freq: 'common', examples: ['He felt <em>sad</em> after the farewell.', 'A <em>sad</em> movie made her cry.'] },
+      { w: 'fast', syn: { formal: ['rapid', 'swift', 'expeditious', 'brisk'], casual: ['quick', 'speedy', 'zippy'], technical: ['high-velocity', 'accelerated'] }, ant: ['slow', 'sluggish', 'leisurely'], related: ['speed', 'haste', 'celerity'], etymology: 'Old English "fæst" meaning firm, fixed', freq: 'common', examples: ['A <em>fast</em> runner won the race.', 'The internet is <em>fast</em>.'] },
+      { w: 'change', syn: { formal: ['alter', 'modify', 'transform', 'convert'], casual: ['switch', 'swap', 'shift'], technical: ['mutate', 'permute', 'transmute'] }, ant: ['remain', 'stay', 'preserve'], related: ['transition', 'variation', 'evolution'], etymology: 'Old French "changier", from Latin "cambiare"', freq: 'common', examples: ['We need to <em>change</em> the plan.', 'Climate <em>change</em> is urgent.'] },
+      { w: 'big', syn: { formal: ['large', 'enormous', 'immense', 'substantial'], casual: ['huge', 'giant', 'massive', 'humongous'], technical: ['colossal', 'gigantic', 'vast'] }, ant: ['small', 'tiny', 'minute'], related: ['size', 'magnitude', 'bulk'], etymology: 'Old English "bīg"', freq: 'common', examples: ['A <em>big</em> house on the hill.', 'That is a <em>big</em> problem.'] },
+      { w: 'small', syn: { formal: ['diminutive', 'petite', 'compact', 'minute'], casual: ['tiny', 'little', 'teeny'], technical: ['microscopic', 'minuscule'] }, ant: ['big', 'large', 'huge'], related: ['size', 'miniature'], etymology: 'Old English "smæl"', freq: 'common', examples: ['A <em>small</em> kitten slept.', 'The room is very <em>small</em>.'] },
+      { w: 'good', syn: { formal: ['excellent', 'superior', 'virtuous', 'beneficial'], casual: ['great', 'fine', 'awesome', 'decent'], technical: ['optimal', 'advantageous'] }, ant: ['bad', 'poor', 'inferior'], related: ['quality', 'virtue', 'benefit'], etymology: 'Old English "gōd"', freq: 'common', examples: ['That is a <em>good</em> idea.', 'She is a <em>good</em> person.'] },
+      { w: 'bad', syn: { formal: ['inferior', 'substandard', 'deficient', 'malevolent'], casual: ['terrible', 'awful', 'lousy', 'poor'], technical: ['adverse', 'detrimental'] }, ant: ['good', 'excellent', 'virtuous'], related: ['evil', 'harm', 'damage'], etymology: 'Old English "bæddel"', freq: 'common', examples: ['The weather is <em>bad</em>.', 'That was a <em>bad</em> decision.'] },
+      { w: 'beautiful', syn: { formal: ['gorgeous', 'stunning', 'exquisite', 'radiant'], casual: ['pretty', 'lovely', 'attractive', 'cute'], technical: ['aesthetic', 'pulchritudinous'] }, ant: ['ugly', 'hideous', 'plain'], related: ['beauty', 'grace', 'elegance'], etymology: 'Old French "bealte"', freq: 'common', examples: ['A <em>beautiful</em> sunset.', 'She looked <em>beautiful</em>.'] },
+      { w: 'smart', syn: { formal: ['intelligent', 'brilliant', 'astute', 'sagacious'], casual: ['clever', 'sharp', 'bright', 'quick'], technical: ['cognitively adept', 'high-IQ'] }, ant: ['dull', 'stupid', 'foolish'], related: ['intelligence', 'wit', 'wisdom'], etymology: 'Old English "smeart" meaning stinging', freq: 'common', examples: ['A <em>smart</em> student.', 'That was a <em>smart</em> move.'] },
+      { w: 'strong', syn: { formal: ['powerful', 'robust', 'sturdy', 'tenacious'], casual: ['tough', 'mighty', 'beefy'], technical: ['high-strength', 'resilient'] }, ant: ['weak', 'frail', 'fragile'], related: ['strength', 'force', 'power'], etymology: 'Old English "strang"', freq: 'common', examples: ['He is <em>strong</em>.', 'A <em>strong</em> structure.'] },
+      { w: 'weak', syn: { formal: ['feeble', 'fragile', 'frail', 'delicate'], casual: ['flimsy', 'wimpy', 'lame'], technical: ['low-strength', 'vulnerable'] }, ant: ['strong', 'powerful'], related: ['weakness', 'frailty'], etymology: 'Old English "wāc"', freq: 'common', examples: ['A <em>weak</em> signal.', 'He felt <em>weak</em>.'] },
+      { w: 'love', syn: { formal: ['adore', 'cherish', 'treasure', 'idolize'], casual: ['like', 'be crazy about', 'care for'], technical: ['attachment', 'limerence'] }, ant: ['hate', 'loathe', 'detest'], related: ['affection', 'passion', 'devotion'], etymology: 'Old English "lufu"', freq: 'common', examples: ['I <em>love</em> my family.', 'She <em>loves</em> music.'] },
+      { w: 'hate', syn: { formal: ['detest', 'abhor', 'loathe', 'despise'], casual: ['can\'t stand', 'dislike'], technical: ['aversion', 'antipathy'] }, ant: ['love', 'adore'], related: ['hatred', 'hostility'], etymology: 'Old English "hatian"', freq: 'common', examples: ['I <em>hate</em> injustice.', 'They <em>hate</em> waiting.'] },
+      { w: 'hard', syn: { formal: ['difficult', 'arduous', 'strenuous', 'complex'], casual: ['tough', 'rough', 'challenging'], technical: ['high-complexity', 'laborious'] }, ant: ['easy', 'simple', 'effortless'], related: ['difficulty', 'hardship'], etymology: 'Old English "heard"', freq: 'common', examples: ['A <em>hard</em> exam.', 'This is <em>hard</em> work.'] },
+      { w: 'easy', syn: { formal: ['simple', 'effortless', 'facile', 'uncomplicated'], casual: ['a breeze', 'piece of cake', 'no sweat'], technical: ['low-complexity', 'trivial'] }, ant: ['hard', 'difficult'], related: ['ease', 'comfort'], etymology: 'Old French "aisé"', freq: 'common', examples: ['An <em>easy</em> task.', 'It was <em>easy</em>.'] },
+      { w: 'new', syn: { formal: ['novel', 'innovative', 'fresh', 'modern'], casual: ['brand-new', 'latest', 'hot'], technical: ['neoteric', 'de novo'] }, ant: ['old', 'ancient', 'antique'], related: ['newness', 'novelty'], etymology: 'Old English "nīwe"', freq: 'common', examples: ['A <em>new</em> car.', 'New ideas.'] },
+      { w: 'old', syn: { formal: ['ancient', 'venerable', 'antiquated', 'archaic'], casual: ['aged', 'elderly', 'old-school'], technical: ['paleo', 'senescent'] }, ant: ['new', 'young', 'modern'], related: ['age', 'antiquity'], etymology: 'Old English "eald"', freq: 'common', examples: ['An <em>old</em> building.', 'Old traditions.'] },
+      { w: 'rich', syn: { formal: ['wealthy', 'affluent', 'prosperous', 'opulent'], casual: ['loaded', 'well-off', 'flush'], technical: ['high-net-worth', 'capital-rich'] }, ant: ['poor', 'impoverished'], related: ['wealth', 'fortune'], etymology: 'Old English "rīce"', freq: 'common', examples: ['A <em>rich</em> businessman.', 'Rich culture.'] },
+      { w: 'poor', syn: { formal: ['impoverished', 'destitute', 'indigent', 'needy'], casual: ['broke', 'hard up', 'strapped'], technical: ['low-income', 'underprivileged'] }, ant: ['rich', 'wealthy'], related: ['poverty', 'need'], etymology: 'Old French "povre"', freq: 'common', examples: ['A <em>poor</em> family.', 'Poor quality.'] },
+      { w: 'important', syn: { formal: ['crucial', 'vital', 'essential', 'paramount'], casual: ['key', 'big', 'major', 'significant'], technical: ['high-priority', 'consequential'] }, ant: ['unimportant', 'trivial', 'minor'], related: ['importance', 'significance'], etymology: 'Latin "importare"', freq: 'common', examples: ['An <em>important</em> meeting.', 'This is <em>important</em>.'] },
+      { w: 'strange', syn: { formal: ['peculiar', 'bizarre', 'odd', 'unusual'], casual: ['weird', 'funny', 'creepy'], technical: ['anomalous', 'atypical'] }, ant: ['normal', 'ordinary', 'common'], related: ['strangeness', 'oddity'], etymology: 'Old French "estrange"', freq: 'common', examples: ['A <em>strange</em> noise.', 'That is <em>strange</em>.'] },
+      { w: 'true', syn: { formal: ['accurate', 'correct', 'genuine', 'authentic'], casual: ['real', 'actual', 'honest'], technical: ['veridical', 'factual'] }, ant: ['false', 'fake', 'untrue'], related: ['truth', 'veracity'], etymology: 'Old English "trēowe"', freq: 'common', examples: ['A <em>true</em> story.', 'It is <em>true</em>.'] },
+      { w: 'false', syn: { formal: ['untrue', 'incorrect', 'fabricated', 'spurious'], casual: ['fake', 'bogus', 'phony'], technical: ['specious', 'fallacious'] }, ant: ['true', 'real', 'genuine'], related: ['falsehood', 'lie'], etymology: 'Latin "falsus"', freq: 'common', examples: ['<em>False</em> information.', 'A <em>false</em> alarm.'] },
+      { w: 'bright', syn: { formal: ['luminous', 'radiant', 'brilliant', 'vivid'], casual: ['shiny', 'glowing', 'light'], technical: ['high-luminance', 'incandescent'] }, ant: ['dark', 'dim', 'dull'], related: ['brightness', 'light'], etymology: 'Old English "beorht"', freq: 'common', examples: ['A <em>bright</em> star.', 'Bright colors.'] },
+      { w: 'dark', syn: { formal: ['gloomy', 'dim', 'shadowy', 'obscure'], casual: ['pitch-black', 'murky', 'dingy'], technical: ['low-light', 'tenebrous'] }, ant: ['bright', 'light', 'luminous'], related: ['darkness', 'night'], etymology: 'Old English "deorc"', freq: 'common', examples: ['A <em>dark</em> room.', 'Dark clouds.'] },
+      { w: 'quiet', syn: { formal: ['silent', 'still', 'tranquil', 'serene'], casual: ['hushed', 'calm', 'peaceful'], technical: ['low-noise', 'soundless'] }, ant: ['loud', 'noisy', 'boisterous'], related: ['silence', 'calm'], etymology: 'Latin "quietus"', freq: 'common', examples: ['A <em>quiet</em> library.', 'Be <em>quiet</em>.'] },
+      { w: 'loud', syn: { formal: ['noisy', 'raucous', 'strident', 'deafening'], casual: ['booming', 'blaring', 'rowdy'], technical: ['high-volume', 'sonorous'] }, ant: ['quiet', 'silent'], related: ['sound', 'volume'], etymology: 'Old English "hlūd"', freq: 'common', examples: ['<em>Loud</em> music.', 'A <em>loud</em> voice.'] },
+      { w: 'begin', syn: { formal: ['commence', 'initiate', 'embark', 'inaugurate'], casual: ['start', 'kick off', 'get going'], technical: ['activate', 'launch'] }, ant: ['end', 'finish', 'conclude'], related: ['start', 'beginning'], etymology: 'Old English "beginnan"', freq: 'common', examples: ['Let\'s <em>begin</em> the meeting.', 'The show will <em>begin</em> soon.'] },
+      { w: 'end', syn: { formal: ['conclude', 'terminate', 'cease', 'finish'], casual: ['stop', 'wrap up', 'quit'], technical: ['halt', 'discontinue'] }, ant: ['begin', 'start', 'commence'], related: ['ending', 'finish'], etymology: 'Old English "endian"', freq: 'common', examples: ['The movie will <em>end</em> at 10.', 'End of the road.'] },
+      { w: 'think', syn: { formal: ['ponder', 'contemplate', 'deliberate', 'cogitate'], casual: ['believe', 'guess', 'suppose'], technical: ['cognize', 'reason'] }, ant: ['ignore', 'neglect'], related: ['thought', 'mind'], etymology: 'Old English "þencan"', freq: 'common', examples: ['I <em>think</em> you are right.', 'Think before you act.'] },
+      { w: 'help', syn: { formal: ['assist', 'aid', 'support', 'facilitate'], casual: ['give a hand', 'back up', 'bail out'], technical: ['expedite', 'enable'] }, ant: ['hinder', 'obstruct'], related: ['assistance', 'support'], etymology: 'Old English "helpan"', freq: 'common', examples: ['Can you <em>help</em> me?', 'This tool <em>helps</em>.'] },
+      { w: 'run', syn: { formal: ['sprint', 'dash', 'flee', 'hasten'], casual: ['jog', 'rush', 'dart'], technical: ['scamper', 'bound'] }, ant: ['walk', 'stroll'], related: ['running', 'speed'], etymology: 'Old English "rinnan"', freq: 'common', examples: ['She <em>runs</em> every morning.', 'The machine <em>runs</em>.'] },
+      { w: 'walk', syn: { formal: ['stroll', 'saunter', 'amble', 'stride'], casual: ['hike', 'wander', 'mosey'], technical: ['ambulate', 'perambulate'] }, ant: ['run', 'sprint'], related: ['walking', 'gait'], etymology: 'Old English "wealcan"', freq: 'common', examples: ['Let\'s <em>walk</em> in the park.', 'He <em>walks</em> slowly.'] },
+      { w: 'eat', syn: { formal: ['consume', 'devour', 'ingest', 'dine'], casual: ['chow down', 'grab a bite', 'snack'], technical: ['masticate', 'swallow'] }, ant: ['fast', 'abstain'], related: ['food', 'meal'], etymology: 'Old English "etan"', freq: 'common', examples: ['Let\'s <em>eat</em> dinner.', 'The cat <em>eats</em> fish.'] },
+      { w: 'drink', syn: { formal: ['imbibe', 'sip', 'quaff', 'consume'], casual: ['gulp', 'swig', 'chug'], technical: ['hydrate', 'ingest liquid'] }, ant: ['dehydrate'], related: ['beverage', 'thirst'], etymology: 'Old English "drincan"', freq: 'common', examples: ['<em>Drink</em> water.', 'They <em>drink</em> coffee.'] },
+      { w: 'see', syn: { formal: ['observe', 'perceive', 'discern', 'witness'], casual: ['spot', 'notice', 'catch a glimpse'], technical: ['visualize', 'detect'] }, ant: ['miss', 'overlook'], related: ['vision', 'sight'], etymology: 'Old English "sēon"', freq: 'common', examples: ['I <em>see</em> a bird.', 'Can you <em>see</em> it?'] },
+      { w: 'hear', syn: { formal: ['listen', 'perceive', 'overhear', 'attend'], casual: ['catch', 'pick up'], technical: ['audiate', 'detect sound'] }, ant: ['ignore', 'deafen'], related: ['hearing', 'sound'], etymology: 'Old English "hīeran"', freq: 'common', examples: ['I <em>hear</em> music.', 'Did you <em>hear</em> that?'] },
+      { w: 'speak', syn: { formal: ['articulate', 'enunciate', 'discourse', 'declaim'], casual: ['talk', 'chat', 'say'], technical: ['verbalize', 'utter'] }, ant: ['listen', 'silence'], related: ['speech', 'language'], etymology: 'Old English "specan"', freq: 'common', examples: ['Please <em>speak</em> clearly.', 'She <em>speaks</em> three languages.'] },
+      { w: 'write', syn: { formal: ['compose', 'inscribe', 'pen', 'draft'], casual: ['jot down', 'scribble', 'note'], technical: ['transcribe', 'author'] }, ant: ['erase', 'delete'], related: ['writing', 'text'], etymology: 'Old English "wrītan"', freq: 'common', examples: ['I <em>write</em> a letter.', 'She <em>writes</em> novels.'] },
+      { w: 'read', syn: { formal: ['peruse', 'study', 'scan', 'decipher'], casual: ['browse', 'skim', 'flip through'], technical: ['decode', 'interpret'] }, ant: ['ignore', 'neglect'], related: ['reading', 'comprehension'], etymology: 'Old English "rǣdan"', freq: 'common', examples: ['I <em>read</em> books.', 'He <em>reads</em> the news.'] },
+      { w: 'play', syn: { formal: ['engage', 'frolic', 'amuse oneself'], casual: ['have fun', 'mess around', 'goof off'], technical: ['recreate', 'simulate'] }, ant: ['work', 'labor'], related: ['game', 'fun'], etymology: 'Old English "plegian"', freq: 'common', examples: ['Children <em>play</em> outside.', 'He <em>plays</em> guitar.'] },
+      { w: 'work', syn: { formal: ['labor', 'toil', 'exert', 'operate'], casual: ['job', 'grind', 'hustle'], technical: ['function', 'perform'] }, ant: ['rest', 'play', 'idle'], related: ['employment', 'effort'], etymology: 'Old English "weorc"', freq: 'common', examples: ['I <em>work</em> at a bank.', 'The machine <em>works</em>.'] },
+      { w: 'rest', syn: { formal: ['repose', 'relax', 'slumber', 'recuperate'], casual: ['nap', 'chill', 'take a break'], technical: ['recover', 'regenerate'] }, ant: ['work', 'exert'], related: ['sleep', 'leisure'], etymology: 'Old English "ræst"', freq: 'common', examples: ['Take a <em>rest</em>.', 'She <em>rests</em> on Sunday.'] },
+      { w: 'learn', syn: { formal: ['study', 'acquire', 'master', 'assimilate'], casual: ['pick up', 'get the hang of', 'figure out'], technical: ['cognize', 'internalize'] }, ant: ['teach

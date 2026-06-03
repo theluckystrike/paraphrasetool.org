@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote Paraphraser — Rephrase Quotes for Your Essay</title>
+  <meta name="description" content="Paraphrase any quote with 3 academic versions: direct, summary, integrated. APA/MLA citations, signal phrases, and 10 famous examples.">
+  <link rel="canonical" href="https://paraphrasetool.org/quote-paraphraser">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Quote Paraphraser",
+    "url": "https://paraphrasetool.org/quote-paraphraser",
+    "applicationCategory": "Educational Application",
+    "operatingSystem": "All",
+    "browserRequirements": "JavaScript enabled",
+    "description": "Paraphrase quotes for essays with direct, summary, and integrated versions. Includes APA/MLA citations and signal phrases."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"How do I paraphrase a quote?","acceptedAnswer":{"@type":"Answer","text":"Enter the quote and author, then choose from direct paraphrase, summary version, or integrated paragraph version. Each includes APA and MLA citations."}},
+      {"@type":"Question","name":"What are signal phrases?","acceptedAnswer":{"@type":"Answer","text":"Signal phrases introduce quotes or paraphrases. Our helper lists 20+ academic verbs like argues, claims, suggests, asserts, contends, maintains."}}
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://paraphrasetool.org/"},
+      {"@type":"ListItem","position":2,"name":"Quote Paraphraser","item":"https://paraphrasetool.org/quote-paraphraser"}
+    ]
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0a0a0a;
+      color: #e0e0e0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 1100px;
+      width: 100%;
+    }
+    header, footer {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    footer {
+      margin-top: 3rem;
+      border-top: 1px solid #2a2a2a;
+      padding-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    footer a {
+      color: #b388ff;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #b388ff, #7c4dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.25rem;
+    }
+    .subhead {
+      color: #aaa;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 700px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+    input, textarea, select {
+      width: 100%;
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      color: #e0e0e0;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #7c4dff;
+      box-shadow: 0 0 0 3px rgba(124,77,255,0.3);
+    }
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.2rem 0 0.5rem;
+    }
+    .btn {
+      background: #2a2a2a;
+      border: none;
+      border-radius: 30px;
+      padding: 0.7rem 1.6rem;
+      font-weight: 500;
+      color: #e0e0e0;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95rem;
+    }
+    .btn-primary {
+      background: #7c4dff;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #9c7aff;
+      transform: scale(1.02);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #7c4dff;
+      color: #b388ff;
+    }
+    .btn-outline:hover {
+      background: #1a1a2e;
+    }
+    .btn-small {
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+    }
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+    .example-tag {
+      background: #1e1e2a;
+      border: 1px solid #333;
+      border-radius: 30px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #bbb;
+      transition: 0.2s;
+    }
+    .example-tag:hover {
+      background: #7c4dff22;
+      border-color: #7c4dff;
+      color: #fff;
+    }
+    .result-box {
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+      border-left: 4px solid #7c4dff;
+    }
+    .result-item {
+      margin-bottom: 1.8rem;
+    }
+    .result-item:last-child {
+      margin-bottom: 0;
+    }
+    .version-label {
+      font-weight: 600;
+      color: #b388ff;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .citation-block {
+      background: #0f0f0f;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      margin: 0.5rem 0 0.8rem;
+      font-size: 0.9rem;
+      border: 1px solid #2a2a2a;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .citation-block span {
+      background: #1e1e2a;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      color: #ccc;
+    }
+    .signal-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.5rem 0 0.2rem;
+    }
+    .signal-chip {
+      background: #1a1a2a;
+      border-radius: 30px;
+      padding: 0.2rem 1rem;
+      font-size: 0.85rem;
+      color: #b388ff;
+      border: 1px solid #333;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+    .signal-chip:hover {
+      background: #7c4dff33;
+      border-color: #7c4dff;
+    }
+    .warning {
+      background: #3a2a1a;
+      border-left: 4px solid #ff8c42;
+      padding: 0.7rem 1.2rem;
+      border-radius: 12px;
+      margin-top: 1rem;
+      color: #f0c8a0;
+      font-size: 0.9rem;
+    }
+    .badge {
+      background: #2a2a3a;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      color: #aaa;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #2a2a2a;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>✍️ Quote Paraphraser</h1>
+    <div class="subhead">Rephrase quotes for your essay — direct, summary & integrated versions</div>
+  </header>
+
+  <!-- Breadcrumb (visual) -->
+  <nav style="font-size:0.85rem; color:#888; margin-bottom:1rem;">🏠 <a href="https://paraphrasetool.org/" style="color:#b388ff;text-decoration:none;">Home</a> / Quote Paraphraser</nav>
+
+  <div class="card">
+    <div class="grid-2">
+      <div>
+        <label for="quoteInput">📜 Quote *</label>
+        <textarea id="quoteInput" placeholder="Paste or type a quote …">The only limit to our realization of tomorrow will be our doubts of today.</textarea>
+      </div>
+      <div>
+        <label for="authorInput">✒️ Author *</label>
+        <input id="authorInput" placeholder="e.g. Franklin D. Roosevelt" value="Franklin D. Roosevelt">
+        <div style="margin-top: 0.8rem;">
+          <label style="margin-bottom:0.2rem;">⚡ Famous examples</label>
+          <div class="examples" id="exampleQuotes"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-primary" id="paraphraseBtn">✨ Paraphrase</button>
+      <button class="btn btn-outline" id="clearBtn">🗑️ Clear</button>
+    </div>
+
+    <!-- signal phrases helper -->
+    <div style="margin-top: 0.8rem;">
+      <span style="color:#aaa; font-size:0.9rem;">🔖 Signal phrases · click to insert</span>
+      <div class="signal-grid" id="signalPhrasesContainer"></div>
+    </div>
+  </div>
+
+  <!-- results area -->
+  <div class="card" id="resultsCard">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+      <h2 style="font-weight:500; font-size:1.4rem; color:#ddd;">📋 Paraphrased versions</h2>
+      <span class="badge" id="similarityBadge">similarity check</span>
+    </div>
+    <div id="resultsContainer">
+      <div style="color:#666; padding:1rem 0; text-align:center;">Enter a quote and click Paraphrase.</div>
+    </div>
+    <div id="warningContainer" class="warning" style="display:none;"></div>
+  </div>
+
+  <footer>
+    <p><a href="https://paraphrasetool.org/">paraphrasetool.org</a> — academic paraphrasing tools</p>
+    <p style="font-size:0.8rem; margin-top:0.3rem;">© 2025 · client‑side only · no data stored</p>
+  </footer>
+</div>
+
+<script>
+  (function() {
+    // ----- SIGNAL PHRASES (20+) -----
+    const signalVerbs = [
+      'argues', 'claims', 'suggests', 'asserts', 'contends', 'maintains', 'posits', 'notes',
+      'observes', 'concedes', 'emphasizes', 'insists', 'reports', 'concludes', 'highlights',
+      'acknowledges', 'adds', 'affirms', 'counters', 'demonstrates', 'illustrates', 'proposes',
+      'refutes', 'reveals', 'states', 'theorizes', 'writes'
+    ];
+
+    // ----- 10 FAMOUS QUOTES (pre‑loaded) -----
+    const famousQuotes = [
+      { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
+      { text: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
+      { text: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
+      { text: "Two roads diverged in a wood, and I— I took the one less traveled by.", author: "Robert Frost" },
+      { text: "The unexamined life is not worth living.", author: "Socrates" },
+      { text: "Imagination is more important than knowledge.", author: "Albert Einstein" },
+      { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+      { text: "The purpose of life is not to be happy. It is to be useful.", author: "Ralph Waldo Emerson" },
+      { text: "That which does not kill us makes us stronger.", author: "Friedrich Nietzsche" },
+      { text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", author: "Aristotle" }
+    ];
+
+    // ----- DOM refs -----
+    const quoteInput = document.getElementById('quoteInput');
+    const authorInput = document.getElementById('authorInput');
+    const paraphraseBtn = document.getElementById('paraphraseBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const warningContainer = document.getElementById('warningContainer');
+    const similarityBadge = document.getElementById('similarityBadge');
+    const signalContainer = document.getElementById('signalPhrasesContainer');
+    const exampleDiv = document.getElementById('exampleQuotes');
+
+    // ----- populate signal chips -----
+    signalVerbs.forEach(verb => {
+      const chip = document.createElement('span');
+      chip.className = 'signal-chip';
+      chip.textContent = verb;
+      chip.addEventListener('click', () => {
+        // insert verb into author field as signal phrase helper (or quote? we insert into author as note)
+        // better: copy to clipboard or insert into a small helper. We'll insert into a temporary field? 
+        // We'll show an alert with usage example, but more useful: insert into a small floating helper.
+        // For simplicity, we set a small message. But we can also insert into author field? No.
+        // We'll create a small toast-like behavior: copy to clipboard.
+        navigator.clipboard.writeText(verb).then(() => {
+          // visual feedback
+          chip.style.background = '#7c4dff66';
+          setTimeout(() => chip.style.background = '', 400);
+        }).catch(() => {});
+      });
+      signalContainer.appendChild(chip);
+    });
+
+    // ----- populate examples -----
+    famousQuotes.forEach((q, idx) => {
+      const tag = document.createElement('span');
+      tag.className = 'example-tag';
+      tag.textContent = `“${q.text.slice(0, 28)}…”`;
+      tag.title = q.text + ' — ' + q.author;
+      tag.addEventListener('click', () => {
+        quoteInput.value = q.text;
+        authorInput.value = q.author;
+        // auto paraphrase? optional: we don't auto to avoid confusion.
+      });
+      exampleDiv.appendChild(tag);
+    });
+
+    // ----- paraphrase engine (client‑side) -----
+    function paraphrase(quote, author) {
+      if (!quote.trim() || !author.trim()) {
+        return { error: 'Please provide both quote and author.' };
+      }
+
+      // simple synonym & reordering (academic style)
+      const words = quote.split(/\s+/);
+      const synonymMap = {
+        'limit': 'boundary', 'realization': 'achievement', 'doubts': 'uncertainties',
+        'today': 'the present', 'tomorrow': 'the future', 'difficulty': 'challenge',
+        'opportunity': 'possibility', 'knowledge': 'understanding', 'imagination': 'creativity',
+        'purpose': 'aim', 'happy': 'content', 'useful': 'beneficial', 'slowly': 'gradually',
+        'stop': 'cease', 'excellence': 'virtue', 'act': 'action', 'habit': 'practice',
+        'life': 'existence', 'examined': 'scrutinized', 'living': 'meaningful',
+        'strength': 'resilience', 'kill': 'destroy', 'stronger': 'more robust',
+        'roads': 'paths', 'traveled': 'journeyed', 'middle': 'heart', 'lies': 'exists',
+        'yourself': 'your own nature', 'taken': 'occupied'
+      };
+
+      // simple synonym replacement (preserve case)
+      const replaced = words.map(w => {
+        const clean = w.replace(/[^a-zA-Z0-9']/g, '');
+        const punct = w.replace(/[a-zA-Z0-9']/g, '');
+        const lower = clean.toLowerCase();
+        const syn = synonymMap[lower];
+        if (syn) {
+          // preserve case: capitalize if original starts uppercase
+          const newWord = (clean[0] && clean[0] === clean[0].toUpperCase()) 
+            ? syn.charAt(0).toUpperCase() + syn.slice(1) 
+            : syn;
+          return newWord + punct;
+        }
+        return w;
+      });
+
+      // reordering: shuffle first 3 and last 2 words slightly (academic variation)
+      let reordered = [...replaced];
+      if (reordered.length > 5) {
+        // swap first two? but keep meaning: move adverbial phrase
+        // simple: move first word after second
+        const first = reordered.shift();
+        reordered.splice(1, 0, first);
+      }
+
+      // build versions
+      const directParaphrase = reordered.join(' ');
+
+      // summary version (shorter, condense)
+      const summary = words.length > 8 
+        ? words.slice(0, 4).join(' ') + ' … ' + words.slice(-3).join(' ')
+        : quote;
+      // integrated version (weave into paragraph)
+      const integrated = `In the context of academic discourse, ${author} ${signalVerbs[Math.floor(Math.random() * signalVerbs.length)]} that “${quote}” — a perspective that underscores the enduring relevance of this insight.`;
+
+      // APA & MLA citations
+      const year = '(n.d.)'; // generic
+      const apa = `${author} ${year}, ${quote.length > 30 ? quote.slice(0, 30)+'…' : quote}`;
+      const mla = `${author} ${year}, ${quote.length > 30 ? quote.slice(0, 30)+'…' : quote}`;
+
+      // similarity warning (simple heuristic: if more than 70% same words)
+      const origWords = new Set(quote.toLowerCase().replace(/[^a-z0-9 ]/g,'').split(/\s+/));
+      const paraWords = new Set(directParaphrase.toLowerCase().replace(/[^a-z0-9 ]/g,'').split(/\s+/));
+      let overlap = 0;
+      origWords.forEach(w => { if (paraWords.has(w) && w.length > 2) overlap++; });
+      const similarity = origWords.size > 0 ? (overlap / origWords.size) : 0;
+      const tooClose = similarity > 0.75;
+
+      return {
+        direct: directParaphrase,
+        summary: summary,
+        integrated: integrated,
+        apa: `(${author}, n.d.)`,
+        mla: `(${author})`,
+        tooClose: tooClose,
+        similarityPercent: Math.round(similarity * 100)
+      };
+    }
+
+    // ----- render results -----
+    function renderResults(data) {
+      if (data.error) {
+        resultsContainer.innerHTML = `<div style="color:#ff8c42; padding:1rem;">⚠️ ${data.error}</div>`;
+        warningContainer.style.display = 'none';
+        similarityBadge.textContent = '⚠️ error';
+        return;
+      }
+
+      const { direct, summary, integrated, apa, mla, tooClose, similarityPercent } = data;
+
+      const html = `
+        <div class="result-item">
+          <div class="version-label">🔹 Direct paraphrase</div>
+          <div style="margin:0.3rem 0 0.2rem; font-style:italic;">${direct}</div>
+          <div class="citation-block"><span>📘 APA: ${apa}</span><span>📗 MLA: ${mla}</span></div>
+        </div>
+        <div class="result-item">
+          <div class="version-label">🔸 Summary version</div>
+          <div style="margin:0.3rem 0 0.2rem; font-style:italic;">${summary}</div>
+          <div class="citation-block"><span>📘 APA: ${apa}</span><span>📗 MLA: ${mla}</span></div>
+        </div>
+        <div class="result-item">
+          <div class="version-label">🔹 Integrated (paragraph)</div>
+          <div style="margin:0.3rem 0 0.2rem;">${integrated}</div>
+          <div class="citation-block"><span>📘 APA: ${apa}</span><span>📗 MLA: ${mla}</span></div>
+        </div>
+      `;
+      resultsContainer.innerHTML = html;
+
+      // similarity badge & warning
+      similarityBadge.textContent = `🔍 similarity ${similarityPercent}%`;
+      if (tooClose) {
+        warningContainer.style.display = 'block';
+        warningContainer.innerHTML = `⚠️ <strong>Warning:</strong> The direct paraphrase is very close to the original (≥75% similarity). Consider revising for better academic integrity.`;
+        similarityBadge.style.background = '#ff8c4233';
+        similarityBadge.style.color = '#ff8c42';
+      } else {
+        warningContainer.style.display = 'none';
+        similarityBadge.style.background = '';
+        similarityBadge.style.color = '#aaa';
+      }
+    }
+
+    // ----- main paraphrase action -----
+    function runParaphrase() {
+      const quote = quoteInput.value.trim();
+      const author = authorInput.value.trim();
+      const result = paraphrase(quote, author);
+      renderResults(result);
+    }
+
+    paraphraseBtn.addEventListener('click', runParaphrase);
+
+    clearBtn.addEventListener('click', () => {
+      quoteInput.value = '';
+      authorInput.value = '';
+      resultsContainer.innerHTML = '<div style="color:#666; padding:1rem 0; text-align:center;">Enter a quote and click Paraphrase.</div>';
+      warningContainer.style.display = 'none';
+      similarityBadge.textContent = 'similarity check';
+      similarityBadge.style.background = '';
+      similarityBadge.style.color = '#aaa';
+    });
+
+    // load default example on page load (FDR)
+    window.addEventListener('DOMContentLoaded', () => {
+      // default already set in HTML
+      runParaphrase();
+    });
+
+    // allow Ctrl+Enter to paraphrase
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        runParaphrase();
+      }
+    });
+
+  })();
+</script>
+</body>
+</html>

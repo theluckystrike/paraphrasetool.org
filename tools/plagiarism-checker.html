@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plagiarism Risk Checker — Check Text Originality</title>
+    <meta name="description" content="Analyze text originality: common phrases, vocabulary uniqueness, sentence variety, quote detection & passive voice. Get risk score 0-100.">
+    <link rel="canonical" href="https://paraphrasetool.org/plagiarism-checker">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Plagiarism Risk Checker",
+        "url": "https://paraphrasetool.org/plagiarism-checker",
+        "applicationCategory": "Educational Application",
+        "operatingSystem": "All",
+        "browserRequirements": "JavaScript enabled",
+        "description": "Client-side plagiarism risk assessment tool analyzing common phrases, vocabulary uniqueness, sentence variety, quote detection, and passive voice.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": "What does the originality risk score mean?", "acceptedAnswer": {"@type": "Answer", "text": "0-100 scale: 0-30 low risk (original), 31-60 moderate risk, 61-100 high risk (potentially unoriginal)."}},
+            {"@type": "Question", "name": "How is passive voice detected?", "acceptedAnswer": {"@type": "Answer", "text": "We use a pattern-based detection (forms of 'be' + past participle) to estimate passive voice percentage."}},
+            {"@type": "Question", "name": "Does this tool actually detect plagiarism?", "acceptedAnswer": {"@type": "Answer", "text": "No, it's a risk analyzer. It highlights stylistic markers common in unoriginal or academic text."}}
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://paraphrasetool.org/"},
+            {"@type": "ListItem", "position": 2, "name": "Plagiarism Checker", "item": "https://paraphrasetool.org/plagiarism-checker"}
+        ]
+    }
+    </script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            padding: 2rem 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 { font-weight: 500; letter-spacing: 0.01em; }
+        h1 { font-size: 2.2rem; margin-bottom: 0.25rem; color: #c8b8ff; }
+        h2 { font-size: 1.6rem; margin: 1.5rem 0 0.75rem; border-left: 4px solid #7c4dff; padding-left: 0.75rem; }
+        h3 { font-size: 1.2rem; margin: 1rem 0 0.5rem; }
+        .subhead { color: #aaa; margin-bottom: 2rem; font-size: 1rem; }
+        textarea {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #e0e0e0;
+            padding: 1rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            min-height: 180px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        textarea:focus { outline: 2px solid #7c4dff; border-color: transparent; }
+        .btn {
+            background: #7c4dff;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.1s;
+            margin: 0.75rem 0 1.5rem;
+        }
+        .btn:hover { background: #9b7bff; }
+        .btn:active { transform: scale(0.96); }
+        .flex-row { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+        .card {
+            background: #141414;
+            border-radius: 16px;
+            padding: 1.5rem 1.8rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            flex: 1 1 280px;
+            border: 1px solid #2a2a2a;
+        }
+        .score-card {
+            background: #141414;
+            border-radius: 24px;
+            padding: 1.8rem 2rem;
+            margin: 1rem 0 2rem;
+            border: 1px solid #2a2a2a;
+        }
+        .score-number {
+            font-size: 3.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+        .traffic-light {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin-left: 0.8rem;
+            vertical-align: middle;
+        }
+        .light-green { background: #2ecc71; box-shadow: 0 0 12px #2ecc7180; }
+        .light-yellow { background: #f1c40f; box-shadow: 0 0 12px #f1c40f80; }
+        .light-red { background: #e74c3c; box-shadow: 0 0 12px #e74c3c80; }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .stat-item {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+        }
+        .stat-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; color: #aaa; }
+        .stat-value { font-size: 1.8rem; font-weight: 500; margin-top: 0.2rem; }
+        .highlight-area {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #7c4dff;
+        }
+        .highlight-area p { margin: 0.5rem 0; }
+        .flag { background: #3a2a1a; border-left: 3px solid #e67e22; padding: 0.3rem 0.8rem; border-radius: 4px; }
+        .tips { background: #0e0e0e; border-radius: 16px; padding: 1.5rem; margin-top: 1.5rem; }
+        .tips ul { padding-left: 1.5rem; }
+        .tips li { margin: 0.5rem 0; }
+        footer { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid #222; text-align: center; color: #888; }
+        footer a { color: #b39dff; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        .small-note { color: #777; font-size: 0.9rem; margin-top: 0.5rem; }
+        .inline-highlight { background: #3a2a1a; padding: 0.1rem 0.3rem; border-radius: 3px; }
+        @media (max-width: 600px) {
+            body { padding: 1.2rem; }
+            .score-number { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Plagiarism Risk Checker</h1>
+        <p class="subhead">Assess originality style — not a plagiarism detector. Paste your text below.</p>
+    </header>
+
+    <textarea id="inputText" placeholder="Paste your text here (at least 30 words for reliable analysis)...">The study was conducted to examine the effects of climate change on agricultural productivity. It was found that rising temperatures have a significant impact on crop yields. The data were collected from multiple sources and were analyzed using statistical methods. As a result, it can be concluded that climate change poses a serious threat to food security. "This research highlights the urgent need for adaptation strategies" (Smith, 2021).</textarea>
+    <br>
+    <button class="btn" id="analyzeBtn">Analyze Originality Risk</button>
+
+    <div class="score-card" id="scoreCard">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="score-number" id="riskScore">42</span>
+            <span class="traffic-light" id="trafficLight" style="background:#f1c40f; box-shadow:0 0 12px #f1c40f80;"></span>
+            <span style="font-size:1.2rem; margin-left:0.5rem;" id="riskLabel">moderate risk</span>
+        </div>
+        <div style="margin-top: 0.5rem; color:#aaa;">overall originality risk score (0 low – 100 high)</div>
+    </div>
+
+    <div class="stat-grid" id="statsGrid">
+        <div class="stat-item"><div class="stat-label">Common phrases</div><div class="stat-value" id="commonPhrases">22%</div></div>
+        <div class="stat-item"><div class="stat-label">Vocabulary uniqueness</div><div class="stat-value" id="vocabUniqueness">65%</div></div>
+        <div class="stat-item"><div class="stat-label">Sentence variety</div><div class="stat-value" id="sentenceVariety">5 patterns</div></div>
+        <div class="stat-item"><div class="stat-label">Quote detection</div><div class="stat-value" id="quoteDetect">1 cited</div></div>
+        <div class="stat-item"><div class="stat-label">Passive voice</div><div class="stat-value" id="passivePercent">38%</div></div>
+    </div>
+
+    <div class="highlight-area" id="flaggedSections">
+        <h3>⚠️ Flagged sections & observations</h3>
+        <p id="flagContent">• Moderate use of common academic phrases (e.g., "it was found that"). <br>• Passive voice detected in 38% of clauses — typical of academic text.</p>
+    </div>
+
+    <div class="tips">
+        <h3>💡 Tips for improving originality</h3>
+        <ul id="tipsList">
+            <li>Replace common stock phrases like <span class="inline-highlight">"it was found that"</span> with more active, specific wording.</li>
+            <li>Increase vocabulary uniqueness: use domain-specific terms and synonyms.</li>
+            <li>Vary sentence openings — avoid starting multiple sentences with "The" or "It".</li>
+            <li>Ensure quoted material is properly cited with author and year.</li>
+            <li>Reduce passive voice by rewriting in active voice where appropriate.</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p><a href="https://paraphrasetool.org/">← paraphrasetool.org</a> — free paraphrasing & originality tools</p>
+        <p class="small-note">This tool is a risk analyzer, not a plagiarism detector. No text is stored or sent.</p>
+    </footer>
+
+    <script>
+        (function() {
+            const inputEl = document.getElementById('inputText');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const riskScoreEl = document.getElementById('riskScore');
+            const trafficLight = document.getElementById('trafficLight');
+            const riskLabel = document.getElementById('riskLabel');
+            const commonPhrasesEl = document.getElementById('commonPhrases');
+            const vocabUniquenessEl = document.getElementById('vocabUniqueness');
+            const sentenceVarietyEl = document.getElementById('sentenceVariety');
+            const quoteDetectEl = document.getElementById('quoteDetect');
+            const passivePercentEl = document.getElementById('passivePercent');
+            const flagContent = document.getElementById('flagContent');
+            const tipsList = document.getElementById('tipsList');
+
+            // common academic 2-4 word sequences (simulated set)
+            const commonPhrasesSet = new Set([
+                "it was found that", "the study was conducted", "as a result", "in order to",
+                "the data were", "it can be concluded", "the purpose of", "due to the fact",
+                "a significant impact", "the results indicate", "based on the", "the analysis of",
+                "the present study", "it is important to", "the majority of", "a number of",
+                "the relationship between", "the effect of", "the use of", "the role of",
+                "the presence of", "the absence of", "the development of", "the concept of",
+                "the findings suggest", "the data indicate", "the results show", "it is possible that",
+                "it is clear that", "it should be noted", "it has been shown", "the research demonstrates"
+            ]);
+
+            // passive voice pattern: form of be + past participle (simple)
+            const passiveRegex = /\b(?:am|is|are|was|were|be|been|being)\s+(\w+ed|written|spoken|built|known|found|given|taken|made|set|brought|shown|done|said|seen|used|analyzed|collected|studied|conducted|examined|measured|observed|established|created|designed|proposed|reported|presented|discussed|developed|based)\b/gi;
+
+            function analyzeText(text) {
+                if (!text || text.trim().length < 20) {
+                    return {
+                        commonPercent: 0,
+                        vocabUniqueness: 0,
+                        sentencePatterns: 0,
+                        quoteInfo: { count: 0, cited: 0, uncited: 0 },
+                        passivePercent: 0,
+                        flags: ["Text too short for reliable analysis (need at least 30 words)."],
+                        tips: ["Provide a longer text (30+ words) for meaningful risk assessment."]
+                    };
+                }
+
+                const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+                const words = text.toLowerCase().match(/\b\w+\b/g) || [];
+                const uniqueWords = new Set(words);
+                const totalWords = words.length;
+
+                // 1) Common phrases: scan 2,3,4-grams
+                let commonCount = 0;
+                let totalGrams = 0;
+                for (let n = 2; n <= 4; n++) {
+                    for (let i = 0; i <= words.length - n; i++) {
+                        totalGrams++;
+                        const phrase = words.slice(i, i + n).join(' ');
+                        if (commonPhrasesSet.has(phrase)) commonCount++;
+                    }
+                }
+                const commonPercent = totalGrams > 0 ? Math.round((commonCount / totalGrams) * 100) : 0;
+
+                // 2) vocabulary uniqueness: ratio of unique words / total words (higher = better)
+                const vocabUniqueness = totalWords > 0 ? Math.round((uniqueWords.size / totalWords) * 100) : 0;
+
+                // 3) sentence structure variety: count patterns (first 3 words lowercase)
+                const patterns = new Set();
+                sentences.forEach(s => {
+                    const t = s.toLowerCase().replace(/[^a-z\s]/g, '').trim();
+                    const firstThree = t.split(/\s+/).slice(0, 3).join(' ');
+                    if (firstThree.length > 2) patterns.add(firstThree);
+                });
+                const sentencePatterns = patterns.size;
+
+                // 4) quote detection
+                const quotes = text.match(/"[^"]+"/g) || [];
+                let citedCount = 0;
+                let uncitedCount = 0;
+                quotes.forEach(q => {
+                    // check if after quote there is (Author, year) or similar
+                    const afterQuote = text.substring(text.indexOf(q) + q.length, text.indexOf(q) + q.length + 60);
+                    if (/\(.*\d{4}.*\)/.test(afterQuote) || /\(.*\d{4}\)/.test(afterQuote)) {
+                        citedCount++;
+                    } else {
+                        uncitedCount++;
+                    }
+                });
+
+                // 5) passive voice percentage (clause-level heuristic)
+                let passiveMatches = 0;
+                let clauseCount = 0;
+                // count finite clauses roughly: look for main verbs (heuristic: count words that are verbs? simpler: count sentences + commas)
+                const clauseSeparators = text.split(/[,;:]+/);
+                clauseCount = clauseSeparators.length;
+                const passiveMatchesArr = text.match(passiveRegex);
+                passiveMatches = passiveMatchesArr ? passiveMatchesArr.length : 0;
+                // avoid overcount
+                const passivePercent = clauseCount > 0 ? Math.min(100, Math.round((passiveMatches / clauseCount) * 100)) : 0;
+
+                // flags & tips
+                let flags = [];
+                let tips = [];
+
+                if (commonPercent > 25) flags.push(`High use of common academic phrases (${commonPercent}% of n-grams).`);
+                else if (commonPercent > 15) flags.push(`Moderate use of common phrases (${commonPercent}%).`);
+                else flags.push(`Low use of common stock phrases (${commonPercent}%) — good.`);
+
+                if (vocabUniqueness < 40) flags.push(`Vocabulary uniqueness is low (${vocabUniqueness}%). Consider using more varied terms.`);
+                else if (vocabUniqueness < 60) flags.push(`Vocabulary uniqueness moderate (${vocabUniqueness}%).`);
+                else flags.push(`Good vocabulary diversity (${vocabUniqueness}%).`);
+
+                if (sentencePatterns < 4) flags.push(`Very low sentence pattern variety (only ${sentencePatterns} patterns). Repetitive structure.`);
+                else if (sentencePatterns < 7) flags.push(`Moderate sentence variety (${sentencePatterns} patterns).`);
+                else flags.push(`Good sentence structure variety (${sentencePatterns} patterns).`);
+
+                if (uncitedCount > 0) flags.push(`⚠️ ${uncitedCount} quote(s) without visible citation (e.g., Author, year).`);
+                if (citedCount > 0) flags.push(`✓ ${citedCount} quote(s) appear cited.`);
+                if (quotes.length === 0) flags.push(`No quotation marks detected.`);
+
+                if (passivePercent > 35) flags.push(`High passive voice usage (${passivePercent}% of clauses). Common in copied academic text.`);
+                else if (passivePercent > 20) flags.push(`Moderate passive voice (${passivePercent}%).`);
+                else flags.push(`Low passive voice (${passivePercent}%) — more active style.`);
+
+                // tips
+                if (commonPercent > 20) tips.push("Replace common phrases like 'it was found that' with direct statements.");
+                if (vocabUniqueness < 55) tips.push("Introduce more synonyms and field-specific terminology.");
+                if (sentencePatterns < 5) tips.push("Vary sentence openings: use adverbs, dependent clauses, or questions.");
+                if (uncitedCount > 0) tips.push("Add proper citations immediately after each quote: (Author, year).");
+                if (passivePercent > 30) tips.push("Rewrite passive constructions in active voice where possible.");
+                if (tips.length === 0) tips.push("Your text shows good originality markers. Keep refining!");
+
+                return {
+                    commonPercent,
+                    vocabUniqueness,
+                    sentencePatterns,
+                    quoteInfo: { count: quotes.length, cited: citedCount, uncited: uncitedCount },
+                    passivePercent,
+                    flags,
+                    tips
+                };
+            }
+
+            function updateUI(result) {
+                const { commonPercent, vocabUniqueness, sentencePatterns, quoteInfo, passivePercent, flags, tips } = result;
+
+                // compute overall risk score (0-100) weighted
+                let risk = 0;
+                // common phrases weight 30%
+                risk += Math.min(30, (commonPercent / 100) * 30);
+                // vocab uniqueness inverse (lower uniqueness = higher risk) weight 25%
+                risk += Math.min(25, ((100 - vocabUniqueness) / 100) * 25);
+                // sentence variety: low patterns = higher risk weight 15%
+                let varietyRisk = 0;
+                if (sentencePatterns <= 2) varietyRisk = 15;
+                else if (sentencePatterns <= 4) varietyRisk = 10;
+                else if (sentencePatterns <= 6) varietyRisk = 5;
+                else varietyRisk = 0;
+                risk += varietyRisk;
+                // quote risk: uncited quotes weight 15%
+                let quoteRisk = 0;
+                if (quoteInfo.uncited > 0) quoteRisk = Math.min(15, quoteInfo.uncited * 7);
+                risk += quoteRisk;
+                // passive voice weight 15%
+                risk += Math.min(15, (passivePercent / 100) * 15);
+                // clamp
+                risk = Math.min(100, Math.round(risk));
+
+                riskScoreEl.textContent = risk;
+
+                // traffic light
+                let color, label;
+                if (risk <= 30) { color = '#2ecc71'; label = 'low risk'; trafficLight.className = 'traffic-light light-green'; }
+                else if (risk <= 60) { color = '#f1c40f'; label = 'moderate risk'; trafficLight.className = 'traffic-light light-yellow'; }
+                else { color = '#e74c3c'; label = 'high risk'; trafficLight.className = 'traffic-light light-red'; }
+                trafficLight.style.background = color;
+                trafficLight.style.boxShadow = `0 0 12px ${color}80`;
+                riskLabel.textContent = label;
+
+                commonPhrasesEl.textContent = commonPercent + '%';
+                vocabUniquenessEl.textContent = vocabUniqueness + '%';
+                sentenceVarietyEl.textContent = sentencePatterns + ' patterns';
+                quoteDetectEl.textContent = `${quoteInfo.count} total, ${quoteInfo.cited} cited`;
+                passivePercentEl.textContent = passivePercent + '%';
+
+                // flags
+                let flagHtml = flags.map(f => `• ${f}`).join('<br>');
+                flagContent.innerHTML = flagHtml || 'No specific flags.';
+
+                // tips
+                let tipsHtml = tips.map(t => `<li>${t}</li>`).join('');
+                tipsList.innerHTML = tipsHtml || '<li>Your text appears original. Keep up good practices!</li>';
+            }
+
+            function runAnalysis() {
+                const text = inputEl.value;
+                const result = analyzeText(text);
+                updateUI(result);
+            }
+
+            analyzeBtn.addEventListener('click', runAnalysis);
+            // run on page load with default text
+            window.addEventListener('DOMContentLoaded', runAnalysis);
+        })();
+    </script>
+</body>
+</html>
