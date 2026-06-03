@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formal to Informal Converter — Change Writing Tone</title>
+  <meta name="description" content="Switch between formal and informal tone instantly. Word replacement, contraction control, and side-by-side highlighting." />
+  <link rel="canonical" href="https://paraphrasetool.org/tools/formal-informal-converter" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Formal to Informal Converter",
+    "url": "https://paraphrasetool.org/formal-informal-converter",
+    "description": "Switch between formal and informal tone instantly. Word replacement, contraction control, and side-by-side highlighting.",
+    "applicationCategory": "Writing Tool",
+    "operatingSystem": "All"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"How does the tone converter work?","acceptedAnswer":{"@type":"Answer","text":"It uses 200+ word replacement pairs, contraction expansion, and sentence structure adjustments to shift between formal and informal registers."}},
+      {"@type":"Question","name":"Is the conversion done locally?","acceptedAnswer":{"@type":"Answer","text":"Yes, all processing happens in your browser. No text is sent to any server."}}
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Paraphrase Tool","item":"https://paraphrasetool.org/"},
+      {"@type":"ListItem","position":2,"name":"Formal to Informal Converter","item":"https://paraphrasetool.org/formal-informal-converter"}
+    ]
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #0a0a0a;
+      color: #e0e0e0;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    .container {
+      max-width: 1300px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #b388ff, #7c4dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.4rem;
+    }
+    .subhead {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+    .control-panel {
+      background: #1a1a1a;
+      border-radius: 24px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+      border: 1px solid #2a2a2a;
+    }
+    .mode-group {
+      display: flex;
+      gap: 0.5rem;
+      background: #0a0a0a;
+      padding: 0.3rem;
+      border-radius: 40px;
+      border: 1px solid #333;
+    }
+    .mode-btn {
+      background: transparent;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      font-weight: 500;
+      color: #aaa;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+    .mode-btn.active {
+      background: #7c4dff;
+      color: #fff;
+      box-shadow: 0 0 12px #7c4dff66;
+    }
+    .mode-btn:not(.active):hover {
+      color: #fff;
+    }
+    .example-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+    .example-btn {
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      color: #ccc;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .example-btn:hover {
+      background: #7c4dff33;
+      border-color: #7c4dff;
+      color: #fff;
+    }
+    .editor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      margin-bottom: 2rem;
+    }
+    .panel {
+      background: #121212;
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .panel-header h3 {
+      font-weight: 400;
+      font-size: 1.2rem;
+      color: #ddd;
+    }
+    .stats {
+      font-size: 0.8rem;
+      background: #1e1e1e;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      color: #aaa;
+      border: 1px solid #333;
+    }
+    .stats span {
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      background: #0f0f0f;
+      border: 1px solid #2e2e2e;
+      border-radius: 16px;
+      padding: 1rem;
+      color: #e0e0e0;
+      font-size: 0.95rem;
+      resize: vertical;
+      transition: 0.2s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #7c4dff;
+      box-shadow: 0 0 0 2px #7c4dff33;
+    }
+    .output-area {
+      background: #0f0f0f;
+      border: 1px solid #2e2e2e;
+      border-radius: 16px;
+      padding: 1rem;
+      min-height: 200px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .highlight-change {
+      background: #7c4dff33;
+      border-bottom: 2px solid #7c4dff;
+      padding: 0 2px;
+      border-radius: 4px;
+    }
+    .copy-btn {
+      background: transparent;
+      border: 1px solid #444;
+      color: #ccc;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: 0.2s;
+    }
+    .copy-btn:hover {
+      background: #7c4dff22;
+      border-color: #7c4dff;
+      color: #fff;
+    }
+    .footer-note {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #222;
+      color: #777;
+    }
+    .footer-note a {
+      color: #b388ff;
+      text-decoration: none;
+    }
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 700px) {
+      .editor-grid { grid-template-columns: 1fr; }
+      .control-panel { flex-direction: column; align-items: stretch; }
+      .example-group { margin-left: 0; }
+    }
+  </style>
+
+    <meta property="og:title" content="Formal to Informal Converter — Change Writing Tone">
+    <meta property="og:description" content="Switch between formal and informal tone instantly. Word replacement, contraction control, and side-by-side highlighting.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://paraphrasetool.org/tools/formal-informal-converter">
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>⇄ Formal to Informal</h1>
+    <div class="subhead">Change writing tone · word replacement · contraction control</div>
+  </header>
+
+  <div class="control-panel">
+    <div class="mode-group" id="modeGroup">
+      <button class="mode-btn active" data-mode="formal2informal">Formal → Informal</button>
+      <button class="mode-btn" data-mode="informal2formal">Informal → Formal</button>
+    </div>
+    <div class="example-group" id="exampleGroup">
+      <button class="example-btn" data-example="0">📄 Business</button>
+      <button class="example-btn" data-example="1">📄 Academic</button>
+      <button class="example-btn" data-example="2">📄 Casual</button>
+      <button class="example-btn" data-example="3">📄 Slang</button>
+      <button class="example-btn" data-example="4">📄 Email</button>
+    </div>
+  </div>
+
+  <div class="editor-grid">
+    <div class="panel">
+      <div class="panel-header">
+        <h3 id="inputLabel">📝 Formal input</h3>
+        <div class="stats" id="inputStats">words <span id="inputWordCount">0</span> · score <span id="inputScore">—</span></div>
+      </div>
+      <textarea id="inputText" placeholder="Type or paste text here..."></textarea>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <h3 id="outputLabel">💬 Informal output</h3>
+        <div class="stats">words <span id="outputWordCount">0</span> · score <span id="outputScore">—</span></div>
+      </div>
+      <div class="output-area" id="outputArea"><span style="color:#555;">Converted text will appear here</span></div>
+      <div style="margin-top: 0.7rem; display: flex; gap: 0.5rem; justify-content: flex-end;">
+        <button class="copy-btn" id="copyOutputBtn">📋 Copy output</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <a href="https://paraphrasetool.org/">← Paraphrase Tool</a> · all processing client-side
+  </div>
+</div>
+
+<script>
+(function() {
+  // ---------- WORD MAPS (200+ pairs each direction) ----------
+  const FORMAL_TO_INFORMAL = {
+    'however': 'but', 'regarding': 'about', 'nevertheless': 'still', 'consequently': 'so',
+    'therefore': 'so', 'furthermore': 'also', 'moreover': 'plus', 'prior to': 'before',
+    'subsequently': 'later', 'utilize': 'use', 'demonstrate': 'show', 'indicate': 'show',
+    'proceed': 'go', 'purchase': 'buy', 'assist': 'help', 'request': 'ask',
+    'require': 'need', 'provide': 'give', 'obtain': 'get', 'sufficient': 'enough',
+    'numerous': 'many', 'frequently': 'often', 'approximately': 'about', 'establish': 'set up',
+    'terminate': 'end', 'commence': 'start', 'expedite': 'speed up', 'implement': 'carry out',
+    'endeavor': 'try', 'encounter': 'meet', 'reside': 'live', 'currently': 'now',
+    'peruse': 'read', 'ascertain': 'find out', 'disseminate': 'spread', 'elucidate': 'explain',
+    'facilitate': 'ease', 'in conjunction with': 'with', 'notwithstanding': 'despite',
+    'subsequent to': 'after', 'with reference to': 'about', 'in the event that': 'if',
+    'on the occasion of': 'when', 'in excess of': 'over', 'a number of': 'some',
+    'due to the fact that': 'because', 'in order to': 'to', 'regardless of': 'no matter',
+    'in the vicinity of': 'near', 'at this point in time': 'now', 'as per': 'as',
+    'via': 'by', 'amongst': 'among', 'whilst': 'while', 'amongst': 'among',
+    'upon': 'on', 'thus': 'so', 'hence': 'so', 'lastly': 'finally',
+    'additionally': 'also', 'similarly': 'likewise', 'conversely': 'but',
+    'nonetheless': 'still', 'notably': 'especially', 'chiefly': 'mainly',
+    'principally': 'mostly', 'namely': 'specifically', 'i.e.': 'that is',
+    'e.g.': 'for example', 'etc': 'and so on', 'per annum': 'a year',
+    'approximately': 'around', 'sufficiently': 'enough', 'endeavour': 'try',
+    'exhibit': 'show', 'fabricate': 'make', 'fortuitous': 'lucky',
+    'gratuitous': 'unnecessary', 'henceforth': 'from now on', 'hitherto': 'until now',
+    'incumbent upon': 'must', 'insofar as': 'as', 'merit': 'deserve',
+    'necessitate': 'require', 'obfuscate': 'confuse', 'perpetrate': 'commit',
+    'promulgate': 'announce', 'pursuant to': 'under', 'substantiate': 'back up',
+    'transpire': 'happen', 'unilateral': 'one-sided', 'veritable': 'real',
+    'warrant': 'justify', 'yield': 'produce', 'accede': 'agree',
+    'bifurcate': 'split', 'cognizant': 'aware', 'demarcate': 'mark',
+    'dichotomy': 'split', 'envisage': 'imagine', 'extrapolate': 'guess',
+    'idiosyncratic': 'unique', 'juxtapose': 'compare', 'paradigm': 'model',
+    'pedantic': 'fussy', 'perfunctory': 'half-hearted', 'prognosticate': 'predict',
+    'reciprocate': 'return', 'reiterate': 'repeat', 'substantive': 'major',
+    'surreptitious': 'secret', 'ubiquitous': 'everywhere', 'vacillate': 'waver',
+    'vex': 'annoy', 'voluminous': 'bulky', 'zealot': 'fan',
+    'abate': 'lessen', 'abjure': 'give up', 'abrogate': 'cancel',
+    'abscond': 'run away', 'abstemious': 'moderate', 'acerbic': 'sharp',
+    'acumen': 'skill', 'admonish': 'warn', 'adroit': 'skilled',
+    'adulation': 'praise', 'aesthetic': 'artistic', 'affable': 'friendly',
+    'aggrandize': 'exaggerate', 'alacrity': 'eagerness', 'amalgamate': 'merge',
+    'ambiguous': 'unclear', 'ameliorate': 'improve', 'anachronism': 'outdated',
+    'anomaly': 'oddity', 'antediluvian': 'ancient', 'antipathy': 'hate',
+    'apathetic': 'indifferent', 'approbation': 'approval', 'arcane': 'mysterious',
+    'arduous': 'hard', 'articulate': 'speak clearly', 'ascetic': 'frugal',
+    'assuage': 'calm', 'audacious': 'bold', 'auspicious': 'favorable',
+    'austere': 'strict', 'avaricious': 'greedy', 'banal': 'boring',
+    'bellicose': 'aggressive', 'benevolent': 'kind', 'benign': 'harmless',
+    'bequeath': 'leave', 'berate': 'scold', 'bifurcated': 'split',
+    'blandish': 'flatter', 'bombastic': 'pompous', 'boorish': 'rude',
+    'brazen': 'bold', 'brevity': 'shortness', 'bucolic': 'rural',
+    'burgeon': 'grow', 'burnish': 'polish', 'cacophony': 'noise',
+    'candid': 'honest', 'capricious': 'unpredictable', 'castigate': 'punish',
+    'catalyst': 'spark', 'caustic': 'sarcastic', 'censure': 'blame',
+    'chicanery': 'trickery', 'circumspect': 'careful', 'clamor': 'noise',
+    'coalesce': 'join', 'cogent': 'convincing', 'commensurate': 'equal',
+    'compendium': 'summary', 'complaisant': 'polite', 'conciliatory': 'peaceful',
+    'condone': 'ignore', 'confound': 'confuse', 'conjecture': 'guess',
+    'consecrate': 'bless', 'contravene': 'violate', 'conundrum': 'puzzle',
+    'convalescence': 'recovery', 'copious': 'abundant', 'corroborate': 'confirm',
+    'credulous': 'gullible', 'culpable': 'guilty', 'cursory': 'quick',
+    'dauntless': 'brave', 'debacle': 'disaster', 'decorum': 'manners',
+    'deference': 'respect', 'delineate': 'describe', 'demagogue': 'rabble-rouser',
+    'demure': 'shy', 'denigrate': 'insult', 'deprecate': 'disapprove',
+    'derelict': 'abandoned', 'desiccate': 'dry', 'desultory': 'random',
+    'diatribe': 'rant', 'dichotomy': 'division', 'diffident': 'shy',
+    'digress': 'wander', 'dilatory': 'slow', 'diminutive': 'tiny',
+    'disaffected': 'unhappy', 'disambiguation': 'clarification', 'discern': 'see',
+    'discombobulate': 'confuse', 'disparate': 'different', 'dissemble': 'hide',
+    'dissipate': 'scatter', 'dissolution': 'breakup', 'distrait': 'distracted',
+    'divulge': 'reveal', 'dogmatic': 'stubborn', 'dormant': 'inactive',
+    'draconian': 'harsh', 'dubiety': 'doubt', 'dulcet': 'sweet',
+    'ebullient': 'enthusiastic', 'eclectic': 'varied', 'edict': 'order',
+    'effervescent': 'bubbly', 'efficacious': 'effective', 'effulgent': 'bright',
+    'egregious': 'shocking', 'elegy': 'poem', 'elicit': 'draw out',
+    'emaciated': 'very thin', 'embellish': 'decorate', 'emollient': 'soothing',
+    'empirical': 'observed', 'emulate': 'imitate', 'encomium': 'praise',
+    'endemic': 'native', 'enervate': 'weaken', 'engender': 'cause',
+    'enigma': 'mystery', 'enormity': 'huge evil', 'ephemeral': 'short-lived',
+    'equanimity': 'calmness', 'equivocal': 'ambiguous', 'erudite': 'learned',
+    'eschew': 'avoid', 'esoteric': 'obscure', 'espouse': 'support',
+    'ethereal': 'delicate', 'eulogy': 'praise', 'euphemism': 'soft term',
+    'evanescent': 'fading', 'exacerbate': 'worsen', 'exalt': 'praise',
+    'excoriate': 'criticize', 'exculpate': 'acquit', 'exemplary': 'outstanding',
+    'exigent': 'urgent', 'exonerate': 'clear', 'expatiate': 'elaborate',
+    'expiate': 'atone', 'expunge': 'delete', 'extant': 'existing',
+    'extol': 'praise', 'extraneous': 'irrelevant', 'extricate': 'free',
+    'exuberant': 'enthusiastic', 'facetious': 'joking', 'fallacious': 'false',
+    'fatuous': 'silly', 'fawn': 'flatter', 'feckless': 'useless',
+    'felicitous': 'apt', 'feral': 'wild', 'fervent': 'passionate',
+    'fetter': 'restrict', 'fiasco': 'disaster', 'fidelity': 'faithfulness',
+    'filibuster': 'delay', 'finesse': 'skill', 'flagrant': 'blatant',
+    'florid': 'flowery', 'fluctuate': 'vary', 'foible': 'weakness',
+    'forbearance': 'patience', 'forestall': 'prevent', 'fortuitous': 'lucky',
+    'fractious': 'irritable', 'frivolous': 'silly', 'frugal': 'thrifty',
+    'fulminate': 'protest', 'furtive': 'secret', 'futile': 'useless',
+    'garrulous': 'talkative', 'germane': 'relevant', 'grandiloquent': 'pompous',
+    'gregarious': 'sociable', 'hackneyed': 'clichéd', 'hapless': 'unlucky',
+    'harangue': 'lecture', 'hegemony': 'dominance', 'heresy': 'blasphemy',
+    'hubris': 'arrogance', 'iconoclast': 'rebel', 'idiosyncratic': 'quirky',
+    'ignominious': 'shameful', 'imbroglio': 'mess', 'immutable': 'unchanging',
+    'impartial': 'fair', 'impecunious': 'poor', 'imperious': 'domineering',
+    'impertinent': 'rude', 'implacable': 'unstoppable', 'implicit': 'understood',
+    'importune': 'beg', 'impregnable': 'unbeatable', 'impudent': 'rude',
+    'impugn': 'challenge', 'impunity': 'freedom', 'inadvertent': 'accidental',
+    'inalienable': 'absolute', 'incandescent': 'glowing', 'inchoate': 'beginning',
+    'incipient': 'beginning', 'incisive': 'sharp', 'incongruous': 'out of place',
+    'incorrigible': 'hopeless', 'incredulous': 'unbelieving', 'incumbent': 'current',
+    'indefatigable': 'tireless', 'indelible': 'permanent', 'indigent': 'poor',
+    'indolent': 'lazy', 'indomitable': 'unconquerable', 'ineffable': 'indescribable',
+    'ineluctable': 'unavoidable', 'inexorable': 'unstoppable', 'infallible': 'perfect',
+    'infelicitous': 'unfortunate', 'ingenuous': 'naive', 'inimical': 'harmful',
+    'iniquitous': 'wicked', 'innocuous': 'harmless', 'inscrutable': 'mysterious',
+    'insidious': 'subtle', 'insolent': 'rude', 'insouciant': 'carefree',
+    'intransigent': 'stubborn', 'intrepid': 'brave', 'inundate': 'flood',
+    'invective': 'abuse', 'inveterate': 'habitual', 'irascible': 'irritable',
+    'irreverent': 'disrespectful', 'itinerant': 'wandering', 'jubilant': 'joyful',
+    'judicious': 'wise', 'laconic': 'brief', 'lambaste': 'criticize',
+    'languid': 'weak', 'largesse': 'generosity', 'lassitude': 'tiredness',
+    'laudable': 'praiseworthy', 'litigious': 'quarrelsome', 'lugubrious': 'sad',
+    'magnanimous': 'generous', 'malediction': 'curse', 'malevolent': 'evil',
+    'malfeasance': 'misconduct', 'malinger': 'fake illness', 'malleable': 'flexible',
+    'materialize': 'appear', 'maudlin': 'sentimental', 'maverick': 'rebel',
+    'mendacious': 'dishonest', 'mercurial': 'changeable', 'meritorious': 'worthy',
+    'metamorphosis': 'change', 'meticulous': 'careful', 'milieu': 'environment',
+    'misanthrope': 'hater', 'mitigate': 'lessen', 'mollify': 'calm',
+    'moribund': 'dying', 'munificent': 'generous', 'myriad': 'many',
+    'nadir': 'lowest point', 'nascent': 'new', 'nebulous': 'vague',
+    'nefarious': 'evil', 'nihilism': 'negativity', 'nonchalant': 'casual',
+    'nonpareil': 'unmatched', 'nostalgic': 'longing', 'notorious': 'famous',
+    'nuance': 'subtlety', 'obdurate': 'stubborn', 'obfuscate': 'confuse',
+    'oblique': 'indirect', 'oblivious': 'unaware', 'obsequious': 'sycophantic',
+    'obsolete': 'outdated', 'obstinate': 'stubborn', 'officious': 'bossy',
+    'omnipotent': 'all-powerful', 'omniscient': 'all-knowing', 'onerous': 'burdensome',
+    'opprobrium': 'disgrace', 'ostentatious': 'showy', 'painstaking': 'careful',
+    'palatable': 'acceptable', 'panacea': 'cure-all', 'paradigm': 'model',
+    'paradox': 'contradiction', 'paragon': 'perfect example', 'pariah': 'outcast',
+    'parochial': 'narrow-minded', 'parsimonious': 'stingy', 'partisan': 'biased',
+    'pastoral': 'rural', 'patronize': 'talk down to', 'paucity': 'lack',
+    'penchant': 'liking', 'penitent': 'sorry', 'penurious': 'poor',
+    'perfidious': 'treacherous', 'perfunctory': 'half-hearted', 'peripatetic': 'wandering',
+    'pernicious': 'harmful', 'perpetuate': 'continue', 'perspicacious': 'perceptive',
+    'pertinacious': 'stubborn', 'pervasive': 'widespread', 'petulant': 'moody',
+    'philanthropic': 'charitable', 'phlegmatic': 'calm', 'placate': 'appease',
+    'placid': 'calm', 'platitude': 'cliché', 'plausible': 'likely',
+    'plethora': 'excess', 'poignant': 'moving', 'polemic': 'argument',
+    'ponderous': 'heavy', 'pragmatic': 'practical', 'precarious': 'unstable',
+    'precedent': 'example', 'precipitate': 'hasty', 'preclude': 'prevent',
+    'precocious': 'advanced', 'predilection': 'preference', 'preeminent': 'outstanding',
+    'premonition': 'feeling', 'preponderance': 'majority', 'prerogative': 'right',
+    'prescient': 'far-sighted', 'presumptuous': 'arrogant', 'prevaricate': 'lie',
+    'pristine': 'pure', 'probity': 'honesty', 'proclivity': 'tendency',
+    'prodigal': 'wasteful', 'prodigious': 'huge', 'profligate': 'wasteful',
+    'prognosticate': 'predict', 'prolific': 'productive', 'promulgate': 'announce',
+    'propensity': 'tendency', 'propitious': 'favorable', 'prosaic': 'dull',
+    'proscribe': 'forbid', 'protean': 'versatile', 'provincial': 'narrow-minded',
+    'proviso': 'condition', 'prudent': 'careful', 'pugnacious': 'aggressive',
+    'punctilious': 'careful', 'pundit': 'expert', 'pungent': 'sharp',
+    'quagmire': 'swamp', 'quandary': 'dilemma', 'querulous': 'complaining',
+    'quiescent': 'inactive', 'quintessential': 'perfect', 'quotidian': 'daily',
+    'rancor': 'bitterness', 'rapacious': 'greedy', 'rarefied': 'elite',
+    'raucous': 'loud', 'recalcitrant': 'stubborn', 'recant': 'take back',
+    'recondite': 'obscure', 'redoubtable': 'formidable', 'refractory': 'stubborn',
+    'refute': 'disprove', 'relegate': 'downgrade', 'relentless': 'unstoppable',
+    'relinquish': 'give up', 'remonstrate': 'protest', 'renaissance': 'rebirth',
+    'renounce': 'give up', 'replete': 'full', 'reprehensible': 'shameful',
+    'reprobate': 'scoundrel', 'repudiate': 'reject', 'requisite': 'necessary',
+    'resilient': 'tough', 'resplendent': 'glorious', 'restitution': 'compensation',
+    'reticent': 'quiet', 'retrograde': 'backward', 'reverent': 'respectful',
+    'rhetoric': 'speech', 'ribald': 'vulgar', 'rife': 'widespread',
+    'ruminate': 'think', 'rustic': 'rural', 'sacrosanct': 'holy',
+    'sagacious': 'wise', 'salient': 'prominent', 'sanctimonious': 'self-righteous',
+    'sanguine': 'optimistic', 'sardonic': 'mocking', 'satiate': 'satisfy',
+    'savor': 'enjoy', 'scintillating': 'brilliant', 'scrupulous': 'careful',
+    'scrutinize': 'examine', 'sedulous': 'diligent', 'semblance': 'appearance',
+    'sentient': 'aware', 'serendipity': 'luck', 'servile': 'submissive',
+    'skeptical': 'doubtful', 'solicitous': 'concerned', 'somnolent': 'sleepy',
+    'sonorous': 'loud', 'sophistry': 'trickery', 'specious': 'false',
+    'sporadic': 'occasional', 'spurious': 'fake', 'squalid': 'dirty',
+    'stagnate': 'stand still', 'stolid': 'unemotional', 'strident': 'loud',
+    'stringent': 'strict', 'stultify': 'bore', 'subjugate': 'conquer',
+    'sublime': 'excellent', 'subservient': 'submissive', 'substantiate': 'prove',
+    'subterfuge': 'trick', 'succinct': 'brief', 'suffrage': 'vote',
+    'sundry': 'various', 'superfluous': 'unnecessary', 'supine': 'passive',
+    'supplant': 'replace', 'surreptitious': 'secret', 'sycophant': 'flatterer',
+    'tacit': 'unspoken', 'taciturn': 'quiet', 'tangential': 'unrelated',
+    'tantamount': 'equivalent', 'temerity': 'nerve', 'temperate': 'moderate',
+    'tenacious': 'persistent', 'tenet': 'belief', 'terse': 'short',
+    'tirade': 'rant', 'torpid': 'sluggish', 'totalitarian': 'dictatorial',
+    'tractable': 'manageable', 'transgress': 'sin', 'transient': 'temporary',
+    'travesty': 'mockery', 'trepidation': 'fear', 'truculent': 'aggressive',
+    'truncate': 'shorten', 'tumultuous': 'chaotic', 'ubiquitous': 'everywhere',
+    'umbrage': 'offense', 'unconscionable': 'unreasonable', 'unctuous': 'oily',
+    'undermine': 'weaken', 'unequivocal': 'clear', 'unprecedented': 'unheard of',
+    'unscrupulous': 'dishonest', 'untenable': 'unsustainable', 'unwitting': 'unaware',
+    'upbraid': 'scold', 'urbane': 'sophisticated', 'usurp': 'take over',
+    'utilitarian': 'practical', 'vacillate': 'waver', 'vacuous': 'empty',
+    'vapid': 'dull', 'vehement': 'passionate', 'venerate': 'worship',
+    'veracious': 'truthful', 'verbose': 'wordy', 'verdant': 'green',
+    'verisimilitude': 'realism', 'vestige': 'trace', 'vicarious': 'indirect',
+    'vicissitude': 'ups and downs', 'vigilant': 'watchful', 'vindicate': 'clear',
+    'virtuoso': 'expert', 'virulent': 'poisonous', 'visceral': 'gut',
+    'vitriolic': 'bitter', 'vituperate': 'abuse', 'vivacious': 'lively',
+    'vociferous': 'loud', 'volatile': 'unstable', 'voracious': 'greedy',
+    'warranted': 'justified', 'wary': 'cautious', 'whimsical': 'fanciful',
+    'wistful': 'longing', 'zealous': 'enthusiastic', 'zenith': 'peak'
+  };
+
+  // Reverse map for
