@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Level Calculator</title>
+    <meta name="description" content="Analyze text vocabulary complexity. Word length, syllables, academic words, reading level, difficulty distribution chart.">
+    <meta name="canonical" content="https://paraphrasetool.org/tools/vocabulary-level-calculator">
+    <meta property="og:title" content="Vocabulary Level Calculator - Text Analysis">
+    <meta property="og:description" content="Measure vocabulary complexity and reading difficulty. Get syllable counts and word distribution analysis.">
+    <meta property="og:url" content="https://paraphrasetool.org/tools/vocabulary-level-calculator">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#ec4899">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1em;
+        }
+
+        .tool-section {
+            background: #262626;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #f0f0f0;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #3a3a3a;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-size: 1em;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .primary-btn {
+            flex: 1;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .secondary-btn {
+            padding: 14px 24px;
+            background: transparent;
+            color: #ec4899;
+            border: 2px solid #ec4899;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .result-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #3a3a3a;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #ec4899;
+            margin-bottom: 8px;
+        }
+
+        .result-label {
+            color: #707070;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .reading-level {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #ec4899;
+        }
+
+        .level-title {
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        .level-description {
+            color: #b0b0b0;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .distribution-chart {
+            margin-top: 30px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 20px;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .bar-label {
+            width: 120px;
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+
+        .bar-container {
+            flex: 1;
+            background: #0a0a0a;
+            border-radius: 4px;
+            height: 30px;
+            margin: 0 12px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ec4899, #f472b6);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: #fff;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .bar-percentage {
+            color: #707070;
+            font-size: 0.9em;
+            width: 40px;
+            text-align: right;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #707070;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #707070;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tool-section {
+                padding: 20px;
+            }
+        }
+    </style>
+<link rel="canonical" href="https://paraphrasetool.org/tools/vocabulary-level-calculator">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Vocabulary Level Calculator</h1>
+            <p class="subtitle">Analyze text complexity and readability</p>
+        </header>
+
+        <div class="tool-section">
+            <div class="input-group">
+                <label for="textInput">Paste Your Text</label>
+                <textarea id="textInput" placeholder="Enter text to analyze vocabulary complexity..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" id="analyzeBtn">Analyze Vocabulary</button>
+                <button class="secondary-btn" id="clearBtn">Clear</button>
+            </div>
+
+            <div id="results" style="display: none;">
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-value" id="avgWordLength">0</div>
+                        <div class="result-label">Avg Word Length</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="avgSyllables">0</div>
+                        <div class="result-label">Avg Syllables</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="commonWords">0%</div>
+                        <div class="result-label">Common Words</div>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-value" id="academicWords">0%</div>
+                        <div class="result-label">Academic Words</div>
+                    </div>
+                </div>
+
+                <div class="reading-level">
+                    <div class="level-title">Estimated Reading Level</div>
+                    <div class="level-description" id="levelDescription"></div>
+                </div>
+
+                <div class="distribution-chart">
+                    <div class="chart-title">Word Difficulty Distribution</div>
+                    <div class="chart-bar">
+                        <div class="bar-label">Simple (1-4 letters)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" id="simpleBar" style="width: 0%">
+                                <span id="simpleCount">0</span>
+                            </div>
+                        </div>
+                        <div class="bar-percentage" id="simplePercent">0%</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">Moderate (5-8 letters)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" id="moderateBar" style="width: 0%">
+                                <span id="moderateCount">0</span>
+                            </div>
+                        </div>
+                        <div class="bar-percentage" id="moderatePercent">0%</div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">Complex (9+ letters)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" id="complexBar" style="width: 0%">
+                                <span id="complexCount">0</span>
+                            </div>
+                        </div>
+                        <div class="bar-percentage" id="complexPercent">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 2026 paraphrasetool.org — Writing Tools</footer>
+<div style="margin:20px auto;max-width:728px;text-align:center">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+    <script>
+        const commonWords = new Set([
+            'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i',
+            'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at',
+            'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she',
+            'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what',
+            'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me',
+            'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take'
+        ]);
+
+        const academicWords = new Set([
+            'analyze', 'synthesis', 'evaluate', 'methodology', 'theoretical', 'significant',
+            'substantial', 'comprehensive', 'demonstrate', 'implement', 'utilize', 'facilitate',
+            'fundamental', 'integrated', 'strategic', 'conceptual', 'empirical', 'systematic',
+            'hypothesis', 'quantitative', 'qualitative', 'framework', 'paradigm', 'discourse',
+            'criteria', 'parameter', 'variance', 'correlation', 'causation', 'inference',
+            'deductive', 'inductive', 'bifurcated', 'dichotomy', 'ambiguous', 'salient'
+        ]);
+
+        document.getElementById('analyzeBtn').addEventListener('click', analyzeVocabulary);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+        function countSyllables(word) {
+            word = word.toLowerCase();
+            let syllableCount = 0;
+            const vowels = 'aeiouy';
+            let previousWasVowel = false;
+
+            for (let i = 0; i < word.length; i++) {
+                const isVowel = vowels.includes(word[i]);
+                if (isVowel && !previousWasVowel) {
+                    syllableCount++;
+                }
+                previousWasVowel = isVowel;
+            }
+
+            if (word.endsWith('e')) {
+                syllableCount--;
+            }
+            if (word.endsWith('le') && word.length > 2 && !vowels.includes(word[word.length - 3])) {
+                syllableCount++;
+            }
+
+            return Math.max(1, syllableCount);
+        }
+
+        function analyzeVocabulary() {
+            const text = document.getElementById('textInput').value.trim();
+
+            if (!text) {
+                alert('Please enter some text to analyze.');
+                return;
+            }
+
+            const words = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
+            const uniqueWords = new Set(words);
+
+            if (words.length === 0) {
+                alert('Please enter valid text with words.');
+                return;
+            }
+
+            let totalLetters = 0;
+            let totalSyllables = 0;
+            let commonCount = 0;
+            let academicCount = 0;
+            let simpleCount = 0;
+            let moderateCount = 0;
+            let complexCount = 0;
+
+            words.forEach(word => {
+                totalLetters += word.length;
+                totalSyllables += countSyllables(word);
+
+                if (commonWords.has(word)) commonCount++;
+                if (academicWords.has(word)) academicCount++;
+
+                if (word.length <= 4) simpleCount++;
+                else if (word.length <= 8) moderateCount++;
+                else complexCount++;
+            });
+
+            const avgWordLength = (totalLetters / words.length).toFixed(2);
+            const avgSyllables = (totalSyllables / words.length).toFixed(2);
+            const commonPercent = Math.round((commonCount / words.length) * 100);
+            const academicPercent = Math.round((academicCount / words.length) * 100);
+
+            let readingLevel = 'Elementary';
+            let levelDescription = 'Text uses simple vocabulary suitable for elementary level readers.';
+
+            if (avgWordLength > 5 && avgSyllables > 1.5) {
+                readingLevel = 'Intermediate';
+                levelDescription = 'Text uses intermediate vocabulary suitable for middle school readers.';
+            }
+            if (avgWordLength > 6 && avgSyllables > 1.8) {
+                readingLevel = 'Advanced';
+                levelDescription = 'Text uses advanced vocabulary suitable for high school or college readers.';
+            }
+            if (academicPercent > 15 && avgWordLength > 6) {
+                readingLevel = 'Academic';
+                levelDescription = 'Text uses academic vocabulary suitable for university-level readers and professional contexts.';
+            }
+
+            document.getElementById('avgWordLength').textContent = avgWordLength;
+            document.getElementById('avgSyllables').textContent = avgSyllables;
+            document.getElementById('commonWords').textContent = commonPercent + '%';
+            document.getElementById('academicWords').textContent = academicPercent + '%';
+            document.getElementById('levelDescription').textContent = `${readingLevel} Level - ${levelDescription}`;
+
+            const totalComplex = simpleCount + moderateCount + complexCount;
+            const simplePercent = Math.round((simpleCount / totalComplex) * 100);
+            const moderatePercent = Math.round((moderateCount / totalComplex) * 100);
+            const complexPercent = Math.round((complexCount / totalComplex) * 100);
+
+            document.getElementById('simpleBar').style.width = simplePercent + '%';
+            document.getElementById('simpleCount').textContent = simpleCount;
+            document.getElementById('simplePercent').textContent = simplePercent + '%';
+
+            document.getElementById('moderateBar').style.width = moderatePercent + '%';
+            document.getElementById('moderateCount').textContent = moderateCount;
+            document.getElementById('moderatePercent').textContent = moderatePercent + '%';
+
+            document.getElementById('complexBar').style.width = complexPercent + '%';
+            document.getElementById('complexCount').textContent = complexCount;
+            document.getElementById('complexPercent').textContent = complexPercent + '%';
+
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function clearAll() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('results').style.display = 'none';
+        }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Vocabulary Level Calculator",
+        "description": "Analyze text vocabulary complexity and reading level",
+        "url": "https://paraphrasetool.org/tools/vocabulary-level-calculator",
+        "applicationCategory": "Utility",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readability Score Checker - Text Analysis</title>
+    <meta name="description" content="Calculate Flesch-Kincaid, Flesch Reading Ease, Gunning Fog, Coleman-Liau, SMOG, and ARI readability scores.">
+    <meta name="canonical" content="https://paraphrasetool.org/tools/readability-score-checker">
+    <meta property="og:title" content="Readability Score Checker - Multiple Metrics">
+    <meta property="og:description" content="Get comprehensive readability metrics. Color-coded scores with target audience recommendations.">
+    <meta property="og:url" content="https://paraphrasetool.org/tools/readability-score-checker">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#ec4899">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1em;
+        }
+
+        .tool-section {
+            background: #262626;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #f0f0f0;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #3a3a3a;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-size: 1em;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .primary-btn {
+            flex: 1;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .secondary-btn {
+            padding: 14px 24px;
+            background: transparent;
+            color: #ec4899;
+            border: 2px solid #ec4899;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .score-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #3a3a3a;
+            border-left: 4px solid #ec4899;
+        }
+
+        .score-name {
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .score-value {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .score-interpretation {
+            color: #b0b0b0;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .score-good {
+            color: #10b981;
+        }
+
+        .score-moderate {
+            color: #f59e0b;
+        }
+
+        .score-difficult {
+            color: #ef4444;
+        }
+
+        .metrics-summary {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .summary-title {
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .summary-item {
+            background: #0a0a0a;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid #2a2a2a;
+        }
+
+        .summary-value {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #ec4899;
+            margin-bottom: 4px;
+        }
+
+        .summary-label {
+            color: #707070;
+            font-size: 0.85em;
+        }
+
+        .recommendation {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(244, 114, 182, 0.05));
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #ec4899;
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 12px;
+        }
+
+        .recommendation-text {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #707070;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-section {
+                padding: 20px;
+            }
+        }
+    </style>
+<link rel="canonical" href="https://paraphrasetool.org/tools/readability-score-checker">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Readability Score Checker</h1>
+            <p class="subtitle">Calculate 6 different readability metrics</p>
+        </header>
+
+        <div class="tool-section">
+            <div class="input-group">
+                <label for="textInput">Enter Your Text</label>
+                <textarea id="textInput" placeholder="Paste text to analyze readability with multiple metrics..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" id="analyzeBtn">Calculate Scores</button>
+                <button class="secondary-btn" id="clearBtn">Clear</button>
+            </div>
+
+            <div id="results" style="display: none;">
+                <div class="results-grid" id="scoresContainer"></div>
+
+                <div class="metrics-summary">
+                    <div class="summary-title">Text Metrics</div>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-value" id="wordCount">0</div>
+                            <div class="summary-label">Words</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-value" id="sentenceCount">0</div>
+                            <div class="summary-label">Sentences</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-value" id="syllableCount">0</div>
+                            <div class="summary-label">Syllables</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendation" id="recommendation"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 2026 paraphrasetool.org — Writing Tools</footer>
+<div style="margin:20px auto;max-width:728px;text-align:center">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+    <script>
+        document.getElementById('analyzeBtn').addEventListener('click', analyzeReadability);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+        function countSyllables(word) {
+            word = word.toLowerCase();
+            let count = 0;
+            const vowels = 'aeiouy';
+            let previousWasVowel = false;
+
+            for (let i = 0; i < word.length; i++) {
+                const isVowel = vowels.includes(word[i]);
+                if (isVowel && !previousWasVowel) {
+                    count++;
+                }
+                previousWasVowel = isVowel;
+            }
+
+            if (word.endsWith('e')) count--;
+            if (word.endsWith('le') && word.length > 2 && !vowels.includes(word[word.length - 3])) {
+                count++;
+            }
+
+            return Math.max(1, count);
+        }
+
+        function analyzeReadability() {
+            const text = document.getElementById('textInput').value.trim();
+
+            if (!text) {
+                alert('Please enter text to analyze.');
+                return;
+            }
+
+            const words = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
+            const sentences = text.match(/[.!?]+/g) || [];
+            const paragraphs = text.split(/\n\n+/).filter(p => p.trim().length > 0);
+
+            if (words.length === 0 || sentences.length === 0) {
+                alert('Please enter valid text with sentences.');
+                return;
+            }
+
+            const wordCount = words.length;
+            const sentenceCount = sentences.length;
+
+            let syllableCount = 0;
+            words.forEach(word => {
+                syllableCount += countSyllables(word);
+            });
+
+            // Readability Formulas
+            const fk = 0.39 * (wordCount / sentenceCount) + 11.8 * (syllableCount / wordCount) - 15.59;
+            const fre = 206.835 - 1.015 * (wordCount / sentenceCount) - 84.6 * (syllableCount / wordCount);
+            const gf = 0.4 * ((wordCount / sentenceCount) + 100 * (0.0353 * syllableCount / wordCount));
+            const cl = 0.0588 * text.replace(/\s/g, '').length - 0.296 * sentenceCount - 15.8;
+            const smog = 1.0430 * Math.sqrt(30 * (syllableCount / sentenceCount)) + 3.1291;
+            const ari = (4.71 * (text.replace(/\s/g, '').length / wordCount)) + (0.5 * (wordCount / sentenceCount)) - 21.43;
+
+            const scores = [
+                {
+                    name: 'Flesch-Kincaid Grade',
+                    value: fk.toFixed(1),
+                    interpretation: getGradeInterpretation(fk),
+                    color: getScoreColor(fk, 0, 5, 10)
+                },
+                {
+                    name: 'Flesch Reading Ease',
+                    value: fre.toFixed(1),
+                    interpretation: getEaseInterpretation(fre),
+                    color: getScoreColor(fre, 90, 60, 30)
+                },
+                {
+                    name: 'Gunning Fog Index',
+                    value: gf.toFixed(1),
+                    interpretation: getGradeInterpretation(gf),
+                    color: getScoreColor(gf, 0, 5, 10)
+                },
+                {
+                    name: 'Coleman-Liau Index',
+                    value: cl.toFixed(1),
+                    interpretation: getGradeInterpretation(cl),
+                    color: getScoreColor(cl, 0, 5, 10)
+                },
+                {
+                    name: 'SMOG Grade',
+                    value: smog.toFixed(1),
+                    interpretation: getGradeInterpretation(smog),
+                    color: getScoreColor(smog, 0, 5, 10)
+                },
+                {
+                    name: 'Automated Readability Index',
+                    value: ari.toFixed(1),
+                    interpretation: getGradeInterpretation(ari),
+                    color: getScoreColor(ari, 0, 5, 10)
+                }
+            ];
+
+            displayScores(scores);
+            displayMetrics(wordCount, sentenceCount, syllableCount);
+            displayRecommendation(scores);
+        }
+
+        function getGradeInterpretation(grade) {
+            if (grade < 6) return 'Elementary School';
+            if (grade < 9) return 'Middle School';
+            if (grade < 13) return 'High School';
+            return 'College/Academic';
+        }
+
+        function getEaseInterpretation(ease) {
+            if (ease >= 90) return 'Very Easy - 5th grade';
+            if (ease >= 80) return 'Easy - 6th grade';
+            if (ease >= 70) return 'Fairly Easy - 7th grade';
+            if (ease >= 60) return 'Standard - 8th-9th grade';
+            if (ease >= 50) return 'Fairly Difficult - 10th-12th grade';
+            if (ease >= 30) return 'Difficult - College';
+            return 'Very Difficult - College graduate';
+        }
+
+        function getScoreColor(score, good, moderate, difficult) {
+            if (score <= good || score >= difficult) return 'score-good';
+            if (score <= moderate || score >= difficult - 2) return 'score-moderate';
+            return 'score-difficult';
+        }
+
+        function displayScores(scores) {
+            const container = document.getElementById('scoresContainer');
+            container.innerHTML = scores.map(score => `
+                <div class="score-card">
+                    <div class="score-name">${score.name}</div>
+                    <div class="score-value ${score.color}">${score.value}</div>
+                    <div class="score-interpretation">${score.interpretation}</div>
+                </div>
+            `).join('');
+        }
+
+        function displayMetrics(wordCount, sentenceCount, syllableCount) {
+            document.getElementById('wordCount').textContent = wordCount;
+            document.getElementById('sentenceCount').textContent = sentenceCount;
+            document.getElementById('syllableCount').textContent = syllableCount;
+        }
+
+        function displayRecommendation(scores) {
+            const avgGrade = (
+                parseFloat(scores[0].value) +
+                parseFloat(scores[2].value) +
+                parseFloat(scores[3].value) +
+                parseFloat(scores[4].value) +
+                parseFloat(scores[5].value)
+            ) / 5;
+
+            let recommendation = '';
+            if (avgGrade < 6) {
+                recommendation = '<strong>Great for general audiences!</strong> Your text is easy to understand for most readers. Consider this level for blogs, marketing copy, and public-facing content.';
+            } else if (avgGrade < 9) {
+                recommendation = '<strong>Good accessibility.</strong> Your text is clear for most educated readers. Suitable for news articles, business writing, and instructional content.';
+            } else if (avgGrade < 13) {
+                recommendation = '<strong>Moderate complexity.</strong> Your text requires a high school education to understand. Suitable for academic papers, technical documentation, and specialized content.';
+            } else {
+                recommendation = '<strong>High complexity.</strong> Your text is challenging and requires college-level education. Consider simplifying for broader accessibility, or keep as is for academic/expert audiences.';
+            }
+
+            document.getElementById('recommendation').innerHTML = `
+                <div class="recommendation-title">Recommendation</div>
+                <div class="recommendation-text">${recommendation}</div>
+            `;
+        }
+
+        function clearAll() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('results').style.display = 'none';
+        }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Readability Score Checker",
+        "description": "Calculate multiple readability scores including Flesch-Kincaid, Flesch Reading Ease, Gunning Fog, Coleman-Liau, SMOG, and ARI",
+        "url": "https://paraphrasetool.org/tools/readability-score-checker",
+        "applicationCategory": "Utility",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>

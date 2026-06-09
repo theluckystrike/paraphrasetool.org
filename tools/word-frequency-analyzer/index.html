@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Frequency Analyzer - Text Analysis</title>
+    <meta name="description" content="Analyze word frequency in text. Bar chart, unique words, type-token ratio, overused words detection, vocabulary richness.">
+    <meta name="canonical" content="https://paraphrasetool.org/tools/word-frequency-analyzer">
+    <meta property="og:title" content="Word Frequency Analyzer - Detect Patterns">
+    <meta property="og:description" content="Identify word frequency patterns. Spot overused words and measure vocabulary richness with visual charts.">
+    <meta property="og:url" content="https://paraphrasetool.org/tools/word-frequency-analyzer">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#ec4899">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1em;
+        }
+
+        .tool-section {
+            background: #262626;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #f0f0f0;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #3a3a3a;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-size: 1em;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .primary-btn {
+            flex: 1;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .secondary-btn {
+            padding: 14px 24px;
+            background: transparent;
+            color: #ec4899;
+            border: 2px solid #ec4899;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #3a3a3a;
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #ec4899;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            color: #707070;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chart-section {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .canvas-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 20px;
+            background: #0a0a0a;
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .frequency-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .frequency-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bar-word {
+            width: 100px;
+            font-weight: 600;
+            color: #ec4899;
+            font-size: 0.95em;
+        }
+
+        .bar-container {
+            flex: 1;
+            background: #0a0a0a;
+            border-radius: 4px;
+            height: 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ec4899, #f472b6);
+            display: flex;
+            align-items: center;
+            padding-right: 8px;
+            justify-content: flex-end;
+            color: #fff;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: width 0.3s;
+        }
+
+        .bar-count {
+            width: 50px;
+            text-align: right;
+            color: #707070;
+            font-size: 0.9em;
+        }
+
+        .overused-section {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ef4444;
+            border: 1px solid #3a3a3a;
+            border-left: 4px solid #ef4444;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .overused-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .overused-tag {
+            background: #0a0a0a;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            font-size: 0.9em;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .richness-bar {
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .richness-title {
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .richness-scale {
+            background: #0a0a0a;
+            border-radius: 6px;
+            height: 30px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .richness-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .richness-text {
+            color: #b0b0b0;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #707070;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tool-section {
+                padding: 20px;
+            }
+
+            .canvas-container {
+                height: 300px;
+            }
+        }
+    </style>
+<link rel="canonical" href="https://paraphrasetool.org/tools/word-frequency-analyzer">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Word Frequency Analyzer</h1>
+            <p class="subtitle">Discover word patterns and vocabulary richness</p>
+        </header>
+
+        <div class="tool-section">
+            <div class="input-group">
+                <label for="textInput">Paste Your Text</label>
+                <textarea id="textInput" placeholder="Enter text to analyze word frequency and patterns..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" id="analyzeBtn">Analyze Word Frequency</button>
+                <button class="secondary-btn" id="clearBtn">Clear</button>
+            </div>
+
+            <div id="results" style="display: none;">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="totalWords">0</div>
+                        <div class="metric-label">Total Words</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="uniqueWords">0</div>
+                        <div class="metric-label">Unique Words</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="ttr">0%</div>
+                        <div class="metric-label">Type-Token Ratio</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="richness">0</div>
+                        <div class="metric-label">Richness Score</div>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <div class="chart-title">Top 20 Words by Frequency</div>
+                    <div class="frequency-bars" id="frequencyBars"></div>
+                </div>
+
+                <div class="overused-section" id="overusedSection" style="display: none;">
+                    <div class="section-title">Overused Words (Repetition Alert)</div>
+                    <div class="overused-list" id="overusedList"></div>
+                </div>
+
+                <div class="richness-bar">
+                    <div class="richness-title">Vocabulary Richness</div>
+                    <div class="richness-scale">
+                        <div class="richness-fill" id="richnessFill" style="width: 0%">
+                            <span id="richnessPercent">0%</span>
+                        </div>
+                    </div>
+                    <div class="richness-text" id="richnessDescription"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 2026 paraphrasetool.org — Writing Tools</footer>
+<div style="margin:20px auto;max-width:728px;text-align:center">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+    <script>
+        document.getElementById('analyzeBtn').addEventListener('click', analyzeFrequency);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+        const stopWords = new Set([
+            'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with',
+            'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does',
+            'did', 'will', 'would', 'could', 'should', 'may', 'might', 'can', 'as', 'it', 'this',
+            'that', 'these', 'those', 'i', 'you', 'he', 'she', 'we', 'they', 'my', 'your', 'his',
+            'her', 'its', 'our', 'their', 'from', 'by', 'about', 'up', 'out', 'if', 'so', 'than'
+        ]);
+
+        function analyzeFrequency() {
+            const text = document.getElementById('textInput').value.trim();
+
+            if (!text) {
+                alert('Please enter text to analyze.');
+                return;
+            }
+
+            const words = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
+
+            if (words.length === 0) {
+                alert('Please enter text with valid words.');
+                return;
+            }
+
+            const frequency = {};
+            words.forEach(word => {
+                frequency[word] = (frequency[word] || 0) + 1;
+            });
+
+            const sorted = Object.entries(frequency)
+                .sort((a, b) => b[1] - a[1]);
+
+            const uniqueCount = sorted.length;
+            const totalCount = words.length;
+            const ttr = ((uniqueCount / totalCount) * 100).toFixed(2);
+
+            // Calculate richness score (0-100)
+            const richnessScore = Math.min(100, Math.round((uniqueCount / totalCount) * 150));
+
+            // Find overused words (appearing more than 5 times)
+            const overused = sorted
+                .filter(([word, count]) => count > 5 && !stopWords.has(word))
+                .slice(0, 10);
+
+            // Display metrics
+            document.getElementById('totalWords').textContent = totalCount;
+            document.getElementById('uniqueWords').textContent = uniqueCount;
+            document.getElementById('ttr').textContent = ttr + '%';
+            document.getElementById('richness').textContent = richnessScore;
+
+            // Display frequency bars
+            const top20 = sorted.slice(0, 20);
+            const maxFreq = top20[0][1];
+
+            const barsHTML = top20.map(([word, count]) => {
+                const percentage = (count / maxFreq) * 100;
+                return `
+                    <div class="frequency-bar">
+                        <div class="bar-word">${word}</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: ${percentage}%">
+                                <span>${count}</span>
+                            </div>
+                        </div>
+                        <div class="bar-count">${count}x</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('frequencyBars').innerHTML = barsHTML;
+
+            // Display overused words
+            if (overused.length > 0) {
+                document.getElementById('overusedSection').style.display = 'block';
+                const overusedHTML = overused.map(([word, count]) =>
+                    `<div class="overused-tag">${word} (${count}x)</div>`
+                ).join('');
+                document.getElementById('overusedList').innerHTML = overusedHTML;
+            } else {
+                document.getElementById('overusedSection').style.display = 'none';
+            }
+
+            // Display richness
+            document.getElementById('richnessFill').style.width = richnessScore + '%';
+            document.getElementById('richnessPercent').textContent = richnessScore + '%';
+
+            let richnessDesc = '';
+            if (richnessScore < 30) {
+                richnessDesc = 'Poor - Your text repeats many words. Consider using synonyms to improve variety.';
+            } else if (richnessScore < 50) {
+                richnessDesc = 'Fair - Moderate word variety. Could benefit from more diverse vocabulary.';
+            } else if (richnessScore < 70) {
+                richnessDesc = 'Good - Your text shows good vocabulary diversity and variety.';
+            } else {
+                richnessDesc = 'Excellent - Your text demonstrates rich vocabulary with strong word variety.';
+            }
+
+            document.getElementById('richnessDescription').textContent = richnessDesc;
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function clearAll() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('results').style.display = 'none';
+        }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Word Frequency Analyzer",
+        "description": "Analyze word frequency patterns, detect overused words, and measure vocabulary richness",
+        "url": "https://paraphrasetool.org/tools/word-frequency-analyzer",
+        "applicationCategory": "Utility",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>
