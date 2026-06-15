@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentence Simplifier — Free Tool | ParaphraseTool</title>
+<meta name="description" content="Simplify complex sentences instantly. Split long sentences, reduce reading level, and improve clarity with real-time analysis.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://paraphrasetool.org/tools/sentence-simplifier/">
+<meta property="og:title" content="Sentence Simplifier">
+<meta property="og:description" content="Break complex sentences into simple, clear statements. Reduce Flesch-Kincaid grade level instantly.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/sentence-simplifier/">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Sentence Simplifier",
+  "url": "https://paraphrasetool.org/tools/sentence-simplifier/",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Web",
+  "description": "Simplify complex sentences and reduce reading level for better clarity"
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #0a0a0a;
+  color: #e8e8e8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-top: 20px;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #3b82f6;
+}
+.subtitle {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.editor-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+}
+.editor-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+textarea {
+  flex: 1;
+  padding: 16px;
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  color: #e8e8e8;
+  border-radius: 8px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: none;
+  min-height: 300px;
+}
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-simplify {
+  background-color: #3b82f6;
+  color: white;
+  flex: 1;
+  min-width: 150px;
+}
+.btn-simplify:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+.btn-copy {
+  background-color: #334155;
+  color: #e8e8e8;
+  padding: 12px 20px;
+}
+.btn-copy:hover {
+  background-color: #475569;
+}
+.btn-clear {
+  background-color: #334155;
+  color: #e8e8e8;
+  padding: 12px 20px;
+}
+.btn-clear:hover {
+  background-color: #475569;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+.stat-box {
+  display: flex;
+  flex-direction: column;
+}
+.stat-label {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.stat-value {
+  color: #3b82f6;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.guide {
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.guide h2 {
+  color: #3b82f6;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+.guide-list {
+  list-style: none;
+}
+.guide-list li {
+  color: #cbd5e1;
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+.guide-list li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: 600;
+}
+.message {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: none;
+}
+.message.success {
+  display: block;
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+.message.error {
+  display: block;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+.partner-box {
+  margin: 30px auto;
+  max-width: 728px;
+  text-align: center;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border: 1px solid #334155;
+  border-radius: 10px;
+}
+.partner-box p {
+  margin: 0;
+}
+.partner-label {
+  margin-bottom: 6px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+.partner-link {
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  display: inline-block;
+  margin: 6px 0;
+}
+.partner-link:hover {
+  text-decoration: underline;
+}
+.partner-desc {
+  margin-top: 6px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+.ad-unit {
+  margin: 20px auto;
+  max-width: 728px;
+  text-align: center;
+}
+footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  padding: 40px 0 20px;
+  border-top: 1px solid #334155;
+  margin-top: 40px;
+}
+footer a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .editor-section {
+    grid-template-columns: 1fr;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Sentence Simplifier</h1>
+    <p class="subtitle">Break complex sentences into clear, easy-to-read statements</p>
+  </header>
+
+  <div id="message" class="message"></div>
+
+  <div class="guide">
+    <h2>How It Works</h2>
+    <ul class="guide-list">
+      <li>Splits long sentences into shorter, clearer ones</li>
+      <li>Removes unnecessary jargon and complex vocabulary</li>
+      <li>Reduces Flesch-Kincaid grade level for better readability</li>
+      <li>Improves clarity while preserving meaning</li>
+    </ul>
+  </div>
+
+  <div class="editor-section">
+    <div class="editor-panel">
+      <label class="editor-label">Complex Text</label>
+      <textarea id="inputText" placeholder="Paste complex sentences here..."></textarea>
+    </div>
+    <div class="editor-panel">
+      <label class="editor-label">Simplified Version</label>
+      <textarea id="outputText" readonly placeholder="Simplified text appears here..."></textarea>
+    </div>
+  </div>
+
+  <div class="button-row">
+    <button class="btn-simplify" onclick="simplifySentences()">Simplify Text</button>
+    <button class="btn-copy" onclick="copyToClipboard()">Copy Result</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-label">Input Grade Level</div>
+      <div class="stat-value" id="inputGrade">—</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Output Grade Level</div>
+      <div class="stat-value" id="outputGrade">—</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Avg Sentence Length</div>
+      <div class="stat-value" id="avgLength">—</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Clarity Improvement</div>
+      <div class="stat-value" id="improvement">—</div>
+    </div>
+  </div>
+
+  <div class="partner-box">
+    <p class="partner-label">Recommended by our team</p>
+    <a href="https://www.belikenative.com?ref=satellite" target="_blank" rel="noopener" class="partner-link">BeLikeNative.com</a>
+    <p class="partner-desc">The #1 AI writing tool for freelancers — perfect grammar in any language, instantly.</p>
+  </div>
+
+  <div class="ad-unit">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 ParaphraseTool.org. All rights reserved. | <a href="https://paraphrasetool.org/tools/">Back to Tools</a></p>
+  </footer>
+</div>
+
+<script>
+const complexWords = {
+  "utilize": "use",
+  "implement": "do",
+  "facilitate": "help",
+  "subsequently": "later",
+  "furthermore": "also",
+  "notwithstanding": "despite",
+  "endeavor": "try",
+  "accomplish": "do",
+  "initiate": "start",
+  "terminate": "end",
+  "approximately": "about",
+  "determine": "find",
+  "demonstrate": "show",
+  "establish": "set up",
+  "obtain": "get",
+  "sufficient": "enough",
+  "regarding": "about",
+  "concerning": "about",
+  "procure": "buy",
+  "expedite": "speed up",
+  "ameliorate": "improve",
+  "substantiate": "prove",
+  "obviate": "prevent",
+  "alleviate": "ease",
+  "perpetual": "endless",
+  "superfluous": "extra",
+  "juxtapose": "compare",
+  "prerequisite": "requirement",
+  "inherent": "built-in",
+  "pertinent": "relevant",
+  "meticulous": "careful",
+  "egregious": "bad",
+  "ubiquitous": "common",
+  "ephemeral": "short-lived",
+  "ameliorate": "improve",
+  "inundate": "flood",
+  "vindicate": "prove right"
+};
+
+function calculateFleschKincaid(text) {
+  const words = text.trim().split(/\s+/).length;
+  const sentences = text.split(/[.!?]+/).filter(s => s.trim()).length;
+  const syllables = countSyllables(text);
+
+  if (sentences === 0) return 0;
+
+  const grade = (0.39 * (words / sentences)) + (11.8 * (syllables / words)) - 15.59;
+  return Math.max(0, Math.round(grade * 10) / 10);
+}
+
+function countSyllables(text) {
+  let count = 0;
+  const words = text.toLowerCase().match(/\b[a-z]+\b/g) || [];
+
+  words.forEach(word => {
+    count += estimateSyllables(word);
+  });
+
+  return count;
+}
+
+function estimateSyllables(word) {
+  const vowels = word.match(/[aeiouy]/g);
+  if (!vowels) return 1;
+
+  let count = vowels.length;
+  if (word.endsWith('e')) count--;
+  if (word.endsWith('le') && word.length > 2 && !word.match(/le$/)[0]) count++;
+  if (count === 0) count = 1;
+
+  return count;
+}
+
+function simplifySentences() {
+  const inputText = document.getElementById('inputText').value;
+
+  if (!inputText.trim()) {
+    showMessage('Please enter text to simplify.', 'error');
+    return;
+  }
+
+  const inputGrade = calculateFleschKincaid(inputText);
+  const sentences = inputText.match(/[^.!?]+[.!?]+/g) || [inputText];
+
+  let simplified = sentences.map(sentence => {
+    let cleaned = sentence.trim();
+    const words = cleaned.split(/\s+/);
+
+    let simplified = words.map(word => {
+      const lower = word.toLowerCase();
+      const clean = lower.replace(/[^a-z0-9]/g, '');
+
+      if (complexWords[clean]) {
+        return word.replace(clean, complexWords[clean]);
+      }
+      return word;
+    }).join(' ');
+
+    if (words.length > 20) {
+      const conjunctions = ['and', 'but', 'so', 'because', 'although', 'since', 'while'];
+      let foundConjunction = false;
+
+      for (let conj of conjunctions) {
+        if (simplified.toLowerCase().includes(' ' + conj + ' ') && !foundConjunction) {
+          const parts = simplified.split(new RegExp(` ${conj} `, 'i'));
+          if (parts.length === 2) {
+            simplified = parts[0].trim() + '. ' + conj[0].toUpperCase() + conj.slice(1) + ' ' + parts[1].trim();
+            foundConjunction = true;
+          }
+        }
+      }
+    }
+
+    if (simplified[0]) {
+      simplified = simplified.charAt(0).toUpperCase() + simplified.slice(1);
+    }
+
+    return simplified;
+  }).join(' ');
+
+  document.getElementById('outputText').value = simplified;
+
+  const outputGrade = calculateFleschKincaid(simplified);
+  const inputAvg = inputText.split(/\s+/).length / sentences.length;
+  const outputAvg = simplified.split(/\s+/).length / simplified.split(/[.!?]+/).filter(s => s.trim()).length;
+  const improvement = Math.round((inputGrade - outputGrade) * 10) / 10;
+
+  document.getElementById('inputGrade').textContent = inputGrade.toFixed(1);
+  document.getElementById('outputGrade').textContent = outputGrade.toFixed(1);
+  document.getElementById('avgLength').textContent = Math.round(inputAvg) + ' → ' + Math.round(outputAvg);
+  document.getElementById('improvement').textContent = improvement > 0 ? '+' + improvement : improvement;
+
+  showMessage('Text simplified successfully!', 'success');
+}
+
+function copyToClipboard() {
+  const outputText = document.getElementById('outputText').value;
+
+  if (!outputText.trim()) {
+    showMessage('Nothing to copy. Simplify text first.', 'error');
+    return;
+  }
+
+  navigator.clipboard.writeText(outputText).then(() => {
+    showMessage('Copied to clipboard!', 'success');
+  }).catch(() => {
+    document.getElementById('outputText').select();
+    document.execCommand('copy');
+    showMessage('Copied to clipboard!', 'success');
+  });
+}
+
+function clearAll() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('outputText').value = '';
+  document.getElementById('inputGrade').textContent = '—';
+  document.getElementById('outputGrade').textContent = '—';
+  document.getElementById('avgLength').textContent = '—';
+  document.getElementById('improvement').textContent = '—';
+  document.getElementById('message').style.display = 'none';
+}
+
+function showMessage(text, type) {
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = text;
+  messageEl.className = 'message ' + type;
+  messageEl.style.display = 'block';
+
+  setTimeout(() => {
+    messageEl.style.display = 'none';
+  }, 4000);
+}
+</script>
+</body>
+</html>

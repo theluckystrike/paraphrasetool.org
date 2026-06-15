@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formal Tone Converter — Free Tool | ParaphraseTool</title>
+<meta name="description" content="Convert casual text to formal academic tone. Rewrite sentences with sophisticated vocabulary and professional structure instantly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://paraphrasetool.org/tools/formal-tone-converter/">
+<meta property="og:title" content="Formal Tone Converter">
+<meta property="og:description" content="Transform casual text into formal academic language with sophisticated vocabulary and professional sentence structures.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/formal-tone-converter/">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Formal Tone Converter",
+  "url": "https://paraphrasetool.org/tools/formal-tone-converter/",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Web",
+  "description": "Convert text to formal academic tone with sophisticated vocabulary and professional structure"
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #0a0a0a;
+  color: #e8e8e8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-top: 20px;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #3b82f6;
+}
+.subtitle {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.editor-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+}
+.editor-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+textarea {
+  flex: 1;
+  padding: 16px;
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  color: #e8e8e8;
+  border-radius: 8px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: none;
+  min-height: 300px;
+}
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-convert {
+  background-color: #3b82f6;
+  color: white;
+  flex: 1;
+  min-width: 150px;
+}
+.btn-convert:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+.btn-copy {
+  background-color: #334155;
+  color: #e8e8e8;
+  padding: 12px 20px;
+}
+.btn-copy:hover {
+  background-color: #475569;
+}
+.btn-clear {
+  background-color: #334155;
+  color: #e8e8e8;
+  padding: 12px 20px;
+}
+.btn-clear:hover {
+  background-color: #475569;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+.stat-box {
+  display: flex;
+  flex-direction: column;
+}
+.stat-label {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.stat-value {
+  color: #3b82f6;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.message {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: none;
+}
+.message.success {
+  display: block;
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+.message.error {
+  display: block;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+.guide {
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.guide h2 {
+  color: #3b82f6;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+.guide-list {
+  list-style: none;
+}
+.guide-list li {
+  color: #cbd5e1;
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+.guide-list li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: 600;
+}
+.partner-box {
+  margin: 30px auto;
+  max-width: 728px;
+  text-align: center;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border: 1px solid #334155;
+  border-radius: 10px;
+}
+.partner-box p {
+  margin: 0;
+}
+.partner-label {
+  margin-bottom: 6px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+.partner-link {
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  display: inline-block;
+  margin: 6px 0;
+}
+.partner-link:hover {
+  text-decoration: underline;
+}
+.partner-desc {
+  margin-top: 6px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+.ad-unit {
+  margin: 20px auto;
+  max-width: 728px;
+  text-align: center;
+}
+footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  padding: 40px 0 20px;
+  border-top: 1px solid #334155;
+  margin-top: 40px;
+}
+footer a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .editor-section {
+    grid-template-columns: 1fr;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Formal Tone Converter</h1>
+    <p class="subtitle">Transform casual language into professional academic prose</p>
+  </header>
+
+  <div id="message" class="message"></div>
+
+  <div class="guide">
+    <h2>How It Works</h2>
+    <ul class="guide-list">
+      <li>Replaces informal words with sophisticated equivalents</li>
+      <li>Restructures sentences for academic clarity</li>
+      <li>Removes contractions and colloquialisms</li>
+      <li>Maintains original meaning while elevating tone</li>
+    </ul>
+  </div>
+
+  <div class="editor-section">
+    <div class="editor-panel">
+      <label class="editor-label">Casual Text</label>
+      <textarea id="inputText" placeholder="Paste your casual text here..."></textarea>
+    </div>
+    <div class="editor-panel">
+      <label class="editor-label">Formal Version</label>
+      <textarea id="outputText" readonly placeholder="Converted formal text appears here..."></textarea>
+    </div>
+  </div>
+
+  <div class="button-row">
+    <button class="btn-convert" onclick="convertToFormal()">Convert to Formal</button>
+    <button class="btn-copy" onclick="copyToClipboard()">Copy Result</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-label">Input Words</div>
+      <div class="stat-value" id="inputWordCount">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Output Words</div>
+      <div class="stat-value" id="outputWordCount">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Formality Score</div>
+      <div class="stat-value" id="formalityScore">—</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Changes Made</div>
+      <div class="stat-value" id="changeCount">0</div>
+    </div>
+  </div>
+
+  <div class="partner-box">
+    <p class="partner-label">Recommended by our team</p>
+    <a href="https://www.belikenative.com?ref=satellite" target="_blank" rel="noopener" class="partner-link">BeLikeNative.com</a>
+    <p class="partner-desc">The #1 AI writing tool for freelancers — perfect grammar in any language, instantly.</p>
+  </div>
+
+  <div class="ad-unit">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 ParaphraseTool.org. All rights reserved. | <a href="https://paraphrasetool.org/tools/">Back to Tools</a></p>
+  </footer>
+</div>
+
+<script>
+const informalToFormal = {
+  "gonna": "will",
+  "wanna": "want to",
+  "gotta": "must",
+  "kinda": "somewhat",
+  "sorta": "rather",
+  "don't": "do not",
+  "won't": "will not",
+  "can't": "cannot",
+  "it's": "it is",
+  "that's": "that is",
+  "there's": "there is",
+  "what's": "what is",
+  "i'm": "I am",
+  "you're": "you are",
+  "they're": "they are",
+  "he's": "he is",
+  "she's": "she is",
+  "we're": "we are",
+  "ain't": "am not",
+  "y'all": "you all",
+  "could've": "could have",
+  "would've": "would have",
+  "should've": "should have",
+  "gotta": "must",
+  "gotcha": "I understand",
+  "yeah": "yes",
+  "yep": "yes",
+  "nope": "no",
+  "OK": "acknowledged",
+  "okay": "certainly",
+  "alright": "very well",
+  "pretty": "quite",
+  "really": "considerably",
+  "very": "extremely",
+  "lots of": "numerous",
+  "a lot of": "considerable",
+  "bunch of": "collection of",
+  "kind of": "somewhat",
+  "sort of": "rather",
+  "stuff": "material",
+  "things": "matters",
+  "guys": "individuals",
+  "dude": "colleague",
+  "cool": "excellent",
+  "awesome": "remarkable",
+  "great": "substantial",
+  "good": "satisfactory",
+  "bad": "unfavorable",
+  "terrible": "detrimental",
+  "awful": "deplorable",
+  "get": "obtain",
+  "got": "acquired",
+  "go": "proceed",
+  "does": "performs",
+  "gonna go": "will proceed",
+  "try to": "attempt to",
+  "use": "utilize",
+  "about": "approximately",
+  "around": "in the vicinity of",
+  "because": "inasmuch as",
+  "but": "however",
+  "so": "consequently",
+  "so like": "therefore",
+  "basically": "essentially",
+  "literally": "precisely",
+  "obviously": "evidently",
+  "seriously": "to be frank",
+  "honestly": "truthfully"
+};
+
+function updateStats() {
+  const inputText = document.getElementById('inputText').value;
+  const outputText = document.getElementById('outputText').value;
+
+  const inputWords = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
+  const outputWords = outputText.trim() ? outputText.trim().split(/\s+/).length : 0;
+
+  document.getElementById('inputWordCount').textContent = inputWords;
+  document.getElementById('outputWordCount').textContent = outputWords;
+}
+
+function convertToFormal() {
+  const inputText = document.getElementById('inputText').value;
+
+  if (!inputText.trim()) {
+    showMessage('Please enter some text to convert.', 'error');
+    return;
+  }
+
+  let outputText = inputText;
+  let changeCount = 0;
+
+  const sentences = inputText.match(/[^.!?]+[.!?]+/g) || [inputText];
+
+  let convertedSentences = sentences.map(sentence => {
+    let converted = sentence;
+    let sentenceChanges = 0;
+
+    const words = converted.split(/\s+/);
+    const newWords = words.map(word => {
+      const lowerWord = word.toLowerCase();
+      const cleanWord = lowerWord.replace(/[^a-z0-9']/g, '');
+
+      if (informalToFormal[cleanWord]) {
+        sentenceChanges++;
+        const punct = word.match(/[^a-z0-9']+$/i) || [''];
+        return informalToFormal[cleanWord] + punct[0];
+      }
+      return word;
+    });
+
+    converted = newWords.join(' ');
+
+    if (converted[0]) {
+      converted = converted.charAt(0).toUpperCase() + converted.slice(1);
+    }
+
+    changeCount += sentenceChanges;
+    return converted;
+  });
+
+  outputText = convertedSentences.join(' ');
+
+  outputText = outputText.replace(/\si\s/gi, ' I ');
+  outputText = outputText.replace(/also,/gi, 'Furthermore,');
+  outputText = outputText.replace(/and so/gi, 'Thus');
+
+  document.getElementById('outputText').value = outputText;
+
+  const formalityBoost = Math.min(100, Math.round((changeCount / inputText.split(/\s+/).length) * 150));
+  document.getElementById('formalityScore').textContent = Math.min(100, 60 + formalityBoost) + '%';
+  document.getElementById('changeCount').textContent = changeCount;
+
+  updateStats();
+  showMessage('Text converted to formal tone successfully!', 'success');
+}
+
+function copyToClipboard() {
+  const outputText = document.getElementById('outputText').value;
+
+  if (!outputText.trim()) {
+    showMessage('Nothing to copy. Convert text first.', 'error');
+    return;
+  }
+
+  navigator.clipboard.writeText(outputText).then(() => {
+    showMessage('Copied to clipboard!', 'success');
+  }).catch(() => {
+    const textarea = document.getElementById('outputText');
+    textarea.select();
+    document.execCommand('copy');
+    showMessage('Copied to clipboard!', 'success');
+  });
+}
+
+function clearAll() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('outputText').value = '';
+  document.getElementById('inputWordCount').textContent = '0';
+  document.getElementById('outputWordCount').textContent = '0';
+  document.getElementById('formalityScore').textContent = '—';
+  document.getElementById('changeCount').textContent = '0';
+  document.getElementById('message').style.display = 'none';
+}
+
+function showMessage(text, type) {
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = text;
+  messageEl.className = 'message ' + type;
+  messageEl.style.display = 'block';
+
+  setTimeout(() => {
+    messageEl.style.display = 'none';
+  }, 4000);
+}
+
+document.getElementById('inputText').addEventListener('input', updateStats);
+</script>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Voice Converter — Free Tool | ParaphraseTool</title>
+<meta name="description" content="Convert passive voice to active voice instantly. Detect weak passive constructions and rewrite for stronger impact.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://paraphrasetool.org/tools/active-voice-converter/">
+<meta property="og:title" content="Active Voice Converter">
+<meta property="og:description" content="Transform passive voice sentences into active voice for stronger, more engaging writing.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/active-voice-converter/">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Active Voice Converter",
+  "url": "https://paraphrasetool.org/tools/active-voice-converter/",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Web",
+  "description": "Convert passive voice to active voice for clearer, more powerful writing"
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #0a0a0a;
+  color: #e8e8e8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-top: 20px;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #3b82f6;
+}
+.subtitle {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.editor-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+}
+.editor-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+textarea {
+  flex: 1;
+  padding: 16px;
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  color: #e8e8e8;
+  border-radius: 8px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: none;
+  min-height: 300px;
+}
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-convert {
+  background-color: #3b82f6;
+  color: white;
+  flex: 1;
+  min-width: 150px;
+}
+.btn-convert:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+.btn-copy {
+  background-color: #334155;
+  color: #e8e8e8;
+  padding: 12px 20px;
+}
+.btn-copy:hover {
+  background-color: #475569;
+}
+.btn-clear {
+  background-color: #334155;
+  color: #e8e8e8;
+  padding: 12px 20px;
+}
+.btn-clear:hover {
+  background-color: #475569;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+.stat-box {
+  display: flex;
+  flex-direction: column;
+}
+.stat-label {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.stat-value {
+  color: #3b82f6;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.guide {
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.guide h2 {
+  color: #3b82f6;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+.guide-list {
+  list-style: none;
+}
+.guide-list li {
+  color: #cbd5e1;
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+.guide-list li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: 600;
+}
+.message {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: none;
+}
+.message.success {
+  display: block;
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+.message.error {
+  display: block;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+.partner-box {
+  margin: 30px auto;
+  max-width: 728px;
+  text-align: center;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border: 1px solid #334155;
+  border-radius: 10px;
+}
+.partner-box p {
+  margin: 0;
+}
+.partner-label {
+  margin-bottom: 6px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+.partner-link {
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  display: inline-block;
+  margin: 6px 0;
+}
+.partner-link:hover {
+  text-decoration: underline;
+}
+.partner-desc {
+  margin-top: 6px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+.ad-unit {
+  margin: 20px auto;
+  max-width: 728px;
+  text-align: center;
+}
+footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  padding: 40px 0 20px;
+  border-top: 1px solid #334155;
+  margin-top: 40px;
+}
+footer a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .editor-section {
+    grid-template-columns: 1fr;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Active Voice Converter</h1>
+    <p class="subtitle">Transform passive voice into powerful active voice sentences</p>
+  </header>
+
+  <div id="message" class="message"></div>
+
+  <div class="guide">
+    <h2>How It Works</h2>
+    <ul class="guide-list">
+      <li>Detects passive voice constructions automatically</li>
+      <li>Suggests active voice alternatives with stronger verbs</li>
+      <li>Maintains meaning while improving impact</li>
+      <li>Shows before/after comparison for clarity</li>
+    </ul>
+  </div>
+
+  <div class="editor-section">
+    <div class="editor-panel">
+      <label class="editor-label">Passive Voice Text</label>
+      <textarea id="inputText" placeholder="Paste text with passive voice sentences..."></textarea>
+    </div>
+    <div class="editor-panel">
+      <label class="editor-label">Active Voice Version</label>
+      <textarea id="outputText" readonly placeholder="Converted active voice text appears here..."></textarea>
+    </div>
+  </div>
+
+  <div class="button-row">
+    <button class="btn-convert" onclick="convertToActive()">Convert to Active</button>
+    <button class="btn-copy" onclick="copyToClipboard()">Copy Result</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-label">Passive Sentences</div>
+      <div class="stat-value" id="passiveCount">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Active Sentences</div>
+      <div class="stat-value" id="activeCount">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Conversions Made</div>
+      <div class="stat-value" id="conversionCount">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Voice Strength</div>
+      <div class="stat-value" id="strength">—</div>
+    </div>
+  </div>
+
+  <div class="partner-box">
+    <p class="partner-label">Recommended by our team</p>
+    <a href="https://www.belikenative.com?ref=satellite" target="_blank" rel="noopener" class="partner-link">BeLikeNative.com</a>
+    <p class="partner-desc">The #1 AI writing tool for freelancers — perfect grammar in any language, instantly.</p>
+  </div>
+
+  <div class="ad-unit">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 ParaphraseTool.org. All rights reserved. | <a href="https://paraphrasetool.org/tools/">Back to Tools</a></p>
+  </footer>
+</div>
+
+<script>
+const passivePatterns = [
+  { pattern: /(\w+)\s+was\s+(\w+ed)\s+by/, suggest: "reorder to subject-verb-object" },
+  { pattern: /(\w+)\s+is\s+(\w+ed)\s+by/, suggest: "use active construction" },
+  { pattern: /(\w+)\s+were\s+(\w+ed)\s+by/, suggest: "change to active voice" },
+  { pattern: /(\w+)\s+been\s+(\w+ed)/, suggest: "use present/past tense" },
+  { pattern: /(\w+)\s+being\s+(\w+ed)/, suggest: "restructure sentence" }
+];
+
+const passiveVerbs = [
+  "is", "are", "was", "were", "be", "been", "being",
+  "has been", "have been", "had been", "will be", "would be",
+  "can be", "could be", "should be", "may be", "might be"
+];
+
+function detectPassiveVoice(text) {
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+  let passiveCount = 0;
+  let activeCount = 0;
+
+  sentences.forEach(sentence => {
+    const lower = sentence.toLowerCase();
+    let isPassive = false;
+
+    for (let verb of passiveVerbs) {
+      if (lower.includes(' ' + verb + ' ')) {
+        const before = lower.indexOf(verb);
+        const after = before + verb.length;
+
+        if (after < lower.length && /[a-z]+ed/.test(lower.substring(after))) {
+          isPassive = true;
+          break;
+        }
+      }
+    }
+
+    if (isPassive) {
+      passiveCount++;
+    } else {
+      activeCount++;
+    }
+  });
+
+  return { passiveCount, activeCount };
+}
+
+function simplifyPassiveSentence(sentence) {
+  let simplified = sentence.trim();
+
+  const patterns = [
+    { regex: /was\s+(\w+ed)\s+by\s+(\w+)/gi, replace: (m, verb, actor) => `${actor} ${verb}` },
+    { regex: /is\s+(\w+ed)\s+by\s+(\w+)/gi, replace: (m, verb, actor) => `${actor} ${verb}s` },
+    { regex: /were\s+(\w+ed)\s+by\s+(\w+)/gi, replace: (m, verb, actor) => `${actor} ${verb}` },
+    { regex: /are\s+(\w+ed)\s+by\s+(\w+)/gi, replace: (m, verb, actor) => `${actor} ${verb}` }
+  ];
+
+  patterns.forEach(p => {
+    simplified = simplified.replace(p.regex, p.replace);
+  });
+
+  if (simplified.includes(' has been ')) {
+    simplified = simplified.replace(/(\w+)\s+has been\s+(\w+ed)/g, '$1 $2s');
+  }
+
+  if (simplified.includes(' have been ')) {
+    simplified = simplified.replace(/(\w+)\s+have been\s+(\w+ed)/g, '$1 $2');
+  }
+
+  if (simplified.includes(' will be ')) {
+    simplified = simplified.replace(/(\w+)\s+will be\s+(\w+ed)/g, 'will $1 $2');
+  }
+
+  return simplified;
+}
+
+function convertToActive() {
+  const inputText = document.getElementById('inputText').value;
+
+  if (!inputText.trim()) {
+    showMessage('Please enter text to convert.', 'error');
+    return;
+  }
+
+  const voiceStats = detectPassiveVoice(inputText);
+  const sentences = inputText.match(/[^.!?]+[.!?]+/g) || [inputText];
+
+  let outputText = sentences.map(sentence => {
+    let converted = simplifyPassiveSentence(sentence);
+
+    const lower = converted.toLowerCase();
+    let needsConversion = false;
+
+    for (let verb of passiveVerbs) {
+      if (lower.includes(' ' + verb + ' ')) {
+        needsConversion = true;
+        break;
+      }
+    }
+
+    if (!needsConversion && converted !== sentence.trim()) {
+      converted = converted.charAt(0).toUpperCase() + converted.slice(1);
+      return converted;
+    }
+
+    return sentence.trim();
+  }).join(' ');
+
+  document.getElementById('outputText').value = outputText;
+
+  const newVoiceStats = detectPassiveVoice(outputText);
+  const conversions = Math.max(0, voiceStats.passiveCount - newVoiceStats.passiveCount);
+  const strength = Math.min(100, Math.round((newVoiceStats.activeCount / sentences.length) * 100));
+
+  document.getElementById('passiveCount').textContent = voiceStats.passiveCount;
+  document.getElementById('activeCount').textContent = newVoiceStats.activeCount;
+  document.getElementById('conversionCount').textContent = conversions;
+  document.getElementById('strength').textContent = strength + '%';
+
+  showMessage('Converted to active voice successfully!', 'success');
+}
+
+function copyToClipboard() {
+  const outputText = document.getElementById('outputText').value;
+
+  if (!outputText.trim()) {
+    showMessage('Nothing to copy. Convert text first.', 'error');
+    return;
+  }
+
+  navigator.clipboard.writeText(outputText).then(() => {
+    showMessage('Copied to clipboard!', 'success');
+  }).catch(() => {
+    document.getElementById('outputText').select();
+    document.execCommand('copy');
+    showMessage('Copied to clipboard!', 'success');
+  });
+}
+
+function clearAll() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('outputText').value = '';
+  document.getElementById('passiveCount').textContent = '0';
+  document.getElementById('activeCount').textContent = '0';
+  document.getElementById('conversionCount').textContent = '0';
+  document.getElementById('strength').textContent = '—';
+  document.getElementById('message').style.display = 'none';
+}
+
+function showMessage(text, type) {
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = text;
+  messageEl.className = 'message ' + type;
+  messageEl.style.display = 'block';
+
+  setTimeout(() => {
+    messageEl.style.display = 'none';
+  }, 4000);
+}
+</script>
+</body>
+</html>

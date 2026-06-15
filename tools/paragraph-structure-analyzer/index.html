@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paragraph Structure Analyzer — Free Tool | ParaphraseTool</title>
+<meta name="description" content="Analyze paragraph structure for topic sentences, supporting evidence, transitions, and conclusions. Improve organization instantly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://paraphrasetool.org/tools/paragraph-structure-analyzer/">
+<meta property="og:title" content="Paragraph Structure Analyzer">
+<meta property="og:description" content="Analyze and improve paragraph organization: topic sentences, evidence, transitions, and conclusions.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/paragraph-structure-analyzer/">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Paragraph Structure Analyzer",
+  "url": "https://paraphrasetool.org/tools/paragraph-structure-analyzer/",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Web",
+  "description": "Analyze paragraph structure and organization for academic and professional writing"
+}
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #0a0a0a;
+  color: #e8e8e8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  padding: 20px;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-top: 20px;
+}
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #3b82f6;
+}
+.subtitle {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.editor-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.editor-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+textarea {
+  padding: 16px;
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  color: #e8e8e8;
+  border-radius: 8px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  resize: none;
+  min-height: 250px;
+}
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+button {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-analyze {
+  background-color: #3b82f6;
+  color: white;
+  flex: 1;
+  min-width: 150px;
+}
+.btn-analyze:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+.btn-clear {
+  background-color: #334155;
+  color: #e8e8e8;
+  padding: 12px 20px;
+}
+.btn-clear:hover {
+  background-color: #475569;
+}
+.guide {
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.guide h2 {
+  color: #3b82f6;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+.guide-list {
+  list-style: none;
+}
+.guide-list li {
+  color: #cbd5e1;
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+.guide-list li:before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: 600;
+}
+.message {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: none;
+}
+.message.success {
+  display: block;
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  color: #86efac;
+}
+.message.error {
+  display: block;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+.results-section {
+  margin-bottom: 30px;
+  display: none;
+}
+.results-section.active {
+  display: block;
+}
+.analysis-title {
+  font-size: 1.4rem;
+  color: #3b82f6;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+.structure-card {
+  padding: 16px;
+  background-color: #1a1a1a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.card-title {
+  color: #3b82f6;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+}
+.card-content {
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.card-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.status-present {
+  background-color: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+.status-missing {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+.status-weak {
+  background-color: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+}
+.suggestion {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #334155;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+.stat-box {
+  display: flex;
+  flex-direction: column;
+}
+.stat-label {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.stat-value {
+  color: #3b82f6;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.partner-box {
+  margin: 30px auto;
+  max-width: 728px;
+  text-align: center;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border: 1px solid #334155;
+  border-radius: 10px;
+}
+.partner-box p {
+  margin: 0;
+}
+.partner-label {
+  margin-bottom: 6px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+.partner-link {
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  display: inline-block;
+  margin: 6px 0;
+}
+.partner-link:hover {
+  text-decoration: underline;
+}
+.partner-desc {
+  margin-top: 6px;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+.ad-unit {
+  margin: 20px auto;
+  max-width: 728px;
+  text-align: center;
+}
+footer {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  padding: 40px 0 20px;
+  border-top: 1px solid #334155;
+  margin-top: 40px;
+}
+footer a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Paragraph Structure Analyzer</h1>
+    <p class="subtitle">Analyze and improve your paragraph organization and flow</p>
+  </header>
+
+  <div id="message" class="message"></div>
+
+  <div class="guide">
+    <h2>How It Works</h2>
+    <ul class="guide-list">
+      <li>Identifies topic sentences and main ideas</li>
+      <li>Analyzes supporting evidence and examples</li>
+      <li>Evaluates transition words and flow</li>
+      <li>Checks for concluding statements</li>
+    </ul>
+  </div>
+
+  <div class="editor-section">
+    <div>
+      <label class="editor-label">Paste Your Paragraph</label>
+      <textarea id="inputText" placeholder="Paste a paragraph to analyze its structure..."></textarea>
+    </div>
+  </div>
+
+  <div class="button-row">
+    <button class="btn-analyze" onclick="analyzeParagraph()">Analyze Structure</button>
+    <button class="btn-clear" onclick="clearAll()">Clear All</button>
+  </div>
+
+  <div class="stats" id="statsSection" style="display: none;">
+    <div class="stat-box">
+      <div class="stat-label">Total Sentences</div>
+      <div class="stat-value" id="sentenceCount">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Avg Sentence Length</div>
+      <div class="stat-value" id="avgLength">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Structure Score</div>
+      <div class="stat-value" id="structureScore">—</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Transition Words</div>
+      <div class="stat-value" id="transitionCount">0</div>
+    </div>
+  </div>
+
+  <div class="results-section" id="analysisSection">
+    <div class="analysis-title">Paragraph Analysis</div>
+
+    <div class="structure-card">
+      <div class="card-title">Topic Sentence</div>
+      <div id="topicSentenceResult" class="card-content"></div>
+      <span id="topicStatus" class="card-status"></span>
+      <div id="topicSuggestion" class="suggestion" style="display: none;"></div>
+    </div>
+
+    <div class="structure-card">
+      <div class="card-title">Supporting Evidence</div>
+      <div id="evidenceResult" class="card-content"></div>
+      <span id="evidenceStatus" class="card-status"></span>
+      <div id="evidenceSuggestion" class="suggestion" style="display: none;"></div>
+    </div>
+
+    <div class="structure-card">
+      <div class="card-title">Transitions & Flow</div>
+      <div id="transitionResult" class="card-content"></div>
+      <span id="transitionStatus" class="card-status"></span>
+      <div id="transitionSuggestion" class="suggestion" style="display: none;"></div>
+    </div>
+
+    <div class="structure-card">
+      <div class="card-title">Concluding Statement</div>
+      <div id="conclusionResult" class="card-content"></div>
+      <span id="conclusionStatus" class="card-status"></span>
+      <div id="conclusionSuggestion" class="suggestion" style="display: none;"></div>
+    </div>
+
+    <div class="structure-card">
+      <div class="card-title">Overall Recommendations</div>
+      <div id="recommendations" class="card-content"></div>
+    </div>
+  </div>
+
+  <div class="partner-box">
+    <p class="partner-label">Recommended by our team</p>
+    <a href="https://www.belikenative.com?ref=satellite" target="_blank" rel="noopener" class="partner-link">BeLikeNative.com</a>
+    <p class="partner-desc">The #1 AI writing tool for freelancers — perfect grammar in any language, instantly.</p>
+  </div>
+
+  <div class="ad-unit">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 ParaphraseTool.org. All rights reserved. | <a href="https://paraphrasetool.org/tools/">Back to Tools</a></p>
+  </footer>
+</div>
+
+<script>
+const transitionWords = [
+  "furthermore", "moreover", "additionally", "also", "in addition",
+  "however", "nevertheless", "on the other hand", "conversely", "but",
+  "therefore", "thus", "consequently", "as a result", "so",
+  "for example", "for instance", "specifically", "such as", "in particular",
+  "in contrast", "similarly", "likewise", "in the same way", "compared to",
+  "first", "second", "third", "next", "finally", "in conclusion"
+];
+
+const conclusionWords = [
+  "in conclusion", "in summary", "to summarize", "to sum up", "ultimately",
+  "finally", "in the end", "therefore", "thus", "in short", "overall"
+];
+
+function analyzeParagraph() {
+  const inputText = document.getElementById('inputText').value.trim();
+
+  if (!inputText) {
+    showMessage('Please enter a paragraph to analyze.', 'error');
+    return;
+  }
+
+  const sentences = inputText.match(/[^.!?]+[.!?]+/g) || [inputText];
+  const words = inputText.split(/\s+/);
+  const avgWordPerSentence = Math.round(words.length / sentences.length);
+
+  document.getElementById('statsSection').style.display = 'grid';
+  document.getElementById('analysisSection').classList.add('active');
+  document.getElementById('sentenceCount').textContent = sentences.length;
+  document.getElementById('avgLength').textContent = avgWordPerSentence;
+
+  let topicScore = 0;
+  const firstSentence = sentences[0].trim();
+  const isTopicSentenceGood = firstSentence.length > 15 && !firstSentence.toLowerCase().startsWith('for example');
+
+  if (isTopicSentenceGood) {
+    topicScore = 2;
+    document.getElementById('topicSentenceResult').textContent = `"${firstSentence}"`;
+    document.getElementById('topicStatus').textContent = 'Strong';
+    document.getElementById('topicStatus').className = 'card-status status-present';
+  } else {
+    topicScore = 0;
+    document.getElementById('topicSentenceResult').textContent = `"${firstSentence}"`;
+    document.getElementById('topicStatus').textContent = 'Weak or Missing';
+    document.getElementById('topicStatus').className = 'card-status status-missing';
+    document.getElementById('topicSuggestion').style.display = 'block';
+    document.getElementById('topicSuggestion').textContent = 'Your opening sentence should clearly state the main idea. Make it direct and comprehensive.';
+  }
+
+  let evidenceScore = 0;
+  const hasExamples = inputText.match(/for example|for instance|such as|specifically/gi);
+  const hasEvidence = sentences.length > 2;
+
+  if (hasExamples || hasEvidence) {
+    evidenceScore = 2;
+    const exampleCount = hasExamples ? hasExamples.length : sentences.length - 2;
+    document.getElementById('evidenceResult').textContent = `Found ${exampleCount} supporting detail(s) or example(s)`;
+    document.getElementById('evidenceStatus').textContent = 'Present';
+    document.getElementById('evidenceStatus').className = 'card-status status-present';
+  } else {
+    evidenceScore = 0;
+    document.getElementById('evidenceResult').textContent = 'No clear supporting evidence detected';
+    document.getElementById('evidenceStatus').textContent = 'Missing';
+    document.getElementById('evidenceStatus').className = 'card-status status-missing';
+    document.getElementById('evidenceSuggestion').style.display = 'block';
+    document.getElementById('evidenceSuggestion').textContent = 'Add examples, facts, or data to support your main idea.';
+  }
+
+  let transitionScore = 0;
+  const foundTransitions = [];
+  const lowerText = inputText.toLowerCase();
+
+  transitionWords.forEach(word => {
+    if (lowerText.includes(word)) {
+      foundTransitions.push(word);
+    }
+  });
+
+  if (foundTransitions.length > 0) {
+    transitionScore = 2;
+    document.getElementById('transitionResult').textContent = `Uses transitions: ${foundTransitions.slice(0, 3).join(", ")}${foundTransitions.length > 3 ? ", etc." : ""}`;
+    document.getElementById('transitionStatus').textContent = 'Good';
+    document.getElementById('transitionStatus').className = 'card-status status-present';
+  } else {
+    transitionScore = 1;
+    document.getElementById('transitionResult').textContent = 'No transition words detected';
+    document.getElementById('transitionStatus').textContent = 'Needs Improvement';
+    document.getElementById('transitionStatus').className = 'card-status status-weak';
+    document.getElementById('transitionSuggestion').style.display = 'block';
+    document.getElementById('transitionSuggestion').textContent = 'Add words like "furthermore," "however," or "for example" to improve flow between sentences.';
+  }
+
+  document.getElementById('transitionCount').textContent = foundTransitions.length;
+
+  let conclusionScore = 0;
+  const lastSentence = sentences[sentences.length - 1].trim();
+  const hasConclusion = conclusionWords.some(word => lastSentence.toLowerCase().includes(word)) || sentences.length > 2;
+
+  if (hasConclusion && lastSentence.length > 10) {
+    conclusionScore = 2;
+    document.getElementById('conclusionResult').textContent = `"${lastSentence}"`;
+    document.getElementById('conclusionStatus').textContent = 'Strong';
+    document.getElementById('conclusionStatus').className = 'card-status status-present';
+  } else {
+    conclusionScore = 1;
+    document.getElementById('conclusionResult').textContent = `"${lastSentence}"`;
+    document.getElementById('conclusionStatus').textContent = 'Weak';
+    document.getElementById('conclusionStatus').className = 'card-status status-weak';
+    document.getElementById('conclusionSuggestion').style.display = 'block';
+    document.getElementById('conclusionSuggestion').textContent = 'Add a sentence that summarizes or emphasizes your main point.';
+  }
+
+  const totalScore = topicScore + evidenceScore + transitionScore + conclusionScore;
+  const maxScore = 8;
+  const scorePercent = Math.round((totalScore / maxScore) * 100);
+  document.getElementById('structureScore').textContent = scorePercent + '%';
+
+  const recommendations = [];
+  if (topicScore < 2) recommendations.push('• Strengthen your opening topic sentence');
+  if (evidenceScore < 2) recommendations.push('• Add specific examples or supporting evidence');
+  if (transitionScore < 2) recommendations.push('• Use more transition words to improve flow');
+  if (conclusionScore < 2) recommendations.push('• Add a clearer concluding statement');
+  if (recommendations.length === 0) recommendations.push('✓ Excellent paragraph structure!');
+
+  document.getElementById('recommendations').textContent = recommendations.join('\n');
+
+  showMessage('Paragraph analysis complete!', 'success');
+}
+
+function clearAll() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('statsSection').style.display = 'none';
+  document.getElementById('analysisSection').classList.remove('active');
+  document.getElementById('message').style.display = 'none';
+
+  document.querySelectorAll('.suggestion').forEach(el => el.style.display = 'none');
+}
+
+function showMessage(text, type) {
+  const messageEl = document.getElementById('message');
+  messageEl.textContent = text;
+  messageEl.className = 'message ' + type;
+  messageEl.style.display = 'block';
+
+  setTimeout(() => {
+    messageEl.style.display = 'none';
+  }, 4000);
+}
+</script>
+</body>
+</html>
