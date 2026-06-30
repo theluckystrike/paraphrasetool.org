@@ -1,299 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Synonym Finder - Discover Better Words</title>
-    <meta name="description" content="Find synonyms, antonyms, and example sentences for over 200 words. Improve your writing with the free Synonym Finder from paraphrasetool.org.">
-    <link rel="canonical" href="https://paraphrasetool.org/tools/synonym-finder">
-    <meta property="og:title" content="Synonym Finder - Discover Better Words">
-    <meta property="og:description" content="Find synonyms, antonyms, and example sentences for over 200 words. Improve your writing with the free Synonym Finder from paraphrasetool.org.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://paraphrasetool.org/tools/synonym-finder">
-    <meta property="og:image" content="https://paraphrasetool.org/og-image.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <script type="application/ld+json">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synonym Finder &amp; Sentence Rephraser - Free Tool</title>
+<meta name="description" content="Free synonym finder and paraphrasing tool. Look up synonyms for any word and instantly rephrase sentences in your browser. No sign-up, fully client-side.">
+<link rel="canonical" href="https://paraphrasetool.org/tools/synonym-finder">
+<meta property="og:title" content="Synonym Finder &amp; Sentence Rephraser - Free Tool">
+<meta property="og:description" content="Look up synonyms and rephrase sentences instantly in your browser with this free, private, client-side synonym finder.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/synonym-finder">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Synonym Finder",
-        "url": "https://paraphrasetool.org/tools/synonym-finder",
-        "description": "Find synonyms, antonyms, and example sentences for over 200 words.",
-        "applicationCategory": "Writing",
-        "operatingSystem": "All",
-        "browserRequirements": "JavaScript"
+      "@type": "WebApplication",
+      "name": "Synonym Finder & Sentence Rephraser",
+      "url": "https://paraphrasetool.org/tools/synonym-finder",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paraphrasetool.org/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://paraphrasetool.org/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Synonym Finder", "item": "https://paraphrasetool.org/tools/synonym-finder" }
+      ]
     }
-    </script>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{background:#0f172a;color:#e2e8f0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;min-height:100vh;display:flex;flex-direction:column}
-        .container{max-width:1200px;margin:0 auto;padding:2rem 1rem;flex:1}
-        h1{font-size:2.5rem;font-weight:700;margin-bottom:0.5rem;color:#38bdf8}
-        .sub{color:#94a3b8;margin-bottom:2rem;font-size:1.1rem}
-        .search-wrap{display:flex;gap:0.75rem;margin-bottom:2.5rem;flex-wrap:wrap}
-        #searchInput{flex:1;min-width:200px;padding:0.9rem 1.2rem;border:2px solid #1e293b;border-radius:12px;background:#1e293b;color:#e2e8f0;font-size:1.1rem;outline:none;transition:0.2s}
-        #searchInput:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,0.2)}
-        #searchInput::placeholder{color:#64748b}
-        .btn{background:#38bdf8;color:#0f172a;border:none;padding:0.9rem 1.8rem;border-radius:12px;font-weight:600;font-size:1rem;cursor:pointer;transition:0.2s;white-space:nowrap}
-        .btn:hover{background:#7dd3fc;transform:scale(1.02)}
-        .btn-copy{background:#1e293b;color:#38bdf8;border:1px solid #38bdf8;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;cursor:pointer;transition:0.2s;margin-top:0.75rem}
-        .btn-copy:hover{background:#38bdf8;color:#0f172a}
-        .stats{color:#94a3b8;margin-bottom:1.5rem;font-size:0.95rem}
-        .word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem}
-        .word-card{background:#1e293b;border-radius:16px;padding:1.5rem;border:1px solid #334155;transition:0.2s}
-        .word-card:hover{border-color:#38bdf8;box-shadow:0 4px 20px rgba(56,189,248,0.1)}
-        .word-header{display:flex;align-items:baseline;gap:0.75rem;margin-bottom:0.5rem;flex-wrap:wrap}
-        .word-title{font-size:1.5rem;font-weight:700;color:#f1f5f9}
-        .pos{background:#334155;color:#94a3b8;padding:0.2rem 0.7rem;border-radius:20px;font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
-        .syn-ant{margin:0.75rem 0;line-height:1.6}
-        .syn-label{color:#38bdf8;font-weight:600;font-size:0.85rem;display:inline-block;margin-right:0.5rem}
-        .ant-label{color:#f87171;font-weight:600;font-size:0.85rem;display:inline-block;margin-right:0.5rem}
-        .syn-list,.ant-list{display:inline;color:#cbd5e1;font-size:0.95rem}
-        .example{margin-top:0.75rem;padding:0.75rem;background:#0f172a;border-radius:8px;border-left:3px solid #38bdf8;font-style:italic;color:#94a3b8;font-size:0.9rem}
-        .no-results{text-align:center;padding:3rem 1rem;color:#64748b;font-size:1.2rem}
-        footer{background:#0f172a;border-top:1px solid #1e293b;padding:1.5rem 1rem;text-align:center;color:#64748b;font-size:0.9rem;margin-top:2rem}
-        footer a{color:#38bdf8;text-decoration:none}
-        footer a:hover{text-decoration:underline}
-        @media(max-width:600px){h1{font-size:2rem}.word-grid{grid-template-columns:1fr}}
-    </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+  ]
+}
+</script>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--bd:#2d3643;--tx:#e6edf3;--mut:#9aa7b4;--ac:#58a6ff;--ac2:#3fb950;--hi:#f2cc60}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;font-size:16px}
+a{color:var(--ac);text-decoration:none}
+a:hover{text-decoration:underline}
+nav{display:flex;gap:18px;padding:14px 20px;border-bottom:1px solid var(--bd);background:var(--panel);font-size:14px}
+.wrap{max-width:860px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:1.85rem;line-height:1.25;margin:.4em 0}
+h2{font-size:1.25rem;margin-top:1.8em;border-bottom:1px solid var(--bd);padding-bottom:.3em}
+.intro{color:var(--mut);font-size:1.05rem}
+section#tool{background:var(--panel);border:1px solid var(--bd);border-radius:12px;padding:20px;margin:22px 0}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.92rem}
+input[type=text],textarea{width:100%;background:var(--panel2);border:1px solid var(--bd);border-radius:8px;color:var(--tx);padding:11px 13px;font-size:15px;font-family:inherit}
+textarea{min-height:96px;resize:vertical}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.row>div{flex:1;min-width:200px}
+.opts{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:.9rem;color:var(--mut)}
+.opts label{display:inline-flex;align-items:center;gap:6px;margin:0;font-weight:400}
+.out{background:var(--panel2);border:1px solid var(--bd);border-radius:8px;padding:14px;margin-top:8px;min-height:48px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#21304a;border:1px solid #2f4a72;color:#cfe2ff;padding:5px 11px;border-radius:16px;font-size:.86rem;cursor:pointer}
+.chip:hover{background:#2b3e60}
+.muted{color:var(--mut)}
+.rew{white-space:pre-wrap}
+.rew mark{background:transparent;color:var(--hi);font-weight:600}
+.btn{background:var(--ac);color:#06131f;border:none;border-radius:8px;padding:9px 16px;font-weight:600;font-size:.9rem;cursor:pointer;margin-top:12px}
+.btn:hover{filter:brightness(1.1)}
+.stat{font-size:.82rem;color:var(--mut);margin-top:8px}
+footer{border-top:1px solid var(--bd);padding:24px 20px;color:var(--mut);font-size:.88rem;text-align:center}
+footer a{margin:0 8px}
+.rel a{display:inline-block;margin:4px 14px 4px 0}
+</style>
 </head>
 <body>
-<div class="container">
-    <h1>Synonym Finder</h1>
-    <p class="sub">Discover better words — synonyms, antonyms, and examples for 200+ words.</p>
-    <div class="search-wrap">
-        <input type="text" id="searchInput" placeholder="Search for a word..." autofocus>
-        <button class="btn" id="clearBtn">Clear</button>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tools/">All Tools</a>
+  <a href="/tools/synonym-finder">Synonym Finder</a>
+</nav>
+<div class="wrap">
+<h1>Find Synonyms &amp; Rephrase Sentences Instantly</h1>
+<p class="intro">Type a word to see its synonyms, or paste a sentence to get an automatic rewrite. Everything runs locally in your browser using a built-in thesaurus and rule-based substitution &mdash; no servers, no tracking, no limits.</p>
+
+<section id="tool">
+  <div class="row">
+    <div>
+      <label for="word">Look up a single word</label>
+      <input type="text" id="word" placeholder="e.g. happy" autocomplete="off">
+      <div class="out"><div id="synOut" class="chips"></div></div>
+      <div class="stat" id="wordStat"></div>
     </div>
-    <div class="stats" id="stats">Showing <span id="count">200</span> words</div>
-    <div class="word-grid" id="wordGrid"></div>
-    <div class="no-results" id="noResults" style="display:none;">No words found. Try a different search.</div>
+  </div>
+
+  <label for="sentence">Rephrase a sentence or paragraph</label>
+  <textarea id="sentence" placeholder="Paste text here to rewrite it..."></textarea>
+  <div class="opts">
+    <label><input type="checkbox" id="optStrength" checked> Aggressive substitution</label>
+    <label><input type="checkbox" id="optKeepShort"> Keep words &le; 3 letters</label>
+    <label><input type="checkbox" id="optHighlight" checked> Highlight changes</label>
+  </div>
+  <button class="btn" id="reroll" type="button">Shuffle alternative wording</button>
+
+  <label style="margin-top:18px">Rewritten output</label>
+  <div class="out rew" id="rewriteOut"></div>
+  <div class="stat" id="rewStat"></div>
+</section>
+
+<h2>How this synonym finder works</h2>
+<p>The tool ships with a compact, hand-curated thesaurus of common English words grouped into synonym sets. When you look up a single word, it lowercases your input, strips surrounding punctuation, and searches every set for a match. If the word appears in a set, all the other members of that set are returned as clickable synonym chips. Because the dictionary is bundled directly into the page, lookups are instant and work completely offline.</p>
+<p>Sentence rephrasing uses rule-based lexical substitution. The rewriter tokenizes your text while preserving spaces and punctuation, then walks token by token. For each alphabetic token it computes a lowercase key and checks the thesaurus. When a match exists, it picks a replacement from the candidate pool and restores the original capitalization pattern &mdash; an all-caps word stays all-caps, a Title-Cased word keeps its leading capital, and everything else is written lowercase. The selection rule is deterministic per shuffle: an index counter advances through the candidate list so repeated words get varied alternatives instead of the same one every time, and the "Shuffle" button reseeds that counter for a fresh rewrite.</p>
+<p>You control the aggression. With <em>Aggressive substitution</em> on, every word that has any synonym is replaced; turn it off and the rewriter only swaps roughly every other eligible word for a lighter touch. The <em>keep short words</em> option protects function words like "and" or "the" from being altered, and <em>highlight changes</em> marks each substituted word so you can review the rewrite at a glance. No text ever leaves your device.</p>
+
+<h2>Tips for better paraphrasing</h2>
+<p>Lexical substitution is a starting point, not a final draft. After generating a rewrite, read it aloud and fix any swap that changed the meaning &mdash; synonyms are rarely perfect equivalents. Combine word-level changes with sentence-structure edits (reordering clauses, splitting long sentences) for genuinely original phrasing. Click any synonym chip to copy it, and use the single-word lookup to explore alternatives before committing to a rewrite.</p>
+
+<h2 class="rel">Related Tools</h2>
+<div class="rel">
+  <a href="/tools/paraphrasing-tool">Paraphrasing Tool</a>
+  <a href="/tools/word-counter">Word Counter</a>
+  <a href="/tools/sentence-rewriter">Sentence Rewriter</a>
 </div>
+</div>
+
 <footer>
-    <p>© 2025 <a href="https://paraphrasetool.org">paraphrasetool.org</a> — <a href="https://paraphrasetool.org/tools/synonym-finder">Synonym Finder</a> | Improve your writing with the best word choices.</p>
+  <div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/about">About</a>
+    <a href="/privacy">Privacy</a>
+  </div>
+  <p>&copy; 2026 paraphrasetool.org &mdash; client-side tools by <a href="https://zovo.one">Michael Lip</a>.</p>
 </footer>
-<div style="margin:20px auto;max-width:728px;text-align:center">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
+
 <script>
-    (function(){
-        const words = [
-            {word:"abandon",pos:"verb",synonyms:["desert","leave","forsake","relinquish","discard"],antonyms:["keep","retain","maintain"],example:"They had to abandon the project due to lack of funds."},
-            {word:"abate",pos:"verb",synonyms:["decrease","diminish","subside","lessen","reduce"],antonyms:["increase","intensify","grow"],example:"The storm began to abate after midnight."},
-            {word:"abbreviate",pos:"verb",synonyms:["shorten","condense","truncate","compress","abridge"],antonyms:["lengthen","extend","expand"],example:"Please abbreviate the report to one page."},
-            {word:"abhor",pos:"verb",synonyms:["detest","loathe","despise","abominate","hate"],antonyms:["love","admire","cherish"],example:"She abhors cruelty to animals."},
-            {word:"abide",pos:"verb",synonyms:["tolerate","endure","bear","accept","comply"],antonyms:["reject","resist","defy"],example:"I cannot abide such rudeness."},
-            {word:"ability",pos:"noun",synonyms:["capability","capacity","skill","talent","competence"],antonyms:["inability","incapacity","weakness"],example:"Her ability to solve complex problems is remarkable."},
-            {word:"abject",pos:"adjective",synonyms:["wretched","miserable","pitiful","hopeless","degraded"],antonyms:["noble","exalted","proud"],example:"They lived in abject poverty."},
-            {word:"abolish",pos:"verb",synonyms:["eliminate","eradicate","annul","repeal","nullify"],antonyms:["establish","create","institute"],example:"The government decided to abolish the outdated law."},
-            {word:"abrupt",pos:"adjective",synonyms:["sudden","unexpected","hasty","precipitous","quick"],antonyms:["gradual","slow","leisurely"],example:"The meeting came to an abrupt end."},
-            {word:"absent",pos:"adjective",synonyms:["missing","gone","away","nonexistent","lacking"],antonyms:["present","here","existing"],example:"He was absent from school due to illness."},
-            {word:"absolute",pos:"adjective",synonyms:["complete","total","unconditional","unlimited","perfect"],antonyms:["partial","limited","conditional"],example:"She demanded absolute loyalty."},
-            {word:"absorb",pos:"verb",synonyms:["soak up","consume","engross","assimilate","incorporate"],antonyms:["release","emit","expel"],example:"The sponge absorbed all the water."},
-            {word:"abstract",pos:"adjective",synonyms:["theoretical","conceptual","ideal","notional","intangible"],antonyms:["concrete","specific","real"],example:"The concept is too abstract for children."},
-            {word:"abundant",pos:"adjective",synonyms:["plentiful","ample","copious","profuse","rich"],antonyms:["scarce","rare","sparse"],example:"The region has abundant natural resources."},
-            {word:"abuse",pos:"verb",synonyms:["mistreat","exploit","harm","damage","ill-treat"],antonyms:["respect","care for","protect"],example:"He abused his position of power."},
-            {word:"accelerate",pos:"verb",synonyms:["speed up","hasten","quicken","expedite","rush"],antonyms:["decelerate","slow down","delay"],example:"The car can accelerate from 0 to 60 in six seconds."},
-            {word:"accept",pos:"verb",synonyms:["receive","agree to","embrace","acknowledge","approve"],antonyms:["reject","refuse","decline"],example:"She accepted the job offer."},
-            {word:"acclaim",pos:"noun",synonyms:["praise","applause","recognition","admiration","honor"],antonyms:["criticism","blame","censure"],example:"The movie received widespread acclaim."},
-            {word:"accommodate",pos:"verb",synonyms:["house","lodge","adapt","adjust","fit"],antonyms:["displace","exclude","hinder"],example:"The hotel can accommodate up to 300 guests."},
-            {word:"accompany",pos:"verb",synonyms:["escort","go with","attend","convey","join"],antonyms:["leave","abandon","desert"],example:"She will accompany me to the airport."},
-            {word:"accomplish",pos:"verb",synonyms:["achieve","complete","fulfill","realize","attain"],antonyms:["fail","abandon","neglect"],example:"He accomplished all his goals."},
-            {word:"accumulate",pos:"verb",synonyms:["collect","gather","amass","stockpile","hoard"],antonyms:["disperse","scatter","distribute"],example:"Dust accumulates quickly on the shelves."},
-            {word:"accurate",pos:"adjective",synonyms:["precise","exact","correct","true","faithful"],antonyms:["inaccurate","wrong","false"],example:"The measurement needs to be accurate."},
-            {word:"achieve",pos:"verb",synonyms:["accomplish","attain","reach","realize","gain"],antonyms:["fail","lose","miss"],example:"She achieved her dream of becoming a doctor."},
-            {word:"acknowledge",pos:"verb",synonyms:["admit","recognize","accept","confess","grant"],antonyms:["deny","ignore","disavow"],example:"He acknowledged his mistake."},
-            {word:"acquire",pos:"verb",synonyms:["obtain","gain","get","procure","secure"],antonyms:["lose","forfeit","surrender"],example:"She acquired a new skill."},
-            {word:"adapt",pos:"verb",synonyms:["adjust","modify","accommodate","conform","alter"],antonyms:["resist","maintain","preserve"],example:"Animals adapt to their environment."},
-            {word:"adequate",pos:"adjective",synonyms:["sufficient","enough","ample","satisfactory","acceptable"],antonyms:["insufficient","inadequate","deficient"],example:"The supply is adequate for the trip."},
-            {word:"adhere",pos:"verb",synonyms:["stick","cling","hold","comply","follow"],antonyms:["detach","separate","disobey"],example:"Please adhere to the rules."},
-            {word:"admire",pos:"verb",synonyms:["respect","appreciate","esteem","honor","praise"],antonyms:["despise","dislike","scorn"],example:"I admire her dedication."},
-            {word:"admit",pos:"verb",synonyms:["confess","acknowledge","concede","allow","accept"],antonyms:["deny","reject","refuse"],example:"He admitted his guilt."},
-            {word:"adopt",pos:"verb",synonyms:["embrace","assume","take up","choose","follow"],antonyms:["reject","abandon","discard"],example:"They decided to adopt a child."},
-            {word:"adverse",pos:"adjective",synonyms:["unfavorable","hostile","negative","contrary","detrimental"],antonyms:["favorable","positive","beneficial"],example:"The drug had adverse side effects."},
-            {word:"advocate",pos:"verb",synonyms:["support","promote","endorse","champion","back"],antonyms:["oppose","criticize","denounce"],example:"She advocates for human rights."},
-            {word:"affect",pos:"verb",synonyms:["influence","impact","alter","change","sway"],antonyms:["remain","stay","unaffected"],example:"The weather affects my mood."},
-            {word:"affluent",pos:"adjective",synonyms:["wealthy","rich","prosperous","opulent","well-off"],antonyms:["poor","impoverished","destitute"],example:"They live in an affluent neighborhood."},
-            {word:"aggravate",pos:"verb",synonyms:["worsen","intensify","exacerbate","irritate","annoy"],antonyms:["improve","alleviate","soothe"],example:"His comments only aggravated the situation."},
-            {word:"agile",pos:"adjective",synonyms:["nimble","quick","supple","graceful","spry"],antonyms:["clumsy","stiff","slow"],example:"The agile cat jumped over the fence."},
-            {word:"alleviate",pos:"verb",synonyms:["relieve","ease","lessen","mitigate","soothe"],antonyms:["aggravate","intensify","worsen"],example:"The medicine alleviated her pain."},
-            {word:"allocate",pos:"verb",synonyms:["assign","allot","distribute","apportion","designate"],antonyms:["withhold","keep","retain"],example:"Funds were allocated for education."},
-            {word:"alter",pos:"verb",synonyms:["change","modify","adjust","revise","transform"],antonyms:["preserve","maintain","keep"],example:"We need to alter the design."},
-            {word:"amaze",pos:"verb",synonyms:["astonish","astound","surprise","stun","dumbfound"],antonyms:["bore","disappoint","dull"],example:"Her talent never ceases to amaze me."},
-            {word:"ambiguous",pos:"adjective",synonyms:["vague","unclear","equivocal","uncertain","doubtful"],antonyms:["clear","definite","explicit"],example:"The instructions were ambiguous."},
-            {word:"amend",pos:"verb",synonyms:["revise","correct","improve","rectify","modify"],antonyms:["worsen","damage","spoil"],example:"The constitution was amended."},
-            {word:"ample",pos:"adjective",synonyms:["abundant","plentiful","generous","copious","sufficient"],antonyms:["scarce","meager","insufficient"],example:"There is ample space in the room."},
-            {word:"ancient",pos:"adjective",synonyms:["old","antique","archaic","primitive","aged"],antonyms:["modern","new","young"],example:"They discovered an ancient artifact."},
-            {word:"announce",pos:"verb",synonyms:["declare","proclaim","reveal","disclose","broadcast"],antonyms:["conceal","hide","suppress"],example:"The president will announce the decision."},
-            {word:"annoy",pos:"verb",synonyms:["irritate","bother","vex","provoke","pester"],antonyms:["please","soothe","calm"],example:"The noise annoyed the neighbors."},
-            {word:"answer",pos:"noun",synonyms:["reply","response","solution","rejoinder","retort"],antonyms:["question","query","inquiry"],example:"She gave a clear answer."},
-            {word:"anxious",pos:"adjective",synonyms:["worried","nervous","uneasy","apprehensive","tense"],antonyms:["calm","relaxed","confident"],example:"He felt anxious before the exam."},
-            {word:"apparent",pos:"adjective",synonyms:["obvious","clear","evident","plain","visible"],antonyms:["unclear","hidden","obscure"],example:"The reason was apparent."},
-            {word:"appeal",pos:"verb",synonyms:["attract","interest","charm","engage","entice"],antonyms:["repel","disgust","bore"],example:"The idea appeals to me."},
-            {word:"appreciate",pos:"verb",synonyms:["value","cherish","admire","enjoy","treasure"],antonyms:["disregard","ignore","undervalue"],example:"I appreciate your help."},
-            {word:"approach",pos:"verb",synonyms:["near","advance","come close","reach","approximate"],antonyms:["retreat","withdraw","leave"],example:"The deadline is approaching."},
-            {word:"appropriate",pos:"adjective",synonyms:["suitable","proper","fitting","apt","relevant"],antonyms:["inappropriate","unsuitable","improper"],example:"Wear appropriate clothing for the occasion."},
-            {word:"ardent",pos:"adjective",synonyms:["passionate","enthusiastic","fervent","zealous","eager"],antonyms:["apathetic","indifferent","cool"],example:"She is an ardent supporter of the cause."},
-            {word:"arise",pos:"verb",synonyms:["emerge","occur","appear","surface","spring up"],antonyms:["disappear","vanish","subside"],example:"A problem may arise."},
-            {word:"arrest",pos:"verb",synonyms:["capture","apprehend","detain","seize","catch"],antonyms:["release","free","liberate"],example:"The police arrested the suspect."},
-            {word:"articulate",pos:"adjective",synonyms:["eloquent","fluent","expressive","clear","coherent"],antonyms:["inarticulate","mumbled","unclear"],example:"She is an articulate speaker."},
-            {word:"ascend",pos:"verb",synonyms:["rise","climb","mount","soar","go up"],antonyms:["descend","fall","drop"],example:"The balloon ascended into the sky."},
-            {word:"aspire",pos:"verb",synonyms:["aim","strive","seek","desire","hope"],antonyms:["despise","disdain","scorn"],example:"She aspires to be a leader."},
-            {word:"assault",pos:"noun",synonyms:["attack","charge","onslaught","strike","offensive"],antonyms:["defense","retreat","protection"],example:"The assault was unexpected."},
-            {word:"assemble",pos:"verb",synonyms:["gather","collect","congregate","accumulate","meet"],antonyms:["disperse","scatter","separate"],example:"The team assembled in the hall."},
-            {word:"assess",pos:"verb",synonyms:["evaluate","appraise","judge","estimate","rate"],antonyms:["ignore","neglect","overlook"],example:"We need to assess the damage."},
-            {word:"assign",pos:"verb",synonyms:["allocate","allot","designate","delegate","appoint"],antonyms:["withhold","keep","retain"],example:"The teacher assigned homework."},
-            {word:"assist",pos:"verb",synonyms:["help","aid","support","facilitate","serve"],antonyms:["hinder","obstruct","oppose"],example:"Can you assist me with this?"},
-            {word:"assume",pos:"verb",synonyms:["presume","suppose","believe","infer","guess"],antonyms:["know","prove","verify"],example:"I assume you are correct."},
-            {word:"astonish",pos:"verb",synonyms:["amaze","astound","surprise","stun","shock"],antonyms:["bore","disappoint","dull"],example:"The magician astonished the audience."},
-            {word:"attach",pos:"verb",synonyms:["fasten","connect","join","affix","secure"],antonyms:["detach","remove","separate"],example:"Please attach the file."},
-            {word:"attain",pos:"verb",synonyms:["achieve","reach","accomplish","gain","secure"],antonyms:["fail","lose","miss"],example:"She attained her goal."},
-            {word:"attempt",pos:"verb",synonyms:["try","endeavor","strive","seek","undertake"],antonyms:["abandon","neglect","ignore"],example:"He attempted to climb the mountain."},
-            {word:"attract",pos:"verb",synonyms:["draw","lure","entice","captivate","charm"],antonyms:["repel","deter","discourage"],example:"The flowers attract bees."},
-            {word:"authentic",pos:"adjective",synonyms:["genuine","real","true","original","legitimate"],antonyms:["fake","false","counterfeit"],example:"The painting is authentic."},
-            {word:"authorize",pos:"verb",synonyms:["permit","allow","approve","sanction","license"],antonyms:["forbid","prohibit","ban"],example:"Only the manager can authorize payments."},
-            {word:"available",pos:"adjective",synonyms:["accessible","obtainable","ready","free","at hand"],antonyms:["unavailable","inaccessible","occupied"],example:"Tickets are still available."},
-            {word:"average",pos:"adjective",synonyms:["ordinary","typical","standard","common","median"],antonyms:["exceptional","extraordinary","outstanding"],example:"It was an average performance."},
-            {word:"avoid",pos:"verb",synonyms:["evade","shun","dodge","elude","escape"],antonyms:["face","confront","seek"],example:"Try to avoid junk food."},
-            {word:"aware",pos:"adjective",synonyms:["conscious","mindful","informed","alert","knowledgeable"],antonyms:["unaware","ignorant","oblivious"],example:"She is aware of the risks."},
-            {word:"awkward",pos:"adjective",synonyms:["clumsy","ungainly","graceless","stiff","uncomfortable"],antonyms:["graceful","elegant","smooth"],example:"He felt awkward at the party."},
-            {word:"back",pos:"verb",synonyms:["support","endorse","uphold","advocate","champion"],antonyms:["oppose","undermine","hinder"],example:"I back your decision."},
-            {word:"ban",pos:"verb",synonyms:["prohibit","forbid","outlaw","bar","suppress"],antonyms:["permit","allow","authorize"],example:"They banned smoking in public."},
-            {word:"bare",pos:"adjective",synonyms:["naked","uncovered","empty","plain","exposed"],antonyms:["covered","clothed","adorned"],example:"The walls were bare."},
-            {word:"barrier",pos:"noun",synonyms:["obstacle","hurdle","impediment","blockade","fence"],antonyms:["passage","opening","aid"],example:"Language can be a barrier."},
-            {word:"base",pos:"noun",synonyms:["foundation","bottom","core","basis","groundwork"],antonyms:["top","peak","apex"],example:"The base of the statue is marble."},
-            {word:"bear",pos:"verb",synonyms:["endure","tolerate","withstand","suffer","carry"],antonyms:["avoid","escape","surrender"],example:"I cannot bear the pain."},
-            {word:"beautiful",pos:"adjective",synonyms:["gorgeous","stunning","lovely","attractive","exquisite"],antonyms:["ugly","hideous","plain"],example:"The sunset was beautiful."},
-            {word:"begin",pos:"verb",synonyms:["start","commence","initiate","launch","embark"],antonyms:["end","finish","conclude"],example:"Let's begin the meeting."},
-            {word:"behave",pos:"verb",synonyms:["act","conduct","perform","operate","function"],antonyms:["misbehave","act up","disobey"],example:"Please behave yourself."},
-            {word:"believe",pos:"verb",synonyms:["trust","accept","hold","consider","deem"],antonyms:["doubt","disbelieve","reject"],example:"I believe you are right."},
-            {word:"benefit",pos:"noun",synonyms:["advantage","gain","profit","boon","asset"],antonyms:["disadvantage","loss","drawback"],example:"Exercise has many benefits."},
-            {word:"betray",pos:"verb",synonyms:["deceive","double-cross","abandon","expose","sell out"],antonyms:["protect","support","loyal"],example:"He betrayed his friend's trust."},
-            {word:"bewilder",pos:"verb",synonyms:["confuse","perplex","baffle","puzzle","mystify"],antonyms:["clarify","enlighten","explain"],example:"The instructions bewildered me."},
-            {word:"bias",pos:"noun",synonyms:["prejudice","partiality","favoritism","inclination","tendency"],antonyms:["fairness","impartiality","objectivity"],example:"The article showed a clear bias."},
-            {word:"bitter",pos:"adjective",synonyms:["sour","acrid","harsh","resentful","sharp"],antonyms:["sweet","pleasant","mild"],example:"The coffee tasted bitter."},
-            {word:"blame",pos:"verb",synonyms:["accuse","censure","criticize","fault","reproach"],antonyms:["praise","commend","exonerate"],example:"Don't blame others for your mistakes."},
-            {word:"bland",pos:"adjective",synonyms:["dull","plain","insipid","tasteless","boring"],antonyms:["flavorful","spicy","exciting"],example:"The food was bland."},
-            {word:"blaze",pos:"noun",synonyms:["flame","fire","inferno","glow","flare"],antonyms:["darkness","extinguish","douse"],example:"The blaze destroyed the barn."},
-            {word:"bloom",pos:"verb",synonyms:["flower","blossom","flourish","thrive","grow"],antonyms:["wilt","fade","shrivel"],example:"The roses bloom in spring."},
-            {word:"boast",pos:"verb",synonyms:["brag","show off","vaunt","crow","exaggerate"],antonyms:["modest","humble","understate"],example:"He likes to boast about his achievements."},
-            {word:"bold",pos:"adjective",synonyms:["brave","daring","courageous","fearless","audacious"],antonyms:["timid","cowardly","shy"],example:"She made a bold move."},
-            {word:"bother",pos:"verb",synonyms:["annoy","irritate","pester","vex","disturb"],antonyms:["please","soothe","comfort"],example:"Don't bother me while I'm working."},
-            {word:"bound",pos:"adjective",synonyms:["obliged","compelled","destined","certain","limited"],antonyms:["free","unbound","optional"],example:"You are bound to succeed."},
-            {word:"brave",pos:"adjective",synonyms:["courageous","valiant","heroic","fearless","daring"],antonyms:["cowardly","timid","afraid"],example:"The brave firefighter saved the child."},
-            {word:"break",pos:"verb",synonyms:["shatter","fracture","crack","smash","split"],antonyms:["repair","mend","fix"],example:"Be careful not to break the glass."},
-            {word:"brief",pos:"adjective",synonyms:["short","concise","succinct","terse","compact"],antonyms:["long","lengthy","verbose"],example:"Keep your speech brief."},
-            {word:"bright",pos:"adjective",synonyms:["luminous","shining","vivid","brilliant","radiant"],antonyms:["dim","dark","dull"],example:"The sun is very bright today."},
-            {word:"broad",pos:"adjective",synonyms:["wide","extensive","expansive","large","comprehensive"],antonyms:["narrow","limited","restricted"],example:"The river is broad at this point."},
-            {word:"brutal",pos:"adjective",synonyms:["cruel","savage","vicious","harsh","ruthless"],antonyms:["gentle","kind","merciful"],example:"The attack was brutal."},
-            {word:"burden",pos:"noun",synonyms:["load","weight","strain","pressure","obligation"],antonyms:["relief","ease","blessing"],example:"The burden of responsibility is heavy."},
-            {word:"calm",pos:"adjective",synonyms:["serene","peaceful","tranquil","composed","still"],antonyms:["agitated","stormy","nervous"],example:"The sea was calm."},
-            {word:"cancel",pos:"verb",synonyms:["annul","revoke","rescind","nullify","abort"],antonyms:["confirm","approve","ratify"],example:"They had to cancel the event."},
-            {word:"capable",pos:"adjective",synonyms:["competent","able","skilled","proficient","efficient"],antonyms:["incapable","incompetent","unskilled"],example:"She is a capable leader."},
-            {word:"capture",pos:"verb",synonyms:["catch","seize","apprehend","arrest","trap"],antonyms:["release","free","liberate"],example:"The photographer captured the moment."},
-            {word:"careful",pos:"adjective",synonyms:["cautious","wary","vigilant","attentive","prudent"],antonyms:["careless","reckless","negligent"],example:"Be careful when crossing the street."},
-            {word:"cease",pos:"verb",synonyms:["stop","halt","discontinue","end","terminate"],antonyms:["continue","persist","begin"],example:"The rain ceased at noon."},
-            {word:"challenge",pos:"noun",synonyms:["difficulty","obstacle","test","trial","dare"],antonyms:["ease","simplicity","success"],example:"The challenge was exciting."},
-            {word:"change",pos:"verb",synonyms:["alter","modify","transform","adjust","convert"],antonyms:["remain","stay","preserve"],example:"We need to change our strategy."},
-            {word:"chaos",pos:"noun",synonyms:["disorder","confusion","turmoil","pandemonium","mayhem"],antonyms:["order","peace","harmony"],example:"The room was in chaos."},
-            {word:"charm",pos:"noun",synonyms:["appeal","attraction","allure","magnetism","grace"],antonyms:["repulsion","ugliness","disgust"],example:"She has a natural charm."},
-            {word:"cheerful",pos:"adjective",synonyms:["happy","joyful","lively","upbeat","merry"],antonyms:["sad","gloomy","depressed"],example:"She has a cheerful disposition."},
-            {word:"choose",pos:"verb",synonyms:["select","pick","opt","decide","elect"],antonyms:["reject","refuse","decline"],example:"Choose the best option."},
-            {word:"clarify",pos:"verb",synonyms:["explain","elucidate","illuminate","simplify","interpret"],antonyms:["confuse","obscure","complicate"],example:"Can you clarify your point?"},
-            {word:"clever",pos:"adjective",synonyms:["intelligent","smart","bright","sharp","ingenious"],antonyms:["stupid","dull","foolish"],example:"She is a clever student."},
-            {word:"climb",pos:"verb",synonyms:["ascend","scale","mount","rise","go up"],antonyms:["descend","fall","drop"],example:"They climbed the mountain."},
-            {word:"coarse",pos:"adjective",synonyms:["rough","bumpy","uneven","harsh","gritty"],antonyms:["smooth","fine","soft"],example:"The fabric is coarse."},
-            {word:"collapse",pos:"verb",synonyms:["fall","crumble","give way","cave in","topple"],antonyms:["rise","stand","withstand"],example:"The building collapsed."},
-            {word:"combine",pos:"verb",synonyms:["merge","unite","blend","fuse","integrate"],antonyms:["separate","divide","split"],example:"Combine the ingredients."},
-            {word:"comfort",pos:"noun",synonyms:["ease","relief","solace","consolation","coziness"],antonyms:["discomfort","pain","distress"],example:"She found comfort in music."},
-            {word:"command",pos:"verb",synonyms:["order","direct","instruct","demand","dictate"],antonyms:["obey","follow","comply"],example:"The general commanded his troops."},
-            {word:"commit",pos:"verb",synonyms:["dedicate","devote","pledge","engage","bind"],antonyms:["neglect","abandon","renounce"],example:"She committed herself to the cause."},
-            {word:"common",pos:"adjective",synonyms:["ordinary","usual","typical","frequent","prevalent"],antonyms:["rare","uncommon","unique"],example:"It's a common mistake."},
-            {word:"compare",pos:"verb",synonyms:["contrast","liken","equate","relate","match"],antonyms:["distinguish","separate","differentiate"],example:"Compare the two products."},
-            {word:"compel",pos:"verb",synonyms:["force","oblige","drive","pressure","coerce"],antonyms:["volunteer","allow","permit"],example:"The law compels us to pay taxes."},
-            {word:"compete",pos:"verb",synonyms:["contend","rival","vie","challenge","oppose"],antonyms:["cooperate","collaborate","support"],example:"They compete for the trophy."},
-            {word:"complex",pos:"adjective",synonyms:["complicated","intricate","involved","elaborate","sophisticated"],antonyms:["simple","easy","straightforward"],example:"The problem is complex."},
-            {word:"compose",pos:"verb",synonyms:["create","write","formulate","construct","produce"],antonyms:["destroy","demolish","ruin"],example:"She composed a beautiful song."},
-            {word:"conceal",pos:"verb",synonyms:["hide","cover","disguise","mask","obscure"],antonyms:["reveal","expose","disclose"],example:"He tried to conceal his identity."},
-            {word:"concentrate",pos:"verb",synonyms:["focus","center","direct","intensify","consolidate"],antonyms:["distract","disperse","scatter"],example:"I need to concentrate on my work."},
-            {word:"conclude",pos:"verb",synonyms:["finish","end","complete","terminate","wrap up"],antonyms:["begin","start","commence"],example:"Let's conclude the meeting."},
-            {word:"condemn",pos:"verb",synonyms:["criticize","denounce","blame","censure","reproach"],antonyms:["praise","commend","approve"],example:"The judge condemned the crime."},
-            {word:"confess",pos:"verb",synonyms:["admit","acknowledge","concede","reveal","disclose"],antonyms:["deny","conceal","hide"],example:"He confessed his sins."},
-            {word:"confident",pos:"adjective",synonyms:["assured","self-assured","poised","certain","positive"],antonyms:["insecure","doubtful","uncertain"],example:"She is confident in her abilities."},
-            {word:"confine",pos:"verb",synonyms:["restrict","limit","imprison","enclose","bound"],antonyms:["free","release","liberate"],example:"They confined the animal to a cage."},
-            {word:"conflict",pos:"noun",synonyms:["dispute","clash","struggle","battle","disagreement"],antonyms:["peace","harmony","agreement"],example:"The conflict lasted for years."},
-            {word:"conform",pos:"verb",synonyms:["comply","obey","follow","adapt","adjust"],antonyms:["rebel","deviate","resist"],example:"You must conform to the rules."},
-            {word:"confuse",pos:"verb",synonyms:["bewilder","perplex","baffle","puzzle","muddle"],antonyms:["clarify","enlighten","explain"],example:"The instructions confused me."},
-            {word:"connect",pos:"verb",synonyms:["link","join","attach","couple","associate"],antonyms:["disconnect","separate","detach"],example:"Connect the wires."},
-            {word:"conquer",pos:"verb",synonyms:["defeat","overcome","subdue","vanquish","triumph"],antonyms:["surrender","yield","lose"],example:"They conquered the enemy."},
-            {word:"conscious",pos:"adjective",synonyms:["aware","mindful","alert","awake","cognizant"],antonyms:["unconscious","unaware","oblivious"],example:"He was conscious of the danger."},
-            {word:"consent",pos:"verb",synonyms:["agree","approve","assent","accede","permit"],antonyms:["refuse","deny","reject"],example:"She consented to the plan."},
-            {word:"consider",pos:"verb",synonyms:["think","contemplate","ponder","reflect","deliberate"],antonyms:["ignore","disregard","overlook"],example:"Consider all options."},
-            {word:"consistent",pos:"adjective",synonyms:["steady","constant","uniform","regular","reliable"],antonyms:["inconsistent","variable","erratic"],example:"Her performance is consistent."},
-            {word:"console",pos:"verb",synonyms:["comfort","soothe","solace","cheer","calm"],antonyms:["distress","upset","agitate"],example:"He tried to console her."},
-            {word:"conspicuous",pos:"adjective",synonyms:["visible","noticeable","prominent","obvious","striking"],antonyms:["inconspicuous","hidden","unnoticeable"],example:"The sign was conspicuous."},
-            {word:"constant",pos:"adjective",synonyms:["continuous","perpetual","unending","steady","persistent"],antonyms:["variable","intermittent","temporary"],example:"The noise was constant."},
-            {word:"construct",pos:"verb",synonyms:["build","erect","assemble","create","form"],antonyms:["destroy","demolish","raze"],example:"They constructed a new bridge."},
-            {word:"consult",pos:"verb",synonyms:["advise","confer","discuss","deliberate","refer"],antonyms:["ignore","neglect","bypass"],example:"Consult a doctor if symptoms persist."},
-            {word:"consume",pos:"verb",synonyms:["eat","devour","ingest","use up","exhaust"],antonyms:["save","preserve","conserve"],example:"They consume a lot of energy."},
-            {word:"contact",pos:"noun",synonyms:["connection","communication","touch","link","association"],antonyms:["disconnection","isolation","separation"],example:"Stay in contact."},
-            {word:"contain",pos:"verb",synonyms:["hold","include","accommodate","enclose","comprise"],antonyms:["exclude","omit","release"],example:"The box contains chocolates."},
-            {word:"contemplate",pos:"verb",synonyms:["ponder","reflect","meditate","consider","muse"],antonyms:["ignore","disregard","neglect"],example:"She contemplated the meaning of life."},
-            {word:"contend",pos:"verb",synonyms:["argue","assert","claim","maintain","dispute"],antonyms:["agree","concede","yield"],example:"He contends that the theory is flawed."},
-            {word:"continue",pos:"verb",synonyms:["persist","endure","last","proceed","carry on"],antonyms:["stop","cease","discontinue"],example:"Please continue with your story."},
-            {word:"contract",pos:"noun",synonyms:["agreement","deal","pact","covenant","compact"],antonyms:["disagreement","breach","void"],example:"Sign the contract."},
-            {word:"contradict",pos:"verb",synonyms:["deny","oppose","refute","challenge","dispute"],antonyms:["confirm","agree","support"],example:"His statement contradicts the facts."},
-            {word:"contribute",pos:"verb",synonyms:["donate","give","provide","supply","add"],antonyms:["withhold","take","remove"],example:"Everyone should contribute to the cause."},
-            {word:"controversy",pos:"noun",synonyms:["dispute","debate","argument","quarrel","dissension"],antonyms:["agreement","harmony","consensus"],example:"The decision sparked controversy."},
-            {word:"convenient",pos:"adjective",synonyms:["handy","accessible","useful","suitable","opportune"],antonyms:["inconvenient","awkward","unsuitable"],example:"The location is convenient."},
-            {word:"convince",pos:"verb",synonyms:["persuade","assure","satisfy","prove","win over"],antonyms:["deter","dissuade","discourage"],example:"She convinced me to join."},
-            {word:"cooperate",pos:"verb",synonyms:["collaborate","work together","unite","assist","join"],antonyms:["oppose","hinder","conflict"],example:"The teams cooperated on the project."},
-            {word:"cope",pos:"verb",synonyms:["manage","handle","endure","survive","deal"],antonyms:["succumb","fail","collapse"],example:"She learned to cope with stress."},
-            {word:"correct",pos:"adjective",synonyms:["accurate","right","true","precise","exact"],antonyms:["incorrect","wrong","false"],example:"Your answer is correct."},
-            {word:"corrupt",pos:"adjective",synonyms:["dishonest","unscrupulous","crooked","venal","bribed"],antonyms:["honest","ethical","upright"],example:"The corrupt official was arrested."},
-            {word:"courage",pos:"noun",synonyms:["bravery","valor","nerve","daring","fearlessness"],antonyms:["cowardice","timidity","fear"],example:"She showed great courage."},
-            {word:"create",pos:"verb",synonyms:["produce","make","generate","invent","form"],antonyms:["destroy","annihilate","demolish"],example:"Artists create beautiful works."},
-            {word:"credible",pos:"adjective",synonyms:["believable","plausible","trustworthy","reliable","convincing"],antonyms:["incredible","unbelievable","dubious"],example:"The witness was credible."},
-            {word:"crisis",pos:"noun",synonyms:["emergency","disaster","catastrophe","calamity","predicament"],antonyms:["calm","stability","peace"],example:"The country faced an economic crisis."},
-            {word:"critical",pos:"adjective",synonyms:["crucial","vital","essential","important","pivotal"],antonyms:["trivial","unimportant","minor"],example:"This is a critical moment."},
-            {word:"crude",pos:"adjective",synonyms:["raw","unrefined","rough","coarse","primitive"],antonyms:["refined","polished","sophisticated"],example:"Crude oil needs processing."},
-            {word:"cruel",pos:"adjective",synonyms:["brutal","savage","vicious","inhumane","ruthless"],antonyms:["kind","gentle","compassionate"],example:"The cruel treatment shocked everyone."},
-            {word:"curious",pos:"adjective",synonyms:["inquisitive","interested","eager","nosy","prying"],antonyms:["indifferent","uninterested","bored"],example:"Children are naturally curious."},
-            {word:"current",pos:"adjective",synonyms:["present","ongoing","contemporary","modern","latest"],antonyms:["past","old","outdated"],example:"The current situation is stable."},
-            {word:"custom",pos:"noun",synonyms:["tradition","practice","habit","convention","ritual"],antonyms:["innovation","change","novelty"],example:"It's a local custom."},
-            {word:"damage",pos:"noun",synonyms:["harm","injury","destruction","impairment","loss"],antonyms:["repair","benefit","improvement"],example:"The storm caused extensive damage."},
-            {word:"damp",pos:"adjective",synonyms:["moist","humid","wet","clammy","soggy"],antonyms:["dry","arid","parched"],example:"The basement is damp."},
-            {word:"dare",pos:"verb",synonyms:["venture","risk","defy","challenge","brave"],antonyms:["avoid","fear","shrink"],example:"I dare you to jump."},
-            {word:"dazzle",pos:"verb",synonyms:["impress","amaze","overwhelm","blind","glitter"],antonyms:["bore","disappoint","dull"],example:"The fireworks dazzled the crowd."},
-            {word:"debate",pos:"noun",synonyms:["discussion","argument","dispute","deliberation","controversy"],antonyms:["agreement","consensus","accord"],example:"There was a heated debate."},
-            {word:"decay",pos:"verb",synonyms:["rot","decompose","spoil","deteriorate","corrode"],antonyms:["flourish","grow","preserve"],example:"The fruit began to decay."},
-            {word:"deceive",pos:"verb",synonyms:["trick","mislead","dupe","hoodwink","beguile"],antonyms:["enlighten","inform","guide"],example:"He deceived his investors."},
-            {word:"declare",pos:"verb",synonyms:["announce","proclaim","state","assert","affirm"],antonyms:["conceal","withhold","deny"],example:"She declared her independence."},
-            {word:"decline",pos:"verb",synonyms:["refuse","reject","diminish","decrease","wane"],antonyms:["accept","increase","rise"],example:"He declined the invitation."},
-            {word:"decorate",pos:"verb",synonyms:["adorn","ornament","embellish","trim","beautify"],antonyms:["strip","disfigure","spoil"],example:"They decorated the hall for the party."},
-            {word:"decrease",pos:"verb",synonyms:["reduce","diminish","lessen","decline","drop"],antonyms:["increase","grow","rise"],example:"The temperature decreased."},
-            {word:"dedicate",pos:"verb",synonyms:["devote","commit","pledge","consecrate","assign"],antonyms:["neglect","abandon","ignore"],example:"She dedicated her life to science."},
-            {word:"defeat",pos:"verb",synonyms:["beat","conquer","overcome","vanquish","triumph"],antonyms:["lose","surrender","yield"],example:"They defeated the enemy."},
-            {word:"defend",pos:"verb",synonyms:["protect","guard","shield","safeguard","uphold"],antonyms:["attack","assault","betray"],example:"The lawyer will defend the client."},
-            {word:"definite",pos:"adjective",synonyms:["certain","clear","explicit","specific","fixed"],antonyms:["indefinite","vague","uncertain"],example:"We need a definite answer."},
-            {word:"delay",pos:"verb",synonyms:["postpone","defer","put off","hold up","slow"],antonyms:["hasten","expedite","advance"],example:"The flight was delayed."},
-            {word:"delicate",pos:"adjective",synonyms:["fragile","dainty","fine","subtle","sensitive"],antonyms:["coarse","rough","tough"],example:"Handle the delicate glass carefully."},
-            {word:"delight",pos:"noun",synonyms:["joy","pleasure","happiness","bliss","ecstasy"],antonyms:["sorrow","misery","displeasure"],example:"The children squealed with delight."}
-        ];
-        
-        // Initialize
-        renderWords(words);
-        searchInput.addEventListener('input', () => renderWords(words));
-    </script>
-    <footer style="text-align:center;padding:2rem 1rem;margin-top:2rem;border-top:1px solid #334155;color:#94a3b8;font-size:0.85rem;">
-        <p>&copy; 2025 paraphrasetool.org &mdash; Free online tool. No data stored.</p>
-    </footer>
-<div style="margin:30px auto;max-width:728px;text-align:center;padding:18px 24px;background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #334155;border-radius:10px">
-<p style="margin:0 0 6px;color:#94a3b8;font-size:0.85rem">Recommended by our team</p>
-<a href="https://www.belikenative.com?ref=satellite" target="_blank" rel="noopener" style="color:#38bdf8;font-weight:600;font-size:1.05rem;text-decoration:none">BeLikeNative.com</a>
-<p style="margin:6px 0 0;color:#cbd5e1;font-size:0.9rem">The #1 AI writing tool for freelancers — perfect grammar in any language, instantly.</p>
-</div>
+(function(){
+  "use strict";
+  // Compact bundled thesaurus: each row is a mutually-interchangeable synonym set.
+  var SETS = [
+    ["happy","glad","joyful","cheerful","content","pleased","delighted"],
+    ["sad","unhappy","gloomy","sorrowful","downcast","miserable"],
+    ["big","large","huge","enormous","massive","sizable","great"],
+    ["small","little","tiny","compact","minor","slight"],
+    ["fast","quick","rapid","swift","speedy","brisk"],
+    ["slow","sluggish","gradual","leisurely","unhurried"],
+    ["good","fine","excellent","great","superb","quality","decent"],
+    ["bad","poor","awful","terrible","lousy","inferior"],
+    ["important","crucial","vital","essential","significant","key","critical"],
+    ["beautiful","gorgeous","lovely","stunning","attractive","pretty"],
+    ["smart","clever","intelligent","bright","sharp","brilliant"],
+    ["difficult","hard","tough","challenging","tricky","demanding"],
+    ["easy","simple","effortless","straightforward","painless"],
+    ["show","display","reveal","demonstrate","present","exhibit"],
+    ["make","create","build","produce","form","generate","construct"],
+    ["use","utilize","employ","apply","leverage","wield"],
+    ["help","assist","aid","support","facilitate"],
+    ["get","obtain","acquire","gain","receive","secure"],
+    ["start","begin","commence","initiate","launch"],
+    ["end","finish","conclude","complete","terminate","close"],
+    ["think","believe","consider","reckon","suppose","figure"],
+    ["want","desire","wish","crave","seek"],
+    ["need","require","demand","necessitate"],
+    ["idea","concept","notion","thought","plan","scheme"],
+    ["problem","issue","trouble","difficulty","obstacle","challenge"],
+    ["answer","reply","response","solution","resolution"],
+    ["happy","upbeat","positive","optimistic"],
+    ["many","numerous","several","countless","plenty"],
+    ["few","scarce","limited","sparse"],
+    ["new","fresh","modern","recent","novel","current"],
+    ["old","ancient","aged","dated","outdated","vintage"],
+    ["change","alter","modify","adjust","transform","revise"],
+    ["interesting","engaging","fascinating","compelling","intriguing"],
+    ["boring","dull","tedious","monotonous","tiresome"],
+    ["strong","powerful","robust","sturdy","mighty","forceful"],
+    ["weak","feeble","frail","fragile","faint"],
+    ["clear","obvious","evident","apparent","plain","transparent"],
+    ["hide","conceal","mask","obscure","cover"],
+    ["increase","grow","raise","boost","expand","enlarge"],
+    ["decrease","reduce","lower","shrink","diminish","lessen"],
+    ["nice","pleasant","agreeable","kind","friendly"],
+    ["angry","furious","irate","annoyed","irritated","mad"],
+    ["scared","afraid","frightened","terrified","fearful"],
+    ["tired","exhausted","weary","fatigued","drained"],
+    ["rich","wealthy","affluent","prosperous","loaded"],
+    ["poor","broke","impoverished","needy"],
+    ["funny","amusing","humorous","comical","hilarious"],
+    ["true","correct","accurate","right","valid","genuine"],
+    ["false","wrong","incorrect","untrue","mistaken"],
+    ["very","extremely","highly","remarkably","exceptionally","really"],
+    ["often","frequently","regularly","repeatedly","commonly"],
+    ["rarely","seldom","infrequently","hardly"],
+    ["quickly","rapidly","swiftly","speedily","promptly"],
+    ["carefully","cautiously","attentively","meticulously"],
+    ["place","location","spot","site","area","venue"],
+    ["job","task","work","duty","assignment","role"],
+    ["money","cash","funds","capital","finances"],
+    ["story","tale","narrative","account","report"],
+    ["word","term","expression","phrase"],
+    ["write","compose","draft","author","pen"],
+    ["read","peruse","review","study","scan"],
+    ["say","state","mention","express","declare","remark"],
+    ["look","glance","gaze","peek","view"],
+    ["walk","stroll","wander","amble","trek"],
+    ["run","sprint","dash","race","jog"],
+    ["eat","consume","devour","ingest"],
+    ["buy","purchase","acquire","procure"],
+    ["sell","vend","market","offer"],
+    ["find","discover","locate","uncover","spot"],
+    ["lose","misplace","forfeit","drop"],
+    ["learn","study","grasp","master","absorb"],
+    ["teach","instruct","educate","train","coach"]
+  ];
+
+  // Build lookup: word -> array of alternatives (deduped, excluding the word itself)
+  var MAP = {};
+  SETS.forEach(function(set){
+    set.forEach(function(w){
+      if(!MAP[w]) MAP[w]=[];
+      set.forEach(function(o){ if(o!==w && MAP[w].indexOf(o)<0) MAP[w].push(o); });
+    });
+  });
+
+  var $=function(id){return document.getElementById(id);};
+  var wordIn=$("word"), synOut=$("synOut"), wordStat=$("wordStat");
+  var sent=$("sentence"), rewOut=$("rewriteOut"), rewStat=$("rewStat");
+  var optStrength=$("optStrength"), optKeepShort=$("optKeepShort"), optHL=$("optHighlight");
+  var seed=0;
+
+  function clean(w){ return w.toLowerCase().replace(/[^a-z']/g,""); }
+
+  function lookup(){
+    var key=clean(wordIn.value);
+    synOut.innerHTML="";
+    if(!key){ wordStat.textContent="Type a word above to see synonyms."; return; }
+    var alts=MAP[key];
+    if(!alts || !alts.length){
+      wordStat.textContent='No synonyms found for "'+key+'" in the built-in thesaurus.';
+      return;
+    }
+    alts.forEach(function(a){
+      var c=document.createElement("span");
+      c.className="chip"; c.textContent=a; c.title="Click to copy";
+      c.addEventListener("click",function(){
+        if(navigator.clipboard) navigator.clipboard.writeText(a);
+        c.textContent=a+" ✓";
+        setTimeout(function(){c.textContent=a;},900);
+      });
+      synOut.appendChild(c);
+    });
+    wordStat.textContent=alts.length+" synonym"+(alts.length>1?"s":"")+' for "'+key+'".';
+  }
+
+  function matchCase(orig,repl){
+    if(orig===orig.toUpperCase()&&orig.length>1) return repl.toUpperCase();
+    if(orig[0]===orig[0].toUpperCase()) return repl.charAt(0).toUpperCase()+repl.slice(1);
+    return repl;
+  }
+
+  function rewrite(){
+    var text=sent.value;
+    if(!text.trim()){ rewOut.innerHTML='<span class="muted">Your rewritten text will appear here.</span>'; rewStat.textContent=""; return; }
+    var tokens=text.split(/(\b)/); // keep boundaries roughly; we'll split on non-letters below
+    // Better: split into word and non-word chunks
+    var parts=text.match(/[A-Za-z']+|[^A-Za-z']+/g)||[];
+    var changed=0, eligible=0, ci=0, html="";
+    parts.forEach(function(p){
+      if(/^[A-Za-z']+$/.test(p)){
+        var key=clean(p);
+        var alts=MAP[key];
+        var protect=optKeepShort.checked && key.length<=3;
+        if(alts && alts.length && !protect){
+          eligible++;
+          var doIt = optStrength.checked ? true : (eligible%2===1);
+          if(doIt){
+            var idx=(ci+seed)%alts.length; ci++;
+            var repl=matchCase(p,alts[idx]);
+            changed++;
+            html += optHL.checked ? "<mark>"+esc(repl)+"</mark>" : esc(repl);
+            return;
+          }
+        }
+        html+=esc(p);
+      } else {
+        html+=esc(p);
+      }
+    });
+    rewOut.innerHTML=html;
+    var words=(text.match(/[A-Za-z']+/g)||[]).length;
+    rewStat.textContent=changed+" of "+words+" words replaced ("+eligible+" had synonyms available).";
+  }
+
+  function esc(s){ return s.replace(/[&<>]/g,function(c){return c==="&"?"&amp;":c==="<"?"&lt;":"&gt;";}); }
+
+  wordIn.addEventListener("input",lookup);
+  sent.addEventListener("input",rewrite);
+  optStrength.addEventListener("change",rewrite);
+  optKeepShort.addEventListener("change",rewrite);
+  optHL.addEventListener("change",rewrite);
+  $("reroll").addEventListener("click",function(){ seed=(seed+1)%97; rewrite(); });
+
+  // Prefill defaults so output shows on load
+  wordIn.value="happy";
+  sent.value="The new idea was very good and made the difficult problem easy to solve.";
+  lookup();
+  rewrite();
+})();
+</script>
 </body>
 </html>

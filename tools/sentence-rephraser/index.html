@@ -1,626 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Sentence Rephraser · Paraphrase Tool</title>
-  <meta name="description" content="Rephrase any sentence with 3–5 variants: passive/active swap, synonym substitution, clause reorder, formality shift. Copy & compare length & complexity.">
-  <link rel="canonical" href="https://paraphrasetool.org/tools/sentence-rephraser">
-  <!-- Open Graph -->
-  <meta property="og:title" content="Sentence Rephraser – Paraphrase Tool">
-  <meta property="og:description" content="Generate 3-5 rephrasings with technique labels, one‑click copy, and length/complexity comparison. Dark theme.">
-  <meta property="og:url" content="https://paraphrasetool.org/tools/sentence-rephraser">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="paraphrasetool.org">
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Sentence Rephraser",
-    "url": "https://paraphrasetool.org/tools/sentence-rephraser",
-    "description": "Rephrase sentences using active/passive swap, synonym substitution, clause reordering, and formality shift. Copy and compare variants.",
-    "applicationCategory": "Writing Tool",
-    "operatingSystem": "All",
-    "browserRequirements": "JavaScript enabled",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentence Rephraser — Free Online Paraphrasing Tool</title>
+<meta name="description" content="Rephrase sentences instantly with a free client-side sentence rephraser. Swap synonyms, reword phrases, and rewrite text right in your browser — no signup.">
+<link rel="canonical" href="https://paraphrasetool.org/tools/sentence-rephraser">
+<meta property="og:title" content="Sentence Rephraser — Free Online Paraphrasing Tool">
+<meta property="og:description" content="Rephrase sentences instantly with a free client-side sentence rephraser. Swap synonyms, reword phrases, and rewrite text in your browser.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/sentence-rephraser">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Sentence Rephraser",
+      "url": "https://paraphrasetool.org/tools/sentence-rephraser",
+      "description": "A free client-side sentence rephraser that swaps synonyms and rewords phrases to paraphrase text in your browser.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paraphrasetool.org/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://paraphrasetool.org/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Sentence Rephraser", "item": "https://paraphrasetool.org/tools/sentence-rephraser" }
+      ]
     }
-  }
-  </script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: #0f172a;
-      color: #e2e8f0;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem 1rem;
-    }
-    .container {
-      max-width: 900px;
-      width: 100%;
-      background: #1e293b;
-      border-radius: 2rem;
-      padding: 2rem 1.8rem;
-      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8);
-      border: 1px solid #334155;
-    }
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 0.25rem;
-    }
-    .subhead {
-      color: #94a3b8;
-      font-size: 1rem;
-      border-left: 3px solid #38bdf8;
-      padding-left: 0.75rem;
-      margin-bottom: 1.8rem;
-    }
-    .input-area {
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      margin-bottom: 2rem;
-    }
-    textarea {
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 1.2rem;
-      padding: 1rem 1.2rem;
-      font-size: 1.1rem;
-      color: #f1f5f9;
-      resize: vertical;
-      min-height: 80px;
-      width: 100%;
-      transition: 0.2s;
-      font-family: inherit;
-    }
-    textarea:focus {
-      outline: 2px solid #38bdf8;
-      border-color: transparent;
-      background: #0b1120;
-    }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      align-items: center;
-    }
-    .btn {
-      background: #38bdf8;
-      color: #0f172a;
-      font-weight: 600;
-      padding: 0.7rem 1.8rem;
-      border: none;
-      border-radius: 3rem;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.15s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
-    }
-    .btn:hover {
-      background: #7dd3fc;
-      transform: scale(0.97);
-      box-shadow: 0 6px 16px rgba(56, 189, 248, 0.3);
-    }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #38bdf8;
-      color: #38bdf8;
-      box-shadow: none;
-    }
-    .btn-outline:hover {
-      background: rgba(56, 189, 248, 0.08);
-    }
-    .stats-badge {
-      margin-left: auto;
-      background: #0f172a;
-      padding: 0.4rem 1rem;
-      border-radius: 2rem;
-      font-size: 0.85rem;
-      color: #94a3b8;
-      border: 1px solid #334155;
-    }
-    .results-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      margin: 1.8rem 0 1.2rem;
-    }
-    .variant-card {
-      background: #0f172a;
-      border-radius: 1.4rem;
-      padding: 1.2rem 1.5rem;
-      border-left: 4px solid #38bdf8;
-      transition: 0.1s;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .variant-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-    .technique-tag {
-      background: #1e293b;
-      padding: 0.2rem 1rem;
-      border-radius: 2rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      color: #38bdf8;
-      border: 1px solid #334155;
-      text-transform: uppercase;
-    }
-    .variant-text {
-      font-size: 1.2rem;
-      line-height: 1.5;
-      word-break: break-word;
-      color: #f1f5f9;
-      padding: 0.2rem 0;
-    }
-    .variant-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.2rem;
-    }
-    .complexity-indicator {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.8rem;
-      color: #94a3b8;
-    }
-    .complexity-bar {
-      width: 80px;
-      height: 6px;
-      background: #1e293b;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .complexity-fill {
-      height: 100%;
-      background: #38bdf8;
-      border-radius: 4px;
-      transition: width 0.2s;
-    }
-    .copy-btn {
-      background: transparent;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      padding: 0.3rem 1rem;
-      border-radius: 2rem;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: 0.1s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-    .copy-btn:hover {
-      background: #1e293b;
-      border-color: #38bdf8;
-      color: #38bdf8;
-    }
-    .copy-btn.copied {
-      background: #38bdf8;
-      color: #0f172a;
-      border-color: #38bdf8;
-    }
-    .empty-state {
-      color: #64748b;
-      text-align: center;
-      padding: 2rem 0;
-      font-style: italic;
-      border: 1px dashed #334155;
-      border-radius: 2rem;
-    }
-    .comparison-area {
-      background: #0f172a;
-      border-radius: 1.4rem;
-      padding: 1.2rem 1.5rem;
-      margin-top: 1rem;
-      border: 1px solid #1e293b;
-    }
-    .comparison-title {
-      font-weight: 500;
-      color: #94a3b8;
-      font-size: 0.9rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.6rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .comparison-stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.2rem 2rem;
-    }
-    .stat-item {
-      display: flex;
-      align-items: baseline;
-      gap: 0.4rem;
-      font-size: 0.9rem;
-    }
-    .stat-label {
-      color: #64748b;
-    }
-    .stat-value {
-      color: #e2e8f0;
-      font-weight: 500;
-    }
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-      color: #475569;
-      font-size: 0.8rem;
-      border-top: 1px solid #1e293b;
-      padding-top: 1.5rem;
-    }
-    footer a {
-      color: #38bdf8;
-      text-decoration: none;
-    }
-    @media (max-width: 600px) {
-      .container { padding: 1.5rem 1rem; }
-      h1 { font-size: 1.8rem; }
-      .stats-badge { margin-left: 0; }
-    }
-  </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+  ]
+}
+</script>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--line:#2a3240;--text:#e6edf3;--muted:#9aa7b4;--accent:#5b9dff;--accent2:#3fb68b;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+nav{display:flex;gap:18px;padding:14px 20px;background:var(--panel);border-bottom:1px solid var(--line);font-size:.95rem}
+.wrap{max-width:880px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:1.9rem;margin:.4em 0 .2em;line-height:1.2}
+h2{font-size:1.3rem;margin:1.8em 0 .5em;border-bottom:1px solid var(--line);padding-bottom:.3em}
+.lead{color:var(--muted);font-size:1.05rem}
+section#tool{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:22px 0}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.92rem}
+textarea{width:100%;min-height:120px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical}
+.controls{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:14px 0}
+.controls label{margin:0;font-weight:500;color:var(--muted)}
+input[type=range]{vertical-align:middle}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+button{background:var(--accent);color:#06101f;border:0;border-radius:8px;padding:10px 16px;font-weight:600;font-size:.95rem;cursor:pointer}
+button.alt{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+button:hover{opacity:.9}
+.out{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:14px;margin-top:14px;min-height:60px;white-space:pre-wrap}
+.out .chg{color:var(--accent2);font-weight:600}
+.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;margin-top:10px}
+.stats b{color:var(--text)}
+footer{border-top:1px solid var(--line);background:var(--panel);padding:20px;color:var(--muted);font-size:.9rem;text-align:center}
+footer a{margin:0 8px}
+.rel a{display:inline-block;margin:4px 10px 4px 0}
+code{background:var(--panel2);padding:1px 5px;border-radius:4px;font-size:.9em}
+</style>
 </head>
 <body>
-<div class="container">
-  <h1>✎ sentence rephraser</h1>
-  <div class="subhead">paraphrase with technique labels · copy · compare</div>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tools/">All Tools</a>
+  <a href="/tools/sentence-rephraser">Sentence Rephraser</a>
+</nav>
+<div class="wrap">
+<h1>Rephrase Any Sentence in Seconds</h1>
+<p class="lead">Paste your text below and the rephraser swaps in synonyms and reworks common phrasing to give you a fresh paraphrase — entirely in your browser, with nothing sent to a server.</p>
 
-  <div class="input-area">
-    <textarea id="inputSentence" placeholder="Enter a sentence to rephrase, e.g. 'The committee will review the proposal next week.'" rows="2">The committee will review the proposal next week.</textarea>
-    <div class="actions">
-      <button class="btn" id="generateBtn">⟳ Generate rephrasings</button>
-      <button class="btn-outline btn" id="exampleBtn">↺ load example</button>
-      <span class="stats-badge" id="wordCount">words: 7</span>
-    </div>
+<section id="tool">
+  <label for="inp">Your text</label>
+  <textarea id="inp" placeholder="Type or paste a sentence to rephrase...">Many students believe that good writing is very important because it helps them communicate their ideas in a clear and effective way.</textarea>
+
+  <div class="controls">
+    <label>Rewrite strength
+      <input type="range" id="strength" min="1" max="3" step="1" value="2">
+      <span id="strengthLbl">Balanced</span>
+    </label>
+    <label><input type="checkbox" id="caseKeep" checked> Preserve capitalization</label>
+    <label><input type="checkbox" id="highlight" checked> Highlight changes</label>
   </div>
 
-  <!-- results injected here -->
-  <div id="resultsContainer" class="results-grid"></div>
-
-  <!-- comparison panel -->
-  <div class="comparison-area" id="comparisonPanel">
-    <div class="comparison-title">📊 length & complexity comparison</div>
-    <div class="comparison-stats" id="comparisonStats">
-      <span class="stat-item"><span class="stat-label">original:</span> <span class="stat-value" id="origLen">—</span></span>
-      <span class="stat-item"><span class="stat-label">avg variant length:</span> <span class="stat-value" id="avgLen">—</span></span>
-      <span class="stat-item"><span class="stat-label">complexity (σ):</span> <span class="stat-value" id="complexitySigma">—</span></span>
-    </div>
+  <div class="btns">
+    <button id="run">Rephrase</button>
+    <button id="again" class="alt">Try another variation</button>
+    <button id="copy" class="alt">Copy result</button>
   </div>
 
-  <footer>
-    <a href="https://paraphrasetool.org/tools/sentence-rephraser" target="_blank">paraphrasetool.org/tools/sentence-rephraser</a> — rephrase with confidence
-  </footer>
-<div style="margin:20px auto;max-width:728px;text-align:center">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <label for="out" style="margin-top:18px">Rephrased output</label>
+  <div class="out" id="out" aria-live="polite"></div>
+  <div class="stats">
+    <span>Words: <b id="wc">0</b></span>
+    <span>Words changed: <b id="cc">0</b></span>
+    <span>Rewrite rate: <b id="rr">0%</b></span>
+  </div>
+</section>
+
+<h2>How the sentence rephraser works</h2>
+<p>This tool is a <strong>rule-based, dictionary-driven paraphraser</strong> that runs 100% client-side — there is no AI server, no account, and no data ever leaves your device. It works in three deterministic passes over your text. First, a <strong>phrase pass</strong> scans for multi-word expressions (for example <code>in order to</code> &rarr; <code>to</code>, <code>a lot of</code> &rarr; <code>many</code>, <code>due to the fact that</code> &rarr; <code>because</code>) and replaces them with shorter or alternative wordings. Second, a <strong>synonym pass</strong> walks each remaining word, looks it up in a built-in thesaurus of several hundred common words, and substitutes a synonym while preserving the original capitalization and trailing punctuation. Segments already rewritten by the phrase pass are skipped so words are never double-replaced.</p>
+<p>The <strong>Rewrite strength</strong> slider controls how aggressive the substitution is. The formula is simple: for each candidate word the tool computes a replacement probability <code>p = strength / 3</code>, so Light strength changes roughly one word in three, Balanced about two in three, and Strong attempts every word that has a known synonym. A seeded pseudo-random generator drives both which words are touched and which synonym is chosen, so the rewrite is reproducible for a given input — and pressing <em>Try another variation</em> reseeds it to produce a different valid paraphrase from the same source. The live counters show how many words were actually swapped and the resulting <strong>rewrite rate</strong> (changed words &divide; total words), a quick proxy for how far the paraphrase has drifted from the original. Because every transformation is a transparent dictionary lookup, the output stays readable and you can always see exactly which words moved when <em>Highlight changes</em> is on. For best results, rephrase one or two sentences at a time and then proofread — automatic synonym swaps occasionally pick a word that does not fit your exact context.</p>
+
+<h2>Related Tools</h2>
+<p class="rel">
+  <a href="/tools/paragraph-rewriter">Paragraph Rewriter</a>
+  <a href="/tools/synonym-finder">Synonym Finder</a>
+  <a href="/tools/word-counter">Word Counter</a>
+</p>
 </div>
-</div>
+
+<footer>
+  <div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/tools/paragraph-rewriter">Paragraph Rewriter</a>
+    <a href="/about">About</a>
+  </div>
+  <div style="margin-top:8px">&copy; 2026 paraphrasetool.org &middot; Built by <a href="https://zovo.one">Michael Lip</a></div>
+</footer>
 
 <script>
-  (function() {
-    const inputEl = document.getElementById('inputSentence');
-    const generateBtn = document.getElementById('generateBtn');
-    const exampleBtn = document.getElementById('exampleBtn');
-    const resultsContainer = document.getElementById('resultsContainer');
-    const wordCountSpan = document.getElementById('wordCount');
-    const origLenSpan = document.getElementById('origLen');
-    const avgLenSpan = document.getElementById('avgLen');
-    const complexitySigmaSpan = document.getElementById('complexitySigma');
+(function(){
+  "use strict";
 
-    // ---------- UTILITIES ----------
-    function countWords(text) {
-      return text.trim() ? text.trim().split(/\s+/).length : 0;
+  var THES = {
+    "many":["numerous","plenty of","a great deal of"],
+    "students":["learners","pupils","scholars"],
+    "believe":["think","feel","hold"],
+    "good":["strong","solid","fine","sound"],
+    "writing":["composition","prose","wording"],
+    "very":["extremely","highly","particularly"],
+    "important":["essential","crucial","vital","significant"],
+    "because":["since","as","given that"],
+    "helps":["enables","assists","allows"],
+    "communicate":["convey","express","share"],
+    "ideas":["thoughts","concepts","points"],
+    "clear":["plain","simple","lucid"],
+    "effective":["efficient","productive","successful"],
+    "way":["manner","fashion","method"],
+    "big":["large","huge","substantial"],
+    "small":["tiny","minor","modest"],
+    "fast":["quick","rapid","swift"],
+    "slow":["sluggish","gradual","unhurried"],
+    "happy":["glad","pleased","content"],
+    "sad":["unhappy","downcast","gloomy"],
+    "make":["create","produce","build"],
+    "use":["employ","utilize","apply"],
+    "show":["demonstrate","reveal","display"],
+    "get":["obtain","acquire","gain"],
+    "give":["provide","offer","supply"],
+    "need":["require","want","demand"],
+    "help":["aid","assist","support"],
+    "find":["locate","discover","spot"],
+    "think":["consider","reckon","suppose"],
+    "know":["understand","realize","grasp"],
+    "want":["wish","desire","prefer"],
+    "people":["individuals","folks","persons"],
+    "thing":["item","matter","element"],
+    "things":["items","matters","elements"],
+    "really":["truly","genuinely","actually"],
+    "great":["excellent","outstanding","superb"],
+    "bad":["poor","weak","subpar"],
+    "easy":["simple","straightforward","effortless"],
+    "hard":["difficult","challenging","tough"],
+    "new":["fresh","modern","recent"],
+    "old":["aged","former","prior"],
+    "start":["begin","launch","commence"],
+    "end":["finish","conclude","complete"],
+    "improve":["enhance","boost","strengthen"],
+    "increase":["raise","grow","expand"],
+    "reduce":["lower","decrease","cut"],
+    "create":["build","form","generate"],
+    "change":["alter","modify","adjust"],
+    "explain":["clarify","describe","outline"],
+    "understand":["grasp","comprehend","follow"],
+    "ensure":["guarantee","secure","confirm"],
+    "provide":["offer","supply","deliver"],
+    "allow":["permit","enable","let"],
+    "result":["outcome","effect","consequence"],
+    "however":["nevertheless","yet","still"],
+    "therefore":["thus","hence","consequently"],
+    "also":["additionally","too","likewise"],
+    "often":["frequently","commonly","regularly"],
+    "always":["consistently","invariably","constantly"]
+  };
+
+  var PHRASES = [
+    ["in order to","to"],
+    ["a lot of","many"],
+    ["a number of","several"],
+    ["due to the fact that","because"],
+    ["in spite of","despite"],
+    ["in the event that","if"],
+    ["at this point in time","now"],
+    ["for the most part","mostly"],
+    ["with regard to","regarding"],
+    ["as a result of","because of"],
+    ["in addition to","besides"],
+    ["the majority of","most"],
+    ["a great deal of","much"]
+  ];
+
+  var S1=String.fromCharCode(1), S2=String.fromCharCode(2);
+
+  var inp=document.getElementById("inp"),
+      out=document.getElementById("out"),
+      strength=document.getElementById("strength"),
+      strengthLbl=document.getElementById("strengthLbl"),
+      caseKeep=document.getElementById("caseKeep"),
+      highlight=document.getElementById("highlight"),
+      wc=document.getElementById("wc"),cc=document.getElementById("cc"),rr=document.getElementById("rr");
+
+  var seed=1;
+  function rand(){ seed=(seed*9301+49297)%233280; return seed/233280; }
+  function pick(arr){ return arr[Math.floor(rand()*arr.length)]; }
+
+  function matchCase(src,rep){
+    if(!caseKeep.checked) return rep;
+    if(src.length && src[0]===src[0].toUpperCase() && src[0]!==src[0].toLowerCase()){
+      return rep.charAt(0).toUpperCase()+rep.slice(1);
     }
+    return rep;
+  }
 
-    function updateWordCount() {
-      const wc = countWords(inputEl.value);
-      wordCountSpan.textContent = `words: ${wc}`;
-    }
+  function strengthLabel(s){ return s==="1"?"Light":s==="3"?"Strong":"Balanced"; }
 
-    // ---------- REPHRASING ENGINE (deterministic, technique‑based) ----------
-    function generateRephrasings(sentence) {
-      const s = sentence.trim();
-      if (!s) return [];
+  function escapeHtml(s){
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
 
-      const results = [];
-      const lower = s.toLowerCase();
+  function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
 
-      // 1) passive / active voice swap
-      // simple heuristic: if contains "will" + verb + object -> passive
-      let voiceSwap = null;
-      const passiveMatch = s.match(/\b(will|shall|can|could|may|might)\s+(\w+)\s+(.+)/i);
-      if (passiveMatch && passiveMatch[2] && passiveMatch[3]) {
-        const modal = passiveMatch[1].toLowerCase();
-        const verb = passiveMatch[2];
-        const object = passiveMatch[3].trim();
-        // passive: Object + modal + be + past participle + by ...
-        const past = verb.endsWith('e') ? verb + 'd' : verb + 'ed'; // naive
-        voiceSwap = `${object} ${modal} be ${past} by the committee.`;
-        // fix double spaces / punctuation
-        voiceSwap = voiceSwap.replace(/\s+/g, ' ').replace(/ ,/g, ',').replace(/\.+/g, '.').trim();
-        if (!voiceSwap.endsWith('.')) voiceSwap += '.';
-      } else {
-        // fallback: if sentence is passive -> active (naive)
-        const byMatch = s.match(/(.+)\s+by\s+(.+)/i);
-        if (byMatch) {
-          voiceSwap = `${byMatch[2].trim()} ${byMatch[1].trim()}`;
-          voiceSwap = voiceSwap.replace(/\s+/g, ' ').trim();
-          if (!voiceSwap.endsWith('.')) voiceSwap += '.';
-        } else {
-          // generic swap: add "by someone"
-          voiceSwap = `${s} This was done by the team.`;
-        }
-      }
-      if (voiceSwap && !results.find(r => r.text === voiceSwap)) {
-        results.push({ technique: 'passive/active swap', text: voiceSwap });
-      }
+  function rephrase(){
+    var text=inp.value;
+    var p=parseInt(strength.value,10)/3;
 
-      // 2) synonym substitution (simple mapping)
-      const synonymMap = {
-        'review': 'examine',
-        'proposal': 'suggestion',
-        'committee': 'board',
-        'next': 'upcoming',
-        'week': 'week',
-        'will': 'is going to',
-        'discuss': 'talk over',
-        'meeting': 'gathering',
-        'plan': 'scheme',
-        'important': 'significant',
-        'quick': 'fast',
-        'help': 'assist',
-        'big': 'large',
-        'small': 'tiny',
-        'good': 'excellent',
-        'bad': 'poor'
-      };
-      let synonymText = s;
-      let synCount = 0;
-      for (const [word, replacement] of Object.entries(synonymMap)) {
-        const regex = new RegExp(`\\b${word}\\b`, 'gi');
-        if (regex.test(synonymText)) {
-          synonymText = synonymText.replace(regex, replacement);
-          synCount++;
-          if (synCount >= 2) break; // max 2 substitutions
-        }
-      }
-      if (synonymText !== s && !results.find(r => r.text === synonymText)) {
-        results.push({ technique: 'synonym substitution', text: synonymText });
-      } else {
-        // fallback: add a synonym variant anyway
-        const fallbackSyn = s.replace(/\breview\b/i, 'examine').replace(/\bproposal\b/i, 'suggestion');
-        if (fallbackSyn !== s && !results.find(r => r.text === fallbackSyn)) {
-          results.push({ technique: 'synonym substitution', text: fallbackSyn });
-        } else {
-          results.push({ technique: 'synonym substitution', text: s + ' (revised wording)' });
-        }
-      }
-
-      // 3) clause reordering (move time / subordinate clause)
-      let reorderText = s;
-      const timeClause = s.match(/\b(next\s+\w+|tomorrow|yesterday|soon|now|then|after\s+\w+)/i);
-      if (timeClause) {
-        const clause = timeClause[0];
-        const rest = s.replace(clause, '').replace(/\s+/g, ' ').trim();
-        reorderText = `${clause}, ${rest}`;
-        if (!reorderText.endsWith('.')) reorderText += '.';
-      } else {
-        // swap first two phrases if comma exists
-        if (s.includes(',')) {
-          const parts = s.split(',').map(p => p.trim());
-          if (parts.length >= 2) {
-            reorderText = `${parts[1]}, ${parts[0]}`;
-            if (!reorderText.endsWith('.')) reorderText += '.';
-          }
-        } else {
-          reorderText = `After deliberation, ${s.slice(0,1).toLowerCase() + s.slice(1)}`;
-        }
-      }
-      if (!results.find(r => r.text === reorderText)) {
-        results.push({ technique: 'clause reordering', text: reorderText });
-      }
-
-      // 4) formality shift (formal ↔ informal)
-      let formalityText = s;
-      if (s.includes("'") || s.includes("can't") || s.includes("won't") || s.includes("gonna") || s.includes("wanna")) {
-        formalityText = s.replace(/can't/g, 'cannot').replace(/won't/g, 'will not').replace(/gonna/g, 'going to').replace(/wanna/g, 'want to');
-        formalityText = formalityText.replace(/'/g, ''); // remove contractions
-      } else {
-        // make slightly informal
-        formalityText = s.replace(/\bwill\b/g, "'ll").replace(/\bcannot\b/g, "can't").replace(/\bcommittee\b/g, 'group');
-        if (formalityText === s) formalityText = s + ' (informal tone)';
-      }
-      if (!results.find(r => r.text === formalityText)) {
-        results.push({ technique: 'formality shift', text: formalityText });
-      }
-
-      // 5) extra variant: active/passive alternative if we have less than 5
-      if (results.length < 5) {
-        const extra = `It is expected that ${s.slice(0,1).toLowerCase() + s.slice(1)}`;
-        if (!results.find(r => r.text === extra)) {
-          results.push({ technique: 'passive/active swap', text: extra });
-        }
-      }
-
-      // ensure max 5, min 3
-      while (results.length > 5) results.pop();
-      while (results.length < 3) {
-        results.push({ technique: 'clause reordering', text: s + ' (rephrased)' });
-      }
-
-      return results;
-    }
-
-    // ---------- RENDER RESULTS ----------
-    function renderResults(variants, original) {
-      if (!variants || variants.length === 0) {
-        resultsContainer.innerHTML = `<div class="empty-state">✏️ enter a sentence and click generate</div>`;
-        return;
-      }
-
-      let html = '';
-      for (const v of variants) {
-        const len = v.text.length;
-        // complexity score based on length & word count (naive)
-        const wordCount = v.text.split(/\s+/).length;
-        const complexity = Math.min(100, Math.round((len * 0.4 + wordCount * 5) % 100));
-        html += `
-          <div class="variant-card">
-            <div class="variant-header">
-              <span class="technique-tag">${v.technique}</span>
-              <button class="copy-btn" data-copy="${escapeAttr(v.text)}">📋 copy</button>
-            </div>
-            <div class="variant-text">${v.text}</div>
-            <div class="variant-footer">
-              <div class="complexity-indicator">
-                <span>complexity</span>
-                <div class="complexity-bar"><div class="complexity-fill" style="width: ${complexity}%"></div></div>
-                <span>${complexity}%</span>
-              </div>
-              <span style="color:#64748b;font-size:0.75rem;">${len} chars · ${wordCount} words</span>
-            </div>
-          </div>
-        `;
-      }
-      resultsContainer.innerHTML = html;
-
-      // attach copy events
-      document.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-          const text = this.getAttribute('data-copy');
-          if (!text) return;
-          navigator.clipboard.writeText(text).then(() => {
-            this.classList.add('copied');
-            this.textContent = '✓ copied';
-            setTimeout(() => {
-              this.classList.remove('copied');
-              this.textContent = '📋 copy';
-            }, 1800);
-          }).catch(() => {
-            // fallback
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand('copy');
-            ta.remove();
-            this.textContent = '📋 copied!';
-            setTimeout(() => { this.textContent = '📋 copy'; }, 1500);
-          });
-        });
+    // Phrase pass — wrap replaced phrases in sentinels
+    PHRASES.forEach(function(pair){
+      var re=new RegExp("\\b"+escRe(pair[0])+"\\b","gi");
+      text=text.replace(re,function(m){
+        if(rand()>p) return m;
+        return S1+matchCase(m,pair[1])+S2;
       });
-
-      // update comparison
-      updateComparison(variants, original);
-    }
-
-    function escapeAttr(str) {
-      return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-    }
-
-    // ---------- COMPARISON ----------
-    function updateComparison(variants, original) {
-      if (!original || !variants || variants.length === 0) {
-        origLenSpan.textContent = '—';
-        avgLenSpan.textContent = '—';
-        complexitySigmaSpan.textContent = '—';
-        return;
-      }
-      const origLen = original.length;
-      origLenSpan.textContent = `${origLen} chars`;
-
-      const lengths = variants.map(v => v.text.length);
-      const avg = lengths.reduce((a, b) => a + b, 0) / lengths.length;
-      avgLenSpan.textContent = `${avg.toFixed(1)} chars`;
-
-      // standard deviation (complexity spread)
-      const mean = avg;
-      const variance = lengths.reduce((sum, l) => sum + (l - mean) ** 2, 0) / lengths.length;
-      const sigma = Math.sqrt(variance);
-      complexitySigmaSpan.textContent = `${sigma.toFixed(1)} (σ)`;
-    }
-
-    // ---------- MAIN GENERATE ----------
-    function generateAndRender() {
-      const sentence = inputEl.value.trim();
-      if (!sentence) {
-        resultsContainer.innerHTML = `<div class="empty-state">⚠️ please enter a sentence</div>`;
-        origLenSpan.textContent = '—';
-        avgLenSpan.textContent = '—';
-        complexitySigmaSpan.textContent = '—';
-        return;
-      }
-      const variants = generateRephrasings(sentence);
-      renderResults(variants, sentence);
-    }
-
-    // ---------- EVENT LISTENERS ----------
-    generateBtn.addEventListener('click', generateAndRender);
-
-    exampleBtn.addEventListener('click', function() {
-      inputEl.value = 'The committee will review the proposal next week.';
-      updateWordCount();
-      generateAndRender();
     });
 
-    inputEl.addEventListener('input', updateWordCount);
-
-    // initial load
-    updateWordCount();
-    // auto-generate on page load (with default example)
-    setTimeout(() => {
-      generateAndRender();
-    }, 80);
-
-    // also generate on Ctrl+Enter
-    inputEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-        e.preventDefault();
-        generateBtn.click();
+    // Synonym pass — token by token, skipping sentineled segments
+    var total=0, insideSeg=false;
+    var tokens=text.split(/(\b)/);
+    var out2=tokens.map(function(tok){
+      if(tok.indexOf(S1)>=0) insideSeg=true;
+      var res;
+      if(!insideSeg && /^[A-Za-z]+$/.test(tok)){
+        total++;
+        var key=tok.toLowerCase();
+        res=tok;
+        if(THES[key] && rand()<p){
+          var syns=THES[key].filter(function(x){return x.toLowerCase()!==key;});
+          if(syns.length){
+            var rep=matchCase(tok,pick(syns));
+            if(rep.toLowerCase()!==tok.toLowerCase()) res=S1+rep+S2;
+          }
+        }
+      } else {
+        res=tok;
       }
-    });
-  })();
+      if(tok.indexOf(S2)>=0) insideSeg=false;
+      return res;
+    }).join("");
+
+    var totalSegs=(out2.split(S1).length-1);
+    if(total<1) total=1;
+
+    // Render with optional highlight
+    var html="", buf="";
+    for(var i=0;i<out2.length;i++){
+      var ch=out2[i];
+      if(ch===S1){ html+=escapeHtml(buf); buf=""; }
+      else if(ch===S2){
+        html+= highlight.checked ? '<span class="chg">'+escapeHtml(buf)+'</span>' : escapeHtml(buf);
+        buf="";
+      } else buf+=ch;
+    }
+    html+=escapeHtml(buf);
+    out.innerHTML=html;
+
+    wc.textContent=String(total);
+    cc.textContent=String(totalSegs);
+    rr.textContent=Math.round(totalSegs/total*100)+"%";
+  }
+
+  function hashSeed(str){
+    var h=5381;
+    for(var i=0;i<str.length;i++){ h=((h*33)+str.charCodeAt(i))%233280; }
+    return Math.abs(h)+1;
+  }
+
+  inp.addEventListener("input",function(){ seed=hashSeed(inp.value); rephrase(); });
+  strength.addEventListener("input",function(){ strengthLbl.textContent=strengthLabel(strength.value); rephrase(); });
+  caseKeep.addEventListener("change",rephrase);
+  highlight.addEventListener("change",rephrase);
+  document.getElementById("run").addEventListener("click",function(){ seed=hashSeed(inp.value); rephrase(); });
+  document.getElementById("again").addEventListener("click",function(){ seed=(seed+Math.floor(Math.random()*9999)+1)%233280+1; rephrase(); });
+  document.getElementById("copy").addEventListener("click",function(){
+    var t=out.textContent||"";
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t); }
+    var b=document.getElementById("copy"), old=b.textContent;
+    b.textContent="Copied!"; setTimeout(function(){b.textContent=old;},1200);
+  });
+
+  // Prefill output on load
+  seed=hashSeed(inp.value);
+  strengthLbl.textContent=strengthLabel(strength.value);
+  rephrase();
+})();
 </script>
-<div style="margin:30px auto;max-width:728px;text-align:center;padding:18px 24px;background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #334155;border-radius:10px">
-<p style="margin:0 0 6px;color:#94a3b8;font-size:0.85rem">Recommended by our team</p>
-<a href="https://www.belikenative.com?ref=satellite" target="_blank" rel="noopener" style="color:#38bdf8;font-weight:600;font-size:1.05rem;text-decoration:none">BeLikeNative.com</a>
-<p style="margin:6px 0 0;color:#cbd5e1;font-size:0.9rem">The #1 AI writing tool for freelancers — perfect grammar in any language, instantly.</p>
-</div>
 </body>
 </html>

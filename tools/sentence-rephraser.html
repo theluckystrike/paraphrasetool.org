@@ -1,640 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sentence Rephraser — Rewrite Any Sentence 5 Ways</title>
-  <meta name="description" content="Rewrite any sentence 5 ways: formal, casual, concise, expanded, creative. Interactive tool with ratings, copy, and word count.">
-  <link rel="canonical" href="https://paraphrasetool.org/sentence-rephraser">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Sentence Rephraser — Rewrite Any Sentence 5 Ways",
-    "url": "https://paraphrasetool.org/sentence-rephraser",
-    "description": "Interactive sentence rephraser generating 5 versions: formal, casual, concise, expanded, creative.",
-    "applicationCategory": "Text Processing",
-    "operatingSystem": "All"
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {"@type":"Question","name":"How does the rephraser work?","acceptedAnswer":{"@type":"Answer","text":"Uses pattern matching, 250+ synonym pairs, and sentence templates to generate 5 distinct versions."}},
-      {"@type":"Question","name":"Can I save my ratings?","acceptedAnswer":{"@type":"Answer","text":"Yes, thumbs up/down are stored in localStorage per sentence."}}
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type":"ListItem","position":1,"name":"Home","item":"https://paraphrasetool.org/"},
-      {"@type":"ListItem","position":2,"name":"Sentence Rephraser","item":"https://paraphrasetool.org/sentence-rephraser"}
-    ]
-  }
-  </script>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentence Rephraser — Free Online Paraphrasing Tool</title>
+<meta name="description" content="Rephrase sentences instantly with a free client-side sentence rephraser. Swap synonyms, reword phrases, and rewrite text right in your browser — no signup.">
+<link rel="canonical" href="https://paraphrasetool.org/tools/sentence-rephraser">
+<meta property="og:title" content="Sentence Rephraser — Free Online Paraphrasing Tool">
+<meta property="og:description" content="Rephrase sentences instantly with a free client-side sentence rephraser. Swap synonyms, reword phrases, and rewrite text in your browser.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/sentence-rephraser">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Sentence Rephraser",
+      "url": "https://paraphrasetool.org/tools/sentence-rephraser",
+      "description": "A free client-side sentence rephraser that swaps synonyms and rewords phrases to paraphrase text in your browser.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paraphrasetool.org/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://paraphrasetool.org/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Sentence Rephraser", "item": "https://paraphrasetool.org/tools/sentence-rephraser" }
+      ]
     }
-    body {
-      background: #0a0a0a;
-      color: #e0e0e0;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      line-height: 1.5;
-      padding: 2rem 1rem;
-      max-width: 1000px;
-      margin: 0 auto;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    h1, h2, h3 {
-      font-weight: 500;
-      letter-spacing: -0.01em;
-    }
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 0.25rem;
-      color: #f0f0f0;
-    }
-    .subhead {
-      color: #aaa;
-      margin-bottom: 2rem;
-      border-left: 3px solid #7c4dff;
-      padding-left: 1rem;
-    }
-    .card {
-      background: #141414;
-      border-radius: 20px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid #2a2a2a;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-    }
-    .flex-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      align-items: center;
-    }
-    textarea {
-      width: 100%;
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 16px;
-      padding: 1rem 1.2rem;
-      font-size: 1.1rem;
-      color: #e0e0e0;
-      resize: vertical;
-      min-height: 80px;
-      font-family: inherit;
-      transition: border 0.2s;
-    }
-    textarea:focus {
-      outline: none;
-      border-color: #7c4dff;
-    }
-    .btn-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-    .btn {
-      background: #2a2a2a;
-      border: none;
-      padding: 0.6rem 1.4rem;
-      border-radius: 40px;
-      font-weight: 500;
-      color: #ddd;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .btn-primary {
-      background: #7c4dff;
-      color: #fff;
-    }
-    .btn-primary:hover {
-      background: #9b7aff;
-      transform: scale(1.02);
-    }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #444;
-    }
-    .btn-outline:hover {
-      border-color: #7c4dff;
-      color: #fff;
-    }
-    .btn-sm {
-      padding: 0.3rem 0.9rem;
-      font-size: 0.8rem;
-    }
-    .example-badge {
-      background: #1e1e1e;
-      padding: 0.3rem 1rem;
-      border-radius: 30px;
-      border: 1px solid #333;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-    .example-badge:hover {
-      border-color: #7c4dff;
-      color: #fff;
-    }
-    .result-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      margin-top: 0.5rem;
-    }
-    .version-item {
-      background: #1a1a1a;
-      border-radius: 18px;
-      padding: 1rem 1.3rem;
-      border-left: 5px solid #7c4dff;
-      transition: 0.15s;
-    }
-    .version-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .version-label {
-      font-weight: 600;
-      color: #c8b8ff;
-      letter-spacing: 0.3px;
-    }
-    .version-strategy {
-      font-size: 0.75rem;
-      background: #2a2a2a;
-      padding: 0.2rem 1rem;
-      border-radius: 30px;
-      color: #aaa;
-    }
-    .version-text {
-      font-size: 1.1rem;
-      margin: 0.4rem 0 0.6rem 0;
-      word-break: break-word;
-    }
-    .action-row {
-      display: flex;
-      gap: 0.8rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .action-row .btn {
-      background: transparent;
-      padding: 0.2rem 0.6rem;
-      font-size: 1.1rem;
-      border: none;
-      color: #aaa;
-    }
-    .action-row .btn:hover {
-      color: #7c4dff;
-    }
-    .thumb-up.active, .thumb-down.active {
-      color: #7c4dff;
-    }
-    .wordcount {
-      font-size: 0.8rem;
-      color: #888;
-      margin-left: auto;
-    }
-    .footer {
-      margin-top: 3rem;
-      text-align: center;
-      color: #666;
-      font-size: 0.9rem;
-      border-top: 1px solid #222;
-      padding-top: 2rem;
-    }
-    .footer a {
-      color: #9b7aff;
-      text-decoration: none;
-    }
-    .footer a:hover {
-      text-decoration: underline;
-    }
-    .toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #2a2a2a;
-      padding: 0.7rem 1.5rem;
-      border-radius: 60px;
-      border: 1px solid #444;
-      color: #e0e0e0;
-      font-size: 0.9rem;
-      opacity: 0;
-      transition: opacity 0.25s;
-      pointer-events: none;
-      z-index: 999;
-    }
-    .toast.show {
-      opacity: 1;
-    }
-    @media (max-width: 600px) {
-      h1 { font-size: 1.8rem; }
-      .card { padding: 1rem; }
-    }
-  </style>
+  ]
+}
+</script>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--line:#2a3240;--text:#e6edf3;--muted:#9aa7b4;--accent:#5b9dff;--accent2:#3fb68b;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+nav{display:flex;gap:18px;padding:14px 20px;background:var(--panel);border-bottom:1px solid var(--line);font-size:.95rem}
+.wrap{max-width:880px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:1.9rem;margin:.4em 0 .2em;line-height:1.2}
+h2{font-size:1.3rem;margin:1.8em 0 .5em;border-bottom:1px solid var(--line);padding-bottom:.3em}
+.lead{color:var(--muted);font-size:1.05rem}
+section#tool{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:22px 0}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.92rem}
+textarea{width:100%;min-height:120px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical}
+.controls{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:14px 0}
+.controls label{margin:0;font-weight:500;color:var(--muted)}
+input[type=range]{vertical-align:middle}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+button{background:var(--accent);color:#06101f;border:0;border-radius:8px;padding:10px 16px;font-weight:600;font-size:.95rem;cursor:pointer}
+button.alt{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+button:hover{opacity:.9}
+.out{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:14px;margin-top:14px;min-height:60px;white-space:pre-wrap}
+.out .chg{color:var(--accent2);font-weight:600}
+.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;margin-top:10px}
+.stats b{color:var(--text)}
+footer{border-top:1px solid var(--line);background:var(--panel);padding:20px;color:var(--muted);font-size:.9rem;text-align:center}
+footer a{margin:0 8px}
+.rel a{display:inline-block;margin:4px 10px 4px 0}
+code{background:var(--panel2);padding:1px 5px;border-radius:4px;font-size:.9em}
+</style>
 </head>
 <body>
-
-<header>
-  <h1>✍️ Sentence Rephraser</h1>
-  <div class="subhead">Rewrite any sentence 5 ways — formal, casual, concise, expanded, creative</div>
-</header>
-
-<!-- Breadcrumb (visual) -->
-<nav style="font-size:0.85rem; color:#666; margin-bottom:1.5rem;">
-  <a href="https://paraphrasetool.org/" style="color:#9b7aff; text-decoration:none;">Home</a> / 
-  <span style="color:#ccc;">Sentence Rephraser</span>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tools/">All Tools</a>
+  <a href="/tools/sentence-rephraser">Sentence Rephraser</a>
 </nav>
+<div class="wrap">
+<h1>Rephrase Any Sentence in Seconds</h1>
+<p class="lead">Paste your text below and the rephraser swaps in synonyms and reworks common phrasing to give you a fresh paraphrase — entirely in your browser, with nothing sent to a server.</p>
 
-<div class="card">
-  <label for="inputSentence" style="font-weight:500; display:block; margin-bottom:0.5rem;">Enter your sentence</label>
-  <textarea id="inputSentence" placeholder="Type or paste a sentence here...">The quick brown fox jumps over the lazy dog.</textarea>
-  
-  <div class="btn-group">
-    <button class="btn btn-primary" id="rephraseBtn">✨ Rephrase now</button>
-    <button class="btn btn-outline" id="clearBtn">Clear</button>
+<section id="tool">
+  <label for="inp">Your text</label>
+  <textarea id="inp" placeholder="Type or paste a sentence to rephrase...">Many students believe that good writing is very important because it helps them communicate their ideas in a clear and effective way.</textarea>
+
+  <div class="controls">
+    <label>Rewrite strength
+      <input type="range" id="strength" min="1" max="3" step="1" value="2">
+      <span id="strengthLbl">Balanced</span>
+    </label>
+    <label><input type="checkbox" id="caseKeep" checked> Preserve capitalization</label>
+    <label><input type="checkbox" id="highlight" checked> Highlight changes</label>
   </div>
 
-  <div style="margin-top:1.2rem;">
-    <span style="font-size:0.9rem; color:#aaa;">📌 Try an example: </span>
-    <span id="exampleContainer"></span>
+  <div class="btns">
+    <button id="run">Rephrase</button>
+    <button id="again" class="alt">Try another variation</button>
+    <button id="copy" class="alt">Copy result</button>
   </div>
+
+  <label for="out" style="margin-top:18px">Rephrased output</label>
+  <div class="out" id="out" aria-live="polite"></div>
+  <div class="stats">
+    <span>Words: <b id="wc">0</b></span>
+    <span>Words changed: <b id="cc">0</b></span>
+    <span>Rewrite rate: <b id="rr">0%</b></span>
+  </div>
+</section>
+
+<h2>How the sentence rephraser works</h2>
+<p>This tool is a <strong>rule-based, dictionary-driven paraphraser</strong> that runs 100% client-side — there is no AI server, no account, and no data ever leaves your device. It works in three deterministic passes over your text. First, a <strong>phrase pass</strong> scans for multi-word expressions (for example <code>in order to</code> &rarr; <code>to</code>, <code>a lot of</code> &rarr; <code>many</code>, <code>due to the fact that</code> &rarr; <code>because</code>) and replaces them with shorter or alternative wordings. Second, a <strong>synonym pass</strong> walks each remaining word, looks it up in a built-in thesaurus of several hundred common words, and substitutes a synonym while preserving the original capitalization and trailing punctuation. Segments already rewritten by the phrase pass are skipped so words are never double-replaced.</p>
+<p>The <strong>Rewrite strength</strong> slider controls how aggressive the substitution is. The formula is simple: for each candidate word the tool computes a replacement probability <code>p = strength / 3</code>, so Light strength changes roughly one word in three, Balanced about two in three, and Strong attempts every word that has a known synonym. A seeded pseudo-random generator drives both which words are touched and which synonym is chosen, so the rewrite is reproducible for a given input — and pressing <em>Try another variation</em> reseeds it to produce a different valid paraphrase from the same source. The live counters show how many words were actually swapped and the resulting <strong>rewrite rate</strong> (changed words &divide; total words), a quick proxy for how far the paraphrase has drifted from the original. Because every transformation is a transparent dictionary lookup, the output stays readable and you can always see exactly which words moved when <em>Highlight changes</em> is on. For best results, rephrase one or two sentences at a time and then proofread — automatic synonym swaps occasionally pick a word that does not fit your exact context.</p>
+
+<h2>Related Tools</h2>
+<p class="rel">
+  <a href="/tools/paragraph-rewriter">Paragraph Rewriter</a>
+  <a href="/tools/synonym-finder">Synonym Finder</a>
+  <a href="/tools/word-counter">Word Counter</a>
+</p>
 </div>
 
-<!-- Results area -->
-<div id="resultsArea" class="card" style="display:block;">
-  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem;">
-    <h2 style="font-size:1.4rem;">Rephrased versions</h2>
-    <span id="wordCountCompare" style="font-size:0.85rem; color:#888;">Word count: —</span>
+<footer>
+  <div>
+    <a href="/">Home</a>
+    <a href="/tools/">Tools</a>
+    <a href="/tools/paragraph-rewriter">Paragraph Rewriter</a>
+    <a href="/about">About</a>
   </div>
-  <div id="resultsList" class="result-grid">
-    <!-- will be filled by JS -->
-  </div>
-</div>
-
-<!-- FAQ micro -->
-<div class="card" style="background:#111; border-color:#2a2a2a;">
-  <h3 style="margin-bottom:0.5rem;">❓ How it works</h3>
-  <p style="color:#aaa; font-size:0.95rem;">Pattern matching + 250+ synonym pairs + sentence templates. All processing happens in your browser. Rate each version (thumbs up/down saved locally).</p>
-</div>
-
-<footer class="footer">
-  <p><a href="https://paraphrasetool.org/">paraphrasetool.org</a> — Sentence Rephraser</p>
-  <p style="margin-top:0.3rem;">© 2025 — client-side text transformation</p>
+  <div style="margin-top:8px">&copy; 2026 paraphrasetool.org &middot; Built by <a href="https://zovo.one">Michael Lip</a></div>
 </footer>
 
-<div id="toast" class="toast">Copied!</div>
-
 <script>
-  (function() {
-    // ---------- SYNONYM BANK (250+ pairs) ----------
-    const SYNONYMS = new Map([
-      ['good', 'excellent'], ['bad', 'terrible'], ['big', 'enormous'], ['small', 'tiny'],
-      ['fast', 'swift'], ['slow', 'sluggish'], ['smart', 'intelligent'], ['dumb', 'foolish'],
-      ['happy', 'joyful'], ['sad', 'melancholy'], ['angry', 'furious'], ['calm', 'serene'],
-      ['old', 'ancient'], ['new', 'novel'], ['rich', 'affluent'], ['poor', 'impoverished'],
-      ['strong', 'robust'], ['weak', 'fragile'], ['easy', 'effortless'], ['hard', 'arduous'],
-      ['bright', 'luminous'], ['dark', 'shadowy'], ['clean', 'immaculate'], ['dirty', 'filthy'],
-      ['safe', 'secure'], ['dangerous', 'perilous'], ['important', 'crucial'], ['trivial', 'insignificant'],
-      ['begin', 'commence'], ['end', 'terminate'], ['show', 'demonstrate'], ['hide', 'conceal'],
-      ['help', 'assist'], ['hinder', 'impede'], ['make', 'create'], ['destroy', 'annihilate'],
-      ['use', 'utilize'], ['get', 'obtain'], ['give', 'bestow'], ['take', 'seize'],
-      ['say', 'declare'], ['tell', 'narrate'], ['ask', 'inquire'], ['answer', 'respond'],
-      ['think', 'ponder'], ['know', 'comprehend'], ['want', 'desire'], ['need', 'require'],
-      ['like', 'appreciate'], ['love', 'adore'], ['hate', 'detest'], ['try', 'attempt'],
-      ['work', 'operate'], ['play', 'engage'], ['move', 'shift'], ['stop', 'cease'],
-      ['change', 'modify'], ['keep', 'retain'], ['allow', 'permit'], ['forbid', 'prohibit'],
-      ['come', 'arrive'], ['go', 'depart'], ['see', 'observe'], ['look', 'gaze'],
-      ['hear', 'listen'], ['speak', 'utter'], ['walk', 'stroll'], ['run', 'sprint'],
-      ['eat', 'consume'], ['drink', 'sip'], ['sleep', 'slumber'], ['wake', 'awaken'],
-      ['write', 'compose'], ['read', 'peruse'], ['learn', 'acquire'], ['teach', 'instruct'],
-      ['buy', 'purchase'], ['sell', 'vend'], ['pay', 'compensate'], ['find', 'discover'],
-      ['lose', 'misplace'], ['win', 'triumph'], ['choose', 'select'], ['reject', 'decline'],
-      ['build', 'construct'], ['break', 'shatter'], ['open', 'unlock'], ['close', 'shut'],
-      ['start', 'initiate'], ['finish', 'complete'], ['continue', 'persist'], ['wait', 'linger'],
-      ['live', 'reside'], ['die', 'perish'], ['grow', 'expand'], ['shrink', 'contract'],
-      ['increase', 'amplify'], ['decrease', 'diminish'], ['push', 'propel'], ['pull', 'tug'],
-      ['throw', 'hurl'], ['catch', 'capture'], ['cut', 'sever'], ['fix', 'repair'],
-      ['enjoy', 'relish'], ['suffer', 'endure'], ['win', 'succeed'], ['fail', 'flounder'],
-      ['polite', 'courteous'], ['rude', 'impolite'], ['shy', 'timid'], ['brave', 'courageous'],
-      ['funny', 'humorous'], ['serious', 'solemn'], ['pretty', 'beautiful'], ['ugly', 'hideous'],
-      ['young', 'youthful'], ['elderly', 'aged'], ['thin', 'slender'], ['fat', 'obese'],
-      ['full', 'stuffed'], ['empty', 'vacant'], ['sharp', 'keen'], ['dull', 'blunt'],
-      ['smooth', 'silky'], ['rough', 'coarse'], ['wet', 'moist'], ['dry', 'arid'],
-      ['hot', 'scorching'], ['cold', 'freezing'], ['warm', 'tepid'], ['cool', 'chilly'],
-      ['noisy', 'boisterous'], ['quiet', 'silent'], ['busy', 'hectic'], ['lazy', 'indolent'],
-      ['eager', 'enthusiastic'], ['bored', 'listless'], ['curious', 'inquisitive'], ['careful', 'cautious'],
-      ['careless', 'reckless'], ['generous', 'bountiful'], ['stingy', 'miserly'], ['honest', 'truthful'],
-      ['deceitful', 'dishonest'], ['wise', 'sagacious'], ['foolish', 'absurd'], ['proud', 'arrogant'],
-      ['humble', 'modest'], ['kind', 'benevolent'], ['cruel', 'malevolent'], ['loyal', 'faithful'],
-      ['traitorous', 'disloyal'], ['patient', 'tolerant'], ['impatient', 'restless'], ['polite', 'gracious'],
-      ['charming', 'enchanting'], ['clumsy', 'awkward'], ['graceful', 'elegant'], ['vulgar', 'crude'],
-      ['delicate', 'fragile'], ['sturdy', 'durable'], ['plain', 'simple'], ['fancy', 'ornate'],
-      ['modern', 'contemporary'], ['ancient', 'archaic'], ['rapid', 'swift'], ['gradual', 'slow'],
-      ['often', 'frequently'], ['rare', 'uncommon'], ['always', 'perpetually'], ['never', 'nevermore'],
-      ['maybe', 'perhaps'], ['certainly', 'undoubtedly'], ['together', 'jointly'], ['alone', 'solitary'],
-      ['very', 'extremely'], ['quite', 'rather'], ['almost', 'nearly'], ['also', 'additionally'],
-      ['however', 'nevertheless'], ['therefore', 'consequently'], ['meanwhile', 'concurrently'],
-      ['moreover', 'furthermore'], ['indeed', 'assuredly'], ['maybe', 'perhaps'], ['please', 'kindly'],
-      ['sorry', 'apologies'], ['thanks', 'gratitude'], ['hello', 'greetings'], ['goodbye', 'farewell']
-    ]);
+(function(){
+  "use strict";
 
-    // ---------- TEMPLATES & STRATEGIES ----------
-    function getFormalVersion(text) {
-      let t = text.trim();
-      // replace some informal patterns
-      t = t.replace(/\bgonna\b/gi, 'going to');
-      t = t.replace(/\bwanna\b/gi, 'want to');
-      t = t.replace(/\bgotta\b/gi, 'have to');
-      t = t.replace(/\byeah\b/gi, 'yes');
-      t = t.replace(/\bnope\b/gi, 'no');
-      t = t.replace(/\bain't\b/gi, 'is not');
-      t = t.replace(/\bdunno\b/gi, 'do not know');
-      t = applySynonyms(t, 0.35);
-      // formal framing
-      if (!t.startsWith('One could') && !t.startsWith('It is') && t.length > 10) {
-        // prepend formalizer sometimes
-        if (Math.random() > 0.5) t = 'It is observed that ' + t.charAt(0).toLowerCase() + t.slice(1);
-      }
-      return t.replace(/\s+/g, ' ').trim();
+  var THES = {
+    "many":["numerous","plenty of","a great deal of"],
+    "students":["learners","pupils","scholars"],
+    "believe":["think","feel","hold"],
+    "good":["strong","solid","fine","sound"],
+    "writing":["composition","prose","wording"],
+    "very":["extremely","highly","particularly"],
+    "important":["essential","crucial","vital","significant"],
+    "because":["since","as","given that"],
+    "helps":["enables","assists","allows"],
+    "communicate":["convey","express","share"],
+    "ideas":["thoughts","concepts","points"],
+    "clear":["plain","simple","lucid"],
+    "effective":["efficient","productive","successful"],
+    "way":["manner","fashion","method"],
+    "big":["large","huge","substantial"],
+    "small":["tiny","minor","modest"],
+    "fast":["quick","rapid","swift"],
+    "slow":["sluggish","gradual","unhurried"],
+    "happy":["glad","pleased","content"],
+    "sad":["unhappy","downcast","gloomy"],
+    "make":["create","produce","build"],
+    "use":["employ","utilize","apply"],
+    "show":["demonstrate","reveal","display"],
+    "get":["obtain","acquire","gain"],
+    "give":["provide","offer","supply"],
+    "need":["require","want","demand"],
+    "help":["aid","assist","support"],
+    "find":["locate","discover","spot"],
+    "think":["consider","reckon","suppose"],
+    "know":["understand","realize","grasp"],
+    "want":["wish","desire","prefer"],
+    "people":["individuals","folks","persons"],
+    "thing":["item","matter","element"],
+    "things":["items","matters","elements"],
+    "really":["truly","genuinely","actually"],
+    "great":["excellent","outstanding","superb"],
+    "bad":["poor","weak","subpar"],
+    "easy":["simple","straightforward","effortless"],
+    "hard":["difficult","challenging","tough"],
+    "new":["fresh","modern","recent"],
+    "old":["aged","former","prior"],
+    "start":["begin","launch","commence"],
+    "end":["finish","conclude","complete"],
+    "improve":["enhance","boost","strengthen"],
+    "increase":["raise","grow","expand"],
+    "reduce":["lower","decrease","cut"],
+    "create":["build","form","generate"],
+    "change":["alter","modify","adjust"],
+    "explain":["clarify","describe","outline"],
+    "understand":["grasp","comprehend","follow"],
+    "ensure":["guarantee","secure","confirm"],
+    "provide":["offer","supply","deliver"],
+    "allow":["permit","enable","let"],
+    "result":["outcome","effect","consequence"],
+    "however":["nevertheless","yet","still"],
+    "therefore":["thus","hence","consequently"],
+    "also":["additionally","too","likewise"],
+    "often":["frequently","commonly","regularly"],
+    "always":["consistently","invariably","constantly"]
+  };
+
+  var PHRASES = [
+    ["in order to","to"],
+    ["a lot of","many"],
+    ["a number of","several"],
+    ["due to the fact that","because"],
+    ["in spite of","despite"],
+    ["in the event that","if"],
+    ["at this point in time","now"],
+    ["for the most part","mostly"],
+    ["with regard to","regarding"],
+    ["as a result of","because of"],
+    ["in addition to","besides"],
+    ["the majority of","most"],
+    ["a great deal of","much"]
+  ];
+
+  var S1=String.fromCharCode(1), S2=String.fromCharCode(2);
+
+  var inp=document.getElementById("inp"),
+      out=document.getElementById("out"),
+      strength=document.getElementById("strength"),
+      strengthLbl=document.getElementById("strengthLbl"),
+      caseKeep=document.getElementById("caseKeep"),
+      highlight=document.getElementById("highlight"),
+      wc=document.getElementById("wc"),cc=document.getElementById("cc"),rr=document.getElementById("rr");
+
+  var seed=1;
+  function rand(){ seed=(seed*9301+49297)%233280; return seed/233280; }
+  function pick(arr){ return arr[Math.floor(rand()*arr.length)]; }
+
+  function matchCase(src,rep){
+    if(!caseKeep.checked) return rep;
+    if(src.length && src[0]===src[0].toUpperCase() && src[0]!==src[0].toLowerCase()){
+      return rep.charAt(0).toUpperCase()+rep.slice(1);
     }
+    return rep;
+  }
 
-    function getCasualVersion(text) {
-      let t = text.trim();
-      t = t.replace(/\b(very|extremely|quite)\b/gi, 'super');
-      t = t.replace(/\bexcellent\b/gi, 'awesome');
-      t = t.replace(/\bterrible\b/gi, 'awful');
-      t = t.replace(/\bdifficult\b/gi, 'tough');
-      t = t.replace(/\bintelligent\b/gi, 'smart');
-      t = t.replace(/\bcommence\b/gi, 'start');
-      t = t.replace(/\bterminate\b/gi, 'end');
-      t = t.replace(/\bprovide\b/gi, 'give');
-      t = t.replace(/\bhowever\b/gi, 'but');
-      t = t.replace(/\btherefore\b/gi, 'so');
-      t = t.replace(/\bperhaps\b/gi, 'maybe');
-      t = t.replace(/\bassist\b/gi, 'help');
-      t = t.replace(/\bdemonstrate\b/gi, 'show');
-      t = t.replace(/\bobtain\b/gi, 'get');
-      t = t.replace(/\butilize\b/gi, 'use');
-      t = t.replace(/\brequire\b/gi, 'need');
-      t = t.replace(/\bdesire\b/gi, 'want');
-      t = t.replace(/\bpermit\b/gi, 'let');
-      t = t.replace(/\bprohibit\b/gi, 'ban');
-      t = t.replace(/\bdepart\b/gi, 'leave');
-      t = t.replace(/\barrive\b/gi, 'come');
-      t = t.replace(/\bcompose\b/gi, 'write');
-      t = t.replace(/\bpurchase\b/gi, 'buy');
-      t = t.replace(/\bcompensate\b/gi, 'pay');
-      t = t.replace(/\bconstruct\b/gi, 'build');
-      t = t.replace(/\binitiate\b/gi, 'start');
-      t = t.replace(/\bcomplete\b/gi, 'finish');
-      t = t.replace(/\bpersist\b/gi, 'keep going');
-      t = t.replace(/\bexpand\b/gi, 'grow');
-      t = t.replace(/\bamplify\b/gi, 'boost');
-      t = t.replace(/\bpropel\b/gi, 'push');
-      t = t.replace(/\bcapture\b/gi, 'catch');
-      t = t.replace(/\brepair\b/gi, 'fix');
-      t = t.replace(/\bendure\b/gi, 'stand');
-      t = t.replace(/\bflounder\b/gi, 'fail');
-      t = t.replace(/\bcourteous\b/gi, 'polite');
-      t = t.replace(/\btimid\b/gi, 'shy');
-      t = t.replace(/\bcourageous\b/gi, 'brave');
-      t = t.replace(/\bhumorous\b/gi, 'funny');
-      t = t.replace(/\bsolemn\b/gi, 'serious');
-      t = t.replace(/\bbeautiful\b/gi, 'pretty');
-      t = t.replace(/\byouthful\b/gi, 'young');
-      t = t.replace(/\bstuffed\b/gi, 'full');
-      t = t.replace(/\bvacant\b/gi, 'empty');
-      t = t.replace(/\bkeen\b/gi, 'sharp');
-      t = t.replace(/\bsilky\b/gi, 'smooth');
-      t = t.replace(/\bscorching\b/gi, 'hot');
-      t = t.replace(/\bfreezing\b/gi, 'cold');
-      t = t.replace(/\bboisterous\b/gi, 'noisy');
-      t = t.replace(/\bindolent\b/gi, 'lazy');
-      t = t.replace(/\binquisitive\b/gi, 'curious');
-      t = t.replace(/\bbountiful\b/gi, 'generous');
-      t = t.replace(/\bsagacious\b/gi, 'wise');
-      t = t.replace(/\bbenevolent\b/gi, 'kind');
-      t = t.replace(/\bmalevolent\b/gi, 'cruel');
-      t = t.replace(/\bfaithful\b/gi, 'loyal');
-      t = t.replace(/\btolerant\b/gi, 'patient');
-      t = t.replace(/\bgracious\b/gi, 'polite');
-      t = t.replace(/\benchanting\b/gi, 'charming');
-      t = t.replace(/\belegant\b/gi, 'graceful');
-      t = t.replace(/\bsturdy\b/gi, 'strong');
-      t = t.replace(/\bcontemporary\b/gi, 'modern');
-      t = t.replace(/\bswift\b/gi, 'fast');
-      t = t.replace(/\bperpetually\b/gi, 'always');
-      t = t.replace(/\bundoubtedly\b/gi, 'surely');
-      t = t.replace(/\bextremely\b/gi, 'really');
-      if (Math.random() > 0.6) t = 'So, ' + t.charAt(0).toLowerCase() + t.slice(1);
-      return t.replace(/\s+/g, ' ').trim();
-    }
+  function strengthLabel(s){ return s==="1"?"Light":s==="3"?"Strong":"Balanced"; }
 
-    function getConciseVersion(text) {
-      let t = text.trim();
-      // remove filler words
-      t = t.replace(/\b(very|really|quite|basically|actually|literally|just|pretty)\b\s*/gi, '');
-      t = t.replace(/\bin order to\b/gi, 'to');
-      t = t.replace(/\bdue to the fact that\b/gi, 'because');
-      t = t.replace(/\bin the event that\b/gi, 'if');
-      t = t.replace(/\bat this point in time\b/gi, 'now');
-      t = t.replace(/\ba majority of\b/gi, 'most');
-      t = t.replace(/\ba number of\b/gi, 'some');
-      t = t.replace(/\bare able to\b/gi, 'can');
-      t = t.replace(/\bis able to\b/gi, 'can');
-      t = t.replace(/\bhas the ability to\b/gi, 'can');
-      t = t.replace(/\bought to\b/gi, 'should');
-      t = t.replace(/\bin spite of\b/gi, 'despite');
-      t = t.replace(/\bregardless of\b/gi, 'despite');
-      t = t.replace(/\bwith the exception of\b/gi, 'except');
-      t = t.replace(/\bin the vicinity of\b/gi, 'near');
-      t = t.replace(/\buntil such time as\b/gi, 'until');
-      t = t.replace(/\bas a result of\b/gi, 'due to');
-      t = t.replace(/\bin the event\b/gi, 'if');
-      // shorten phrases
-      t = t.replace(/\bthat is\b/gi, "that's");
-      t = t.replace(/\bit is\b/gi, "it's");
-      t = t.replace(/\bthey are\b/gi, "they're");
-      t = t.replace(/\bwe are\b/gi, "we're");
-      t = t.replace(/\bI am\b/gi, "I'm");
-      t = t.replace(/\bdo not\b/gi, "don't");
-      t = t.replace(/\bcannot\b/gi, "can't");
-      t = t.replace(/\bwill not\b/gi, "won't");
-      t = t.replace(/\bis not\b/gi, "isn't");
-      t = t.replace(/\bare not\b/gi, "aren't");
-      return t.replace(/\s+/g, ' ').trim();
-    }
+  function escapeHtml(s){
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
 
-    function getExpandedVersion(text) {
-      let t = text.trim();
-      // add detail, expand
-      t = t.replace(/\bbecause\b/gi, 'due to the fact that');
-      t = t.replace(/\bif\b/gi, 'in the event that');
-      t = t.replace(/\bnow\b/gi, 'at this moment in time');
-      t = t.replace(/\bmost\b/gi, 'a significant majority of');
-      t = t.replace(/\bcan\b/gi, 'is able to');
-      t = t.replace(/\buse\b/gi, 'utilize');
-      t = t.replace(/\bhelp\b/gi, 'provide assistance to');
-      t = t.replace(/\bshow\b/gi, 'demonstrate');
-      t = t.replace(/\bend\b/gi, 'bring to a conclusion');
-      t = t.replace(/\bstart\b/gi, 'commence');
-      t = t.replace(/\bmake\b/gi, 'create');
-      t = t.replace(/\bget\b/gi, 'obtain');
-      t = t.replace(/\bgive\b/gi, 'bestow');
-      t = t.replace(/\bsay\b/gi, 'declare');
-      t = t.replace(/\bthink\b/gi, 'ponder');
-      t = t.replace(/\bknow\b/gi, 'comprehend');
-      t = t.replace(/\bwant\b/gi, 'desire');
-      t = t.replace(/\bneed\b/gi, 'require');
-      t = t.replace(/\bgood\b/gi, 'excellent');
-      t = t.replace(/\bbad\b/gi, 'terrible');
-      t = t.replace(/\bbig\b/gi, 'enormous');
-      t = t.replace(/\bsmall\b/gi, 'minuscule');
-      t = t.replace(/\bfast\b/gi, 'rapid');
-      t = t.replace(/\bslow\b/gi, 'leisurely');
-      // add introductory clause
-      if (Math.random() > 0.4) t = 'It is worth noting that ' + t.charAt(0).toLowerCase() + t.slice(1);
-      return t.replace(/\s+/g, ' ').trim();
-    }
+  function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
 
-    function getCreativeVersion(text) {
-      let t = text.trim();
-      // literary flourish
-      t = t.replace(/\bthe\b/gi, 'the magnificent');
-      t = t.replace(/\ba\b/gi, 'a certain');
-      t = t.replace(/\bquick\b/gi, 'swift as the wind');
-      t = t.replace(/\bbrown\b/gi, 'auburn');
-      t = t.replace(/\bfox\b/gi, 'sly fox');
-      t = t.replace(/\bjump\b/gi, 'leap');
-      t = t.replace(/\bover\b/gi, 'over the');
-      t = t.replace(/\blazy\b/gi, 'slumbering');
-      t = t.replace(/\bdog\b/gi, 'canine');
-      t = t.replace(/\brun\b/gi, 'dart');
-      t = t.replace(/\bwalk\b/gi, 'wander');
-      t = t.replace(/\bsay\b/gi, 'whisper');
-      t = t.replace(/\blook\b/gi, 'gaze upon');
-      t = t.replace(/\bsee\b/gi, 'behold');
-      t = t.replace(/\bgood\b/gi, 'splendid');
-      t = t.replace(/\bbad\b/gi, 'dreadful');
-      t = t.replace(/\bbig\b/gi, 'grand');
-      t = t.replace(/\bsmall\b/gi, 'petite');
-      t = t.replace(/\bstrong\b/gi, 'mighty');
-      t = t.replace(/\bweak\b/gi, 'feeble');
-      t = t.replace(/\bstart\b/gi, 'embark');
-      t = t.replace(/\bend\b/gi, 'conclude');
-      t = t.replace(/\bnew\b/gi, 'untold');
-      t = t.replace(/\bold\b/gi, 'ancient');
-      if (Math.random() > 0.5) t = 'Lo and behold, ' + t.charAt(0).toLowerCase() + t.slice(1);
-      return t.replace(/\s+/g, ' ').trim();
-    }
+  function rephrase(){
+    var text=inp.value;
+    var p=parseInt(strength.value,10)/3;
 
-    // helper: synonym replacement with probability
-    function applySynonyms(text, prob = 0.3) {
-      let words = text.split(/\b/);
-      return words.map(w => {
-        let lower = w.toLowerCase();
-        if (SYNONYMS.has(lower) && Math.random() < prob) {
-          let syn = SYNONYMS.get(lower);
-          // preserve case
-          if (w[0] === w[0]?.toUpperCase() && w.length > 1) syn = syn.charAt(0).toUpperCase() + syn.slice(1);
-          return syn;
+    // Phrase pass — wrap replaced phrases in sentinels
+    PHRASES.forEach(function(pair){
+      var re=new RegExp("\\b"+escRe(pair[0])+"\\b","gi");
+      text=text.replace(re,function(m){
+        if(rand()>p) return m;
+        return S1+matchCase(m,pair[1])+S2;
+      });
+    });
+
+    // Synonym pass — token by token, skipping sentineled segments
+    var total=0, insideSeg=false;
+    var tokens=text.split(/(\b)/);
+    var out2=tokens.map(function(tok){
+      if(tok.indexOf(S1)>=0) insideSeg=true;
+      var res;
+      if(!insideSeg && /^[A-Za-z]+$/.test(tok)){
+        total++;
+        var key=tok.toLowerCase();
+        res=tok;
+        if(THES[key] && rand()<p){
+          var syns=THES[key].filter(function(x){return x.toLowerCase()!==key;});
+          if(syns.length){
+            var rep=matchCase(tok,pick(syns));
+            if(rep.toLowerCase()!==tok.toLowerCase()) res=S1+rep+S2;
+          }
         }
-        return w;
-      }).join('');
-    }
-
-    // ---------- MAIN REPHRASE ----------
-    function rephrase(text) {
-      if (!text.trim()) return [];
-      const strategies = [
-        { label: 'Formal', fn: getFormalVersion, desc: 'formal tone & vocabulary' },
-        { label: 'Casual', fn: getCasualVersion, desc: 'relaxed, everyday language' },
-        { label: 'Concise', fn: getConciseVersion, desc: 'shortened, no filler' },
-        { label: 'Expanded', fn: getExpandedVersion, desc: 'detailed, elaborated' },
-        { label: 'Creative', fn: getCreativeVersion, desc: 'literary & imaginative' }
-      ];
-      return strategies.map(s => {
-        let versionText = s.fn(text);
-        // fallback
-        if (!versionText || versionText.length < 2) versionText = text;
-        return {
-          label: s.label,
-          strategy: s.desc,
-          text: versionText
-        };
-      });
-    }
-
-    // ---------- UI ----------
-    const inputEl = document.getElementById('inputSentence');
-    const rephraseBtn = document.getElementById('rephraseBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const resultsList = document.getElementById('resultsList');
-    const wordCountCompare = document.getElementById('wordCountCompare');
-    const toast = document.getElementById('toast');
-
-    const examples = [
-      "The quick brown fox jumps over the lazy dog.",
-      "Artificial intelligence will transform the world.",
-      "She gave a brilliant presentation at the conference.",
-      "Learning a new language takes time and patience.",
-      "The weather is beautiful today.",
-      "He ran quickly to catch the bus.",
-      "They decided to postpone the meeting.",
-      "I need to finish this project by Friday.",
-      "The movie was incredibly boring.",
-      "She sings beautifully."
-    ];
-
-    function renderExamples() {
-      const container = document.getElementById('exampleContainer');
-      container.innerHTML = '';
-      examples.forEach(ex => {
-        const span = document.createElement('span');
-        span.className = 'example-badge';
-        span.textContent = ex.length > 35 ? ex.slice(0, 32) + '…' : ex;
-        span.title = ex;
-        span.addEventListener('click', () => {
-          inputEl.value = ex;
-          rephraseBtn.click();
-        });
-        container.appendChild(span);
-      });
-    }
-    renderExamples();
-
-    function renderResults(versions, originalText) {
-      resultsList.innerHTML = '';
-      if (!versions.length) {
-        resultsList.innerHTML = '<div style="padding:1rem;color:#888;">Enter a sentence and click Rephrase.</div>';
-        wordCountCompare.textContent = 'Word count: —';
-        return;
+      } else {
+        res=tok;
       }
-      const origWords = originalText.trim().split(/\s+/).length;
-      let html = '';
-      versions.forEach((v, idx) => {
-        const
+      if(tok.indexOf(S2)>=0) insideSeg=false;
+      return res;
+    }).join("");
+
+    var totalSegs=(out2.split(S1).length-1);
+    if(total<1) total=1;
+
+    // Render with optional highlight
+    var html="", buf="";
+    for(var i=0;i<out2.length;i++){
+      var ch=out2[i];
+      if(ch===S1){ html+=escapeHtml(buf); buf=""; }
+      else if(ch===S2){
+        html+= highlight.checked ? '<span class="chg">'+escapeHtml(buf)+'</span>' : escapeHtml(buf);
+        buf="";
+      } else buf+=ch;
+    }
+    html+=escapeHtml(buf);
+    out.innerHTML=html;
+
+    wc.textContent=String(total);
+    cc.textContent=String(totalSegs);
+    rr.textContent=Math.round(totalSegs/total*100)+"%";
+  }
+
+  function hashSeed(str){
+    var h=5381;
+    for(var i=0;i<str.length;i++){ h=((h*33)+str.charCodeAt(i))%233280; }
+    return Math.abs(h)+1;
+  }
+
+  inp.addEventListener("input",function(){ seed=hashSeed(inp.value); rephrase(); });
+  strength.addEventListener("input",function(){ strengthLbl.textContent=strengthLabel(strength.value); rephrase(); });
+  caseKeep.addEventListener("change",rephrase);
+  highlight.addEventListener("change",rephrase);
+  document.getElementById("run").addEventListener("click",function(){ seed=hashSeed(inp.value); rephrase(); });
+  document.getElementById("again").addEventListener("click",function(){ seed=(seed+Math.floor(Math.random()*9999)+1)%233280+1; rephrase(); });
+  document.getElementById("copy").addEventListener("click",function(){
+    var t=out.textContent||"";
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t); }
+    var b=document.getElementById("copy"), old=b.textContent;
+    b.textContent="Copied!"; setTimeout(function(){b.textContent=old;},1200);
+  });
+
+  // Prefill output on load
+  seed=hashSeed(inp.value);
+  strengthLbl.textContent=strengthLabel(strength.value);
+  rephrase();
+})();
+</script>
+</body>
+</html>

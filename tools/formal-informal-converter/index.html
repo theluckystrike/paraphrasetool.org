@@ -1,645 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>Formal / Informal Text Converter | paraphrasetool.org</title>
-  <meta name="description" content="Convert text between formal and informal registers instantly. 100+ word/phrase replacements, formality score, and highlighted changes.">
-  <link rel="canonical" href="https://paraphrasetool.org/tools/formal-informal-converter">
-  <!-- Open Graph -->
-  <meta property="og:title" content="Formal / Informal Text Converter | paraphrasetool.org">
-  <meta property="og:description" content="Convert text between formal and informal registers instantly. 100+ word/phrase replacements, formality score, and highlighted changes.">
-  <meta property="og:url" content="https://paraphrasetool.org/tools/formal-informal-converter">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="paraphrasetool.org">
-  <!-- JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Formal / Informal Text Converter",
-    "url": "https://paraphrasetool.org/tools/formal-informal-converter",
-    "description": "Convert text between formal and informal registers instantly. 100+ word/phrase replacements, formality score, and highlighted changes.",
-    "applicationCategory": "Writing Tool",
-    "operatingSystem": "All",
-    "browserRequirements": "JavaScript enabled"
-  }
-  </script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formal Informal Converter - Rewrite Text Tone Free</title>
+<meta name="description" content="Free formal informal converter. Instantly rewrite text into a formal or casual tone using a client-side dictionary of contractions, slang and phrasing.">
+<link rel="canonical" href="https://paraphrasetool.org/tools/formal-informal-converter">
+<meta property="og:title" content="Formal Informal Converter - Rewrite Text Tone Free">
+<meta property="og:description" content="Instantly rewrite text into a formal or casual tone with this free client-side formal informal converter. No sign-up, no data sent anywhere.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/formal-informal-converter">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Formal Informal Converter",
+      "url": "https://paraphrasetool.org/tools/formal-informal-converter",
+      "description": "A free client-side tool that rewrites text into a formal or informal tone using a dictionary of contractions, slang and phrasing rules.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paraphrasetool.org/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://paraphrasetool.org/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Formal Informal Converter", "item": "https://paraphrasetool.org/tools/formal-informal-converter" }
+      ]
     }
-    body {
-      background: #0f172a;
-      color: #e2e8f0;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem 1rem;
-    }
-    .container {
-      max-width: 900px;
-      width: 100%;
-      background: #1e293b;
-      border-radius: 2rem;
-      padding: 2rem 1.8rem;
-      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.6);
-      border: 1px solid #334155;
-    }
-    h1 {
-      font-size: 2.2rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    h1 span {
-      background: #38bdf8;
-      color: #0f172a;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 0.2rem 0.8rem;
-      border-radius: 40px;
-      letter-spacing: 0.3px;
-    }
-    .sub {
-      color: #94a3b8;
-      margin-bottom: 1.8rem;
-      font-size: 0.95rem;
-      border-left: 3px solid #38bdf8;
-      padding-left: 0.8rem;
-    }
-    .mode-toggle {
-      display: flex;
-      background: #0f172a;
-      border-radius: 60px;
-      padding: 0.3rem;
-      width: fit-content;
-      margin-bottom: 1.8rem;
-      border: 1px solid #334155;
-    }
-    .mode-btn {
-      background: transparent;
-      border: none;
-      padding: 0.6rem 1.8rem;
-      border-radius: 40px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: #94a3b8;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .mode-btn.active {
-      background: #38bdf8;
-      color: #0f172a;
-      box-shadow: 0 4px 8px rgba(56,189,248,0.3);
-    }
-    .mode-btn:first-child.active {
-      background: #38bdf8;
-    }
-    .mode-btn:last-child.active {
-      background: #38bdf8;
-    }
-    .textarea-group {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .input-area, .output-area {
-      background: #0f172a;
-      border-radius: 1.2rem;
-      padding: 1.2rem 1.5rem;
-      border: 1px solid #334155;
-      transition: 0.2s;
-    }
-    .input-area:focus-within {
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 2px rgba(56,189,248,0.2);
-    }
-    .input-area label, .output-area label {
-      display: block;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #64748b;
-      margin-bottom: 0.4rem;
-    }
-    textarea {
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: #e2e8f0;
-      font-size: 1rem;
-      line-height: 1.5;
-      resize: vertical;
-      min-height: 100px;
-      padding: 0;
-      font-family: inherit;
-    }
-    textarea:focus {
-      outline: none;
-    }
-    .output-area {
-      background: #0f172a;
-      min-height: 100px;
-      word-wrap: break-word;
-      white-space: pre-wrap;
-    }
-    .output-content {
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    .output-content .changed {
-      background: #38bdf8;
-      color: #0f172a;
-      padding: 0.1rem 0.2rem;
-      border-radius: 6px;
-      font-weight: 500;
-      box-decoration-break: clone;
-    }
-    .placeholder-text {
-      color: #475569;
-    }
-    .action-bar {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin: 1.2rem 0 1.8rem;
-    }
-    .copy-btn {
-      background: #38bdf8;
-      border: none;
-      color: #0f172a;
-      font-weight: 600;
-      padding: 0.6rem 1.8rem;
-      border-radius: 40px;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 4px 8px rgba(56,189,248,0.2);
-    }
-    .copy-btn:hover {
-      background: #7dd3fc;
-      transform: scale(1.02);
-    }
-    .copy-btn:active {
-      transform: scale(0.96);
-    }
-    .score-meter {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      background: #0f172a;
-      padding: 0.3rem 1rem 0.3rem 1.2rem;
-      border-radius: 40px;
-      border: 1px solid #334155;
-    }
-    .score-label {
-      font-size: 0.8rem;
-      color: #94a3b8;
-    }
-    .score-value {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #e2e8f0;
-      min-width: 2.2rem;
-      text-align: center;
-    }
-    .score-bar {
-      width: 80px;
-      height: 6px;
-      background: #1e293b;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-    .score-fill {
-      height: 100%;
-      width: 50%;
-      background: #38bdf8;
-      border-radius: 20px;
-      transition: width 0.2s ease;
-    }
-    .footer {
-      margin-top: 2.5rem;
-      text-align: center;
-      font-size: 0.8rem;
-      color: #475569;
-      border-top: 1px solid #1e293b;
-      padding-top: 1.5rem;
-    }
-    .footer a {
-      color: #38bdf8;
-      text-decoration: none;
-    }
-    .footer a:hover {
-      text-decoration: underline;
-    }
-    @media (max-width: 500px) {
-      .container { padding: 1.5rem 1rem; }
-      h1 { font-size: 1.8rem; }
-      .mode-btn { padding: 0.4rem 1.2rem; font-size: 0.85rem; }
-    }
-  </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2241192243363112" crossorigin="anonymous"></script>
+  ]
+}
+</script>
+<style>
+:root{
+  --bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--border:#2d3748;
+  --text:#e6edf3;--muted:#9aa6b2;--accent:#58a6ff;--accent2:#3fb950;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;
+}
+nav{
+  display:flex;gap:20px;padding:14px 22px;border-bottom:1px solid var(--border);
+  background:var(--panel);font-size:15px;align-items:center;
+}
+nav a{color:var(--accent);text-decoration:none;font-weight:600}
+nav a:hover{text-decoration:underline}
+.wrap{max-width:920px;margin:0 auto;padding:26px 20px 60px}
+h1{font-size:30px;line-height:1.25;margin:18px 0 8px}
+h2{font-size:22px;margin:36px 0 10px;border-bottom:1px solid var(--border);padding-bottom:6px}
+.lead{color:var(--muted);font-size:17px;margin:0 0 8px}
+#tool{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;margin:22px 0}
+.row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.grow{flex:1 1 260px}
+label{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+textarea,select,button{
+  font-family:inherit;font-size:15px;background:var(--panel2);color:var(--text);
+  border:1px solid var(--border);border-radius:8px;padding:11px 12px;
+}
+textarea{width:100%;min-height:130px;resize:vertical;line-height:1.55}
+select{cursor:pointer}
+button{cursor:pointer;font-weight:600;background:var(--accent);color:#04121f;border:none}
+button:hover{filter:brightness(1.08)}
+button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+.out-head{display:flex;justify-content:space-between;align-items:center;margin:18px 0 6px}
+.out-head label{margin:0}
+#output{
+  width:100%;min-height:130px;background:#0a1f14;border:1px solid #1f5135;
+  border-radius:8px;padding:12px;white-space:pre-wrap;word-wrap:break-word;color:#d4f7e0;
+}
+.stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--muted)}
+.stats b{color:var(--accent2)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.toggles{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px;font-size:14px;color:var(--muted)}
+.toggles label{text-transform:none;letter-spacing:0;font-weight:400;display:flex;gap:6px;align-items:center;color:var(--text)}
+p{margin:12px 0}
+.related{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.related a{
+  background:var(--panel);border:1px solid var(--border);border-radius:8px;
+  padding:10px 14px;color:var(--accent);text-decoration:none;font-weight:600;font-size:14px;
+}
+.related a:hover{border-color:var(--accent)}
+code{background:var(--panel2);padding:2px 6px;border-radius:5px;font-size:13px}
+footer{
+  border-top:1px solid var(--border);margin-top:50px;padding:24px 20px;
+  text-align:center;color:var(--muted);font-size:14px;
+}
+footer a{color:var(--accent);text-decoration:none;margin:0 8px}
+@media(max-width:560px){h1{font-size:25px}.wrap{padding:18px 14px 50px}}
+</style>
 </head>
 <body>
-<div class="container">
-  <h1>📝 Formality Converter <span>paraphrasetool.org</span></h1>
-  <div class="sub">100+ linguistic rules · real-time · highlight changes</div>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tools/">Tools</a>
+  <span style="color:var(--muted);font-size:14px">Formal &amp; Informal Converter</span>
+</nav>
 
-  <!-- toggle -->
-  <div class="mode-toggle" id="modeToggle">
-    <button class="mode-btn active" data-mode="formal">📌 Formal → Informal</button>
-    <button class="mode-btn" data-mode="informal">💬 Informal → Formal</button>
-  </div>
+<div class="wrap">
+  <h1>Formal &amp; Informal Tone Converter</h1>
+  <p class="lead">Paste any text and instantly rewrite it into a polished formal register or a relaxed, conversational one. Everything runs in your browser.</p>
 
-  <!-- input / output -->
-  <div class="textarea-group">
-    <div class="input-area">
-      <label for="inputText">✏️ Your text</label>
-      <textarea id="inputText" placeholder="Paste or type text here..." rows="3">I'm gonna go to the store, wanna come? It's really nice.</textarea>
-    </div>
-    <div class="output-area">
-      <label>🔄 Converted output</label>
-      <div class="output-content" id="outputDisplay"><span class="placeholder-text">Converted text will appear here</span></div>
-    </div>
-  </div>
-
-  <!-- action bar: copy + score -->
-  <div class="action-bar">
-    <button class="copy-btn" id="copyBtn"><span>📋</span> Copy output</button>
-    <div class="score-meter">
-      <span class="score-label">Formality</span>
-      <span class="score-value" id="scoreValue">52%</span>
-      <div class="score-bar">
-        <div class="score-fill" id="scoreFill" style="width:52%"></div>
+  <section id="tool">
+    <div class="row">
+      <div class="field">
+        <label for="dir">Convert to</label>
+        <select id="dir">
+          <option value="formal">Formal (professional)</option>
+          <option value="informal">Informal (casual)</option>
+        </select>
+      </div>
+      <div class="field grow">
+        <label for="input">Your text</label>
+        <textarea id="input" placeholder="Type or paste text here...">Hey, I wanna let you know we can't make the meeting, but it's gonna be fine. Thanks a lot, gotta run!</textarea>
       </div>
     </div>
-  </div>
 
-  <div class="footer">
-    &copy; 2025 <a href="https://paraphrasetool.org" target="_blank">paraphrasetool.org</a> — 
-    <a href="https://paraphrasetool.org/tools/formal-informal-converter" target="_blank">Formal/Informal Converter</a>
+    <div class="toggles">
+      <label><input type="checkbox" id="optContractions" checked> Expand / add contractions</label>
+      <label><input type="checkbox" id="optSlang" checked> Swap slang &amp; phrasing</label>
+      <label><input type="checkbox" id="optCaps" checked> Fix sentence capitalization</label>
+    </div>
+
+    <div class="out-head">
+      <label for="output">Converted text</label>
+    </div>
+    <div id="output" aria-live="polite"></div>
+
+    <div class="stats">
+      <span>Words: <b id="wc">0</b></span>
+      <span>Characters: <b id="cc">0</b></span>
+      <span>Substitutions applied: <b id="sc">0</b></span>
+    </div>
+
+    <div class="controls">
+      <button id="copyBtn" class="ghost" type="button">Copy result</button>
+      <button id="clearBtn" class="ghost" type="button">Clear</button>
+      <button id="swapBtn" class="ghost" type="button">Use result as input</button>
+    </div>
+  </section>
+
+  <h2>How the converter works</h2>
+  <p>Tone is mostly a matter of word choice, contractions, and a handful of opening phrases. This tool models that with three rule layers that run in order. First, a <b>contraction layer</b>: when you convert to a formal register it expands forms like <code>can't</code> &rarr; <code>cannot</code>, <code>I'm</code> &rarr; <code>I am</code> and <code>won't</code> &rarr; <code>will not</code>; when you convert to informal it contracts them back. Second, a <b>lexical layer</b> maps roughly 120 slang and casual items to their counterparts in a paired dictionary &mdash; <code>wanna</code> &harr; <code>want to</code>, <code>kids</code> &harr; <code>children</code>, <code>a lot</code> &harr; <code>considerably</code>, <code>thanks</code> &harr; <code>thank you</code>. Each pair is bidirectional, so the same data drives both directions. Third, a <b>cleanup layer</b> re-capitalizes the first letter of every sentence and trims stray spacing.</p>
+  <p>The matching is whole-word and case-insensitive, using word-boundary checks so that <code>can</code> inside <code>candle</code> is never touched, while the original capitalization of a replaced word is preserved. Because all of this is deterministic dictionary substitution rather than a neural model, the output is instant, fully private, and identical every time you run it &mdash; nothing is uploaded or stored. Treat the result as a strong first draft: read it through, because register also depends on sentence length and context that a rule engine cannot judge. The substitution counter tells you how many changes were made so you can gauge how far the tone shifted. Toggle any of the three layers off if you only want, say, contraction handling without slang swaps.</p>
+
+  <h2>Related Tools</h2>
+  <div class="related">
+    <a href="/tools/paraphrasing-tool">Paraphrasing Tool</a>
+    <a href="/tools/sentence-rewriter">Sentence Rewriter</a>
+    <a href="/tools/synonym-replacer">Synonym Replacer</a>
   </div>
 </div>
+
+<footer>
+  <div>
+    <a href="/">Home</a>
+    <a href="/tools/">All Tools</a>
+    <a href="/tools/paraphrasing-tool">Paraphraser</a>
+  </div>
+  <p>&copy; 2026 paraphrasetool.org &mdash; client-side text tools.</p>
+</footer>
 
 <script>
-  (function() {
-    // ---------- 100+ replacement mappings (formal ↔ informal) ----------
-    const formalToInformal = {
-      // common contractions & informal
-      "going to": "gonna", "want to": "wanna", "got to": "gotta", "have to": "hafta",
-      "let me": "lemme", "give me": "gimme", "kind of": "kinda", "sort of": "sorta",
-      "out of": "outta", "a lot of": "lots of", "because": "cause", "actually": "like",
-      "really": "hella", "very": "super", "somewhat": "kinda", "rather": "pretty",
-      "perhaps": "maybe", "however": "but", "furthermore": "also", "moreover": "plus",
-      "nevertheless": "still", "nonetheless": "anyway", "therefore": "so",
-      "thus": "so", "consequently": "so", "in addition": "also", "additionally": "plus",
-      "regarding": "about", "concerning": "about", "sufficient": "enough",
-      "assist": "help", "purchase": "buy", "obtain": "get", "utilize": "use",
-      "demonstrate": "show", "indicate": "show", "proceed": "go", "terminate": "end",
-      "commence": "start", "initiate": "start", "construct": "build", "destroy": "wreck",
-      "difficult": "hard", "inexpensive": "cheap", "reside": "live", "depart": "leave",
-      "encounter": "meet", "request": "ask", "require": "need", "provide": "give",
-      "receive": "get", "attempt": "try", "consider": "think", "determine": "decide",
-      "establish": "set up", "maintain": "keep", "perform": "do", "possess": "have",
-      "produce": "make", "reduce": "cut", "remove": "take out", "reveal": "show",
-      "sufficient": "enough", "therefore": "so", "upon": "on", "prior to": "before",
-      "subsequent": "next", "initially": "first", "ultimately": "finally",
-      "approximately": "about", "frequently": "often", "individual": "person",
-      "numerous": "many", "previous": "last", "currently": "now", "presently": "now",
-      "nevertheless": "still", "nonetheless": "anyway", "obtain": "get",
-      "purchase": "buy", "assist": "help", "request": "ask", "require": "need",
-      "utilize": "use", "demonstrate": "show", "proceed": "go", "terminate": "end",
-      "commence": "start", "initiate": "start", "construct": "build", "destroy": "wreck",
-      "difficult": "hard", "inexpensive": "cheap", "reside": "live", "depart": "leave",
-      "encounter": "meet", "attempt": "try", "consider": "think", "determine": "decide",
-      "establish": "set up", "maintain": "keep", "perform": "do", "possess": "have",
-      "produce": "make", "reduce": "cut", "remove": "take out", "reveal": "show",
-      "sufficient": "enough", "upon": "on", "prior to": "before", "subsequent": "next",
-      "initially": "first", "ultimately": "finally", "approximately": "about",
-      "frequently": "often", "individual": "person", "numerous": "many",
-      "previous": "last", "currently": "now", "presently": "now",
-      "is not": "isn't", "are not": "aren't", "was not": "wasn't", "were not": "weren't",
-      "do not": "don't", "does not": "doesn't", "did not": "didn't", "have not": "haven't",
-      "has not": "hasn't", "had not": "hadn't", "will not": "won't", "would not": "wouldn't",
-      "should not": "shouldn't", "could not": "couldn't", "might not": "mightn't",
-      "must not": "mustn't", "cannot": "can't", "i am": "i'm", "you are": "you're",
-      "he is": "he's", "she is": "she's", "it is": "it's", "we are": "we're",
-      "they are": "they're", "i have": "i've", "you have": "you've", "we have": "we've",
-      "they have": "they've", "i will": "i'll", "you will": "you'll", "he will": "he'll",
-      "she will": "she'll", "it will": "it'll", "we will": "we'll", "they will": "they'll",
-      "i would": "i'd", "you would": "you'd", "he would": "he'd", "she would": "she'd",
-      "we would": "we'd", "they would": "they'd", "i had": "i'd", "you had": "you'd",
-      "he had": "he'd", "she had": "she'd", "it had": "it'd", "we had": "we'd",
-      "they had": "they'd", "let us": "let's", "give us": "gimme", "going to": "gonna",
-      "want to": "wanna", "got to": "gotta", "have to": "hafta", "out of": "outta",
-      "kind of": "kinda", "sort of": "sorta", "a lot of": "lots of", "because": "cause"
-    };
+(function(){
+  "use strict";
 
-    // reverse mapping for informal -> formal (swap keys/values)
-    const informalToFormal = {};
-    for (let [formal, informal] of Object.entries(formalToInformal)) {
-      // avoid collisions: keep first occurrence (most common)
-      if (!informalToFormal[informal]) {
-        informalToFormal[informal] = formal;
-      }
+  // Bidirectional contraction map: expanded <-> contracted
+  var CONTRACTIONS = [
+    ["cannot","can't"],["will not","won't"],["do not","don't"],["does not","doesn't"],
+    ["did not","didn't"],["is not","isn't"],["are not","aren't"],["was not","wasn't"],
+    ["were not","weren't"],["have not","haven't"],["has not","hasn't"],["had not","hadn't"],
+    ["would not","wouldn't"],["should not","shouldn't"],["could not","couldn't"],
+    ["I am","I'm"],["you are","you're"],["we are","we're"],["they are","they're"],
+    ["it is","it's"],["that is","that's"],["there is","there's"],["who is","who's"],
+    ["I will","I'll"],["you will","you'll"],["we will","we'll"],["they will","they'll"],
+    ["I have","I've"],["you have","you've"],["we have","we've"],["they have","they've"],
+    ["I would","I'd"],["you would","you'd"],["let us","let's"]
+  ];
+
+  // Bidirectional lexical map: [formal, informal]
+  var LEXICON = [
+    ["want to","wanna"],["going to","gonna"],["got to","gotta"],["kind of","kinda"],
+    ["sort of","sorta"],["out of","outta"],["a lot of","lotta"],
+    ["children","kids"],["a great deal","a lot"],["considerably","a lot"],
+    ["thank you","thanks"],["hello","hey"],["yes","yeah"],["okay","ok"],
+    ["because","cuz"],["about","bout"],["very good","awesome"],["excellent","awesome"],
+    ["assist","help"],["assistance","help"],["purchase","buy"],["obtain","get"],
+    ["require","need"],["request","ask for"],["inquire","ask"],["commence","start"],
+    ["terminate","end"],["sufficient","enough"],["additional","more"],["numerous","many"],
+    ["utilize","use"],["demonstrate","show"],["attempt","try"],["regarding","about"],
+    ["currently","right now"],["immediately","right away"],["approximately","around"],
+    ["however","but"],["therefore","so"],["nevertheless","still"],["furthermore","also"],
+    ["subsequently","later"],["previously","before"],["frequently","often"],
+    ["apologies","sorry"],["farewell","bye"],["individual","person"],["automobile","car"],
+    ["residence","home"],["beverage","drink"],["fatigued","tired"],["intelligent","smart"],
+    ["difficult","hard"],["inexpensive","cheap"],["enormous","huge"],["fortunate","lucky"],
+    ["unfortunately","sadly"],["certainly","sure"],["perhaps","maybe"],["extremely","super"]
+  ];
+
+  var subCount = 0;
+
+  function escapeRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
+
+  // Preserve the casing pattern of the matched source word
+  function matchCase(src, repl){
+    if(src.toUpperCase() === src && src.length > 1) return repl.toUpperCase();
+    if(src.charAt(0).toUpperCase() === src.charAt(0)){
+      return repl.charAt(0).toUpperCase() + repl.slice(1);
     }
-    // additional manual overrides for better coverage
-    informalToFormal["gonna"] = "going to";
-    informalToFormal["wanna"] = "want to";
-    informalToFormal["gotta"] = "got to";
-    informalToFormal["hafta"] = "have to";
-    informalToFormal["lemme"] = "let me";
-    informalToFormal["gimme"] = "give me";
-    informalToFormal["kinda"] = "kind of";
-    informalToFormal["sorta"] = "sort of";
-    informalToFormal["outta"] = "out of";
-    informalToFormal["lots of"] = "a lot of";
-    informalToFormal["cause"] = "because";
-    informalToFormal["hella"] = "very";
-    informalToFormal["super"] = "very";
-    informalToFormal["pretty"] = "rather";
-    informalToFormal["maybe"] = "perhaps";
-    informalToFormal["but"] = "however";
-    informalToFormal["also"] = "furthermore";
-    informalToFormal["plus"] = "moreover";
-    informalToFormal["still"] = "nevertheless";
-    informalToFormal["anyway"] = "nonetheless";
-    informalToFormal["so"] = "therefore";
-    informalToFormal["about"] = "regarding";
-    informalToFormal["enough"] = "sufficient";
-    informalToFormal["help"] = "assist";
-    informalToFormal["buy"] = "purchase";
-    informalToFormal["get"] = "obtain";
-    informalToFormal["use"] = "utilize";
-    informalToFormal["show"] = "demonstrate";
-    informalToFormal["go"] = "proceed";
-    informalToFormal["end"] = "terminate";
-    informalToFormal["start"] = "commence";
-    informalToFormal["build"] = "construct";
-    informalToFormal["wreck"] = "destroy";
-    informalToFormal["hard"] = "difficult";
-    informalToFormal["cheap"] = "inexpensive";
-    informalToFormal["live"] = "reside";
-    informalToFormal["leave"] = "depart";
-    informalToFormal["meet"] = "encounter";
-    informalToFormal["ask"] = "request";
-    informalToFormal["need"] = "require";
-    informalToFormal["give"] = "provide";
-    informalToFormal["try"] = "attempt";
-    informalToFormal["think"] = "consider";
-    informalToFormal["decide"] = "determine";
-    informalToFormal["set up"] = "establish";
-    informalToFormal["keep"] = "maintain";
-    informalToFormal["do"] = "perform";
-    informalToFormal["have"] = "possess";
-    informalToFormal["make"] = "produce";
-    informalToFormal["cut"] = "reduce";
-    informalToFormal["take out"] = "remove";
-    informalToFormal["on"] = "upon";
-    informalToFormal["before"] = "prior to";
-    informalToFormal["next"] = "subsequent";
-    informalToFormal["first"] = "initially";
-    informalToFormal["finally"] = "ultimately";
-    informalToFormal["often"] = "frequently";
-    informalToFormal["person"] = "individual";
-    informalToFormal["many"] = "numerous";
-    informalToFormal["last"] = "previous";
-    informalToFormal["now"] = "currently";
-    // contractions reverse
-    informalToFormal["isn't"] = "is not";
-    informalToFormal["aren't"] = "are not";
-    informalToFormal["wasn't"] = "was not";
-    informalToFormal["weren't"] = "were not";
-    informalToFormal["don't"] = "do not";
-    informalToFormal["doesn't"] = "does not";
-    informalToFormal["didn't"] = "did not";
-    informalToFormal["haven't"] = "have not";
-    informalToFormal["hasn't"] = "has not";
-    informalToFormal["hadn't"] = "had not";
-    informalToFormal["won't"] = "will not";
-    informalToFormal["wouldn't"] = "would not";
-    informalToFormal["shouldn't"] = "should not";
-    informalToFormal["couldn't"] = "could not";
-    informalToFormal["mightn't"] = "might not";
-    informalToFormal["mustn't"] = "must not";
-    informalToFormal["can't"] = "cannot";
-    informalToFormal["i'm"] = "I am";
-    informalToFormal["you're"] = "you are";
-    informalToFormal["he's"] = "he is";
-    informalToFormal["she's"] = "she is";
-    informalToFormal["it's"] = "it is";
-    informalToFormal["we're"] = "we are";
-    informalToFormal["they're"] = "they are";
-    informalToFormal["i've"] = "I have";
-    informalToFormal["you've"] = "you have";
-    informalToFormal["we've"] = "we have";
-    informalToFormal["they've"] = "they have";
-    informalToFormal["i'll"] = "I will";
-    informalToFormal["you'll"] = "you will";
-    informalToFormal["he'll"] = "he will";
-    informalToFormal["she'll"] = "she will";
-    informalToFormal["it'll"] = "it will";
-    informalToFormal["we'll"] = "we will";
-    informalToFormal["they'll"] = "they will";
-    informalToFormal["i'd"] = "I would";
-    informalToFormal["you'd"] = "you would";
-    informalToFormal["he'd"] = "he would";
-    informalToFormal["she'd"] = "she would";
-    informalToFormal["we'd"] = "we would";
-    informalToFormal["they'd"] = "they would";
-    informalToFormal["let's"] = "let us";
+    return repl;
+  }
 
-    // ---------- DOM refs ----------
-    const inputText = document.getElementById('inputText');
-    const outputDisplay = document.getElementById('outputDisplay');
-    const modeBtns = document.querySelectorAll('.mode-btn');
-    const copyBtn = document.getElementById('copyBtn');
-    const scoreValue = document.getElementById('scoreValue');
-    const scoreFill = document.getElementById('scoreFill');
-
-    let currentMode = 'formal'; // 'formal' => formal→informal
-
-    // ---------- conversion + highlight ----------
-    function convertAndRender() {
-      const text = inputText.value;
-      if (!text.trim()) {
-        outputDisplay.innerHTML = '<span class="placeholder-text">Converted text will appear here</span>';
-        updateScore(0);
-        return;
-      }
-
-      const mapping = currentMode === 'formal' ? formalToInformal : informalToFormal;
-      // sort keys by length descending to match longer phrases first
-      const keys = Object.keys(mapping).sort((a, b) => b.split(' ').length - a.split(' ').length || b.length - a.length);
-
-      let result = text;
-      const changes = []; // store { from, to, index } for highlighting (simplified: we'll wrap after)
-
-      // We'll do a global replacement with a function that tracks changes
-      // but for highlight we need positions. Use a simple approach: replace and mark.
-      // We'll create a regex from keys (escaped) and replace, then highlight by wrapping.
-      const escaped = keys.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-      const regex = new RegExp(`\\b(${escaped.join('|')})\\b`, 'gi');
-
-      let matchCount = 0;
-      result = text.replace(regex, (matched) => {
-        const lower = matched.toLowerCase();
-        // find proper key (case-insensitive)
-        const foundKey = keys.find(k => k.toLowerCase() === lower);
-        if (foundKey) {
-          const replacement = mapping[foundKey];
-          // preserve case: simple heuristic: if first letter uppercase, capitalize replacement
-          let finalReplacement = replacement;
-          if (matched[0] === matched[0].toUpperCase() && matched.length > 1) {
-            finalReplacement = replacement.charAt(0).toUpperCase() + replacement.slice(1);
-          } else if (matched === matched.toUpperCase() && matched.length > 1) {
-            finalReplacement = replacement.toUpperCase();
-          } else if (matched[0] === matched[0].toUpperCase()) {
-            finalReplacement = replacement.charAt(0).toUpperCase() + replacement.slice(1);
-          }
-          matchCount++;
-          return `@@CHANGE_${matchCount}@@`;
-        }
-        return matched;
-      });
-
-      // rebuild with highlights
-      let highlighted = result;
-      for (let i = 1; i <= matchCount; i++) {
-        const placeholder = `@@CHANGE_${i}@@`;
-        // find the original matched word from mapping (we lost it, but we can retrieve from regex)
-        // simpler: we replace placeholder with a marker + word + marker
-        // we'll do a second pass: but we lost the original word. Better approach: store replacements.
-        // Let's redo: use a map of placeholder -> original & replacement.
-      }
-
-      // Better: re-run with replacement function that builds map
-      const replacementMap = new Map();
-      let idx = 0;
-      const result2 = text.replace(regex, (matched) => {
-        const lower = matched.toLowerCase();
-        const foundKey = keys.find(k => k.toLowerCase() === lower);
-        if (foundKey) {
-          const replacement = mapping[foundKey];
-          let finalReplacement = replacement;
-          if (matched[0] === matched[0].toUpperCase() && matched.length > 1) {
-            finalReplacement = replacement.charAt(0).toUpperCase() + replacement.slice(1);
-          } else if (matched === matched.toUpperCase() && matched.length > 1) {
-            finalReplacement = replacement.toUpperCase();
-          } else if (matched[0] === matched[0].toUpperCase()) {
-            finalReplacement = replacement.charAt(0).toUpperCase() + replacement.slice(1);
-          }
-          idx++;
-          const key = `%%C${idx}%%`;
-          replacementMap.set(key, { original: matched, replacement: finalReplacement });
-          return key;
-        }
-        return matched;
-      });
-
-      // now replace placeholders with highlighted spans
-      let finalHtml = result2;
-      for (let [key, { original, replacement }] of replacementMap) {
-        finalHtml = finalHtml.replace(key, `<span class="changed">${replacement}</span>`);
-      }
-
-      outputDisplay.innerHTML = finalHtml;
-
-      // formality score: based on ratio of informal words in text (heuristic)
-      const words = text.split(/\s+/).filter(w => w.length > 0);
-      let informalCount = 0;
-      const informalSet = new Set(Object.keys(informalToFormal).map(k => k.toLowerCase()));
-      for (let w of words) {
-        const clean = w.replace(/[^a-zA-Z']/g, '').toLowerCase();
-        if (informalSet.has(clean)) informalCount++;
-      }
-      let score = Math.round((1 - (informalCount / Math.max(words.length, 1))) * 100);
-      if (currentMode === 'informal') {
-        // if converting to formal, score should reflect formality after conversion? we use output
-        // but simpler: use same heuristic on output? we'll compute on output words.
-        const outWords = finalHtml.replace(/<[^>]*>/g, ' ').split(/\s+/).filter(w => w.length>0);
-        let outInformal = 0;
-        for (let w of outWords) {
-          const clean = w.replace(/[^a-zA-Z']/g, '').toLowerCase();
-          if (informalSet.has(clean)) outInformal++;
-        }
-        score = Math.round((1 - (outInformal / Math.max(outWords.length, 1))) * 100);
-      }
-      if (isNaN(score) || score < 0) score = 0;
-      if (score > 100) score = 100;
-      updateScore(score);
-    }
-
-    function updateScore(score) {
-      scoreValue.textContent = score + '%';
-      scoreFill.style.width = score + '%';
-    }
-
-    // ---------- mode switching ----------
-    function setMode(mode) {
-      currentMode = mode;
-      modeBtns.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === mode);
-      });
-      convertAndRender();
-    }
-
-    modeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        setMode(btn.dataset.mode);
-      });
+  function replacePhrase(text, from, to){
+    var re = new RegExp("(^|[^A-Za-z'])(" + escapeRe(from) + ")(?![A-Za-z'])","gi");
+    return text.replace(re, function(m, pre, word){
+      subCount++;
+      return pre + matchCase(word, to);
     });
+  }
 
-    // ---------- copy ----------
-    copyBtn.addEventListener('click', async () => {
-      const text = outputDisplay.innerText;
-      if (!text || text === 'Converted text will appear here') return;
-      try {
-        await navigator.clipboard.writeText(text);
-        copyBtn.innerHTML = '<span>✅</span> Copied!';
-        setTimeout(() => {
-          copyBtn.innerHTML = '<span>📋</span> Copy output';
-        }, 1800);
-      } catch {
-        alert('Copy not supported, please select manually.');
-      }
+  function applyMap(text, pairs, fromIdx, toIdx){
+    // Longest source first so multi-word phrases win over single words
+    var sorted = pairs.slice().sort(function(a,b){
+      return b[fromIdx].length - a[fromIdx].length;
     });
+    for(var i=0;i<sorted.length;i++){
+      text = replacePhrase(text, sorted[i][fromIdx], sorted[i][toIdx]);
+    }
+    return text;
+  }
 
-    // ---------- input listener ----------
-    inputText.addEventListener('input', convertAndRender);
+  function fixCaps(text){
+    // Capitalize first letter of each sentence
+    return text.replace(/(^|[.!?]\s+)([a-z])/g, function(m, sep, ch){
+      return sep + ch.toUpperCase();
+    });
+  }
 
-    // ---------- init ----------
-    setMode('formal');
-  })();
+  function convert(){
+    subCount = 0;
+    var text = document.getElementById("input").value;
+    var dir = document.getElementById("dir").value; // formal | informal
+    var doContr = document.getElementById("optContractions").checked;
+    var doSlang = document.getElementById("optSlang").checked;
+    var doCaps  = document.getElementById("optCaps").checked;
+
+    var out = text;
+
+    if(dir === "formal"){
+      if(doContr) out = applyMap(out, CONTRACTIONS, 1, 0); // contracted -> expanded
+      if(doSlang) out = applyMap(out, LEXICON, 1, 0);      // informal -> formal
+    } else {
+      if(doSlang) out = applyMap(out, LEXICON, 0, 1);      // formal -> informal
+      if(doContr) out = applyMap(out, CONTRACTIONS, 0, 1); // expanded -> contracted
+    }
+
+    out = out.replace(/[ \t]{2,}/g," ");
+    if(doCaps) out = fixCaps(out);
+
+    document.getElementById("output").textContent = out;
+
+    var words = out.trim() ? out.trim().split(/\s+/).length : 0;
+    document.getElementById("wc").textContent = words;
+    document.getElementById("cc").textContent = out.length;
+    document.getElementById("sc").textContent = subCount;
+  }
+
+  var ids = ["input","dir","optContractions","optSlang","optCaps"];
+  ids.forEach(function(id){
+    var el = document.getElementById(id);
+    el.addEventListener("input", convert);
+    el.addEventListener("change", convert);
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var t = document.getElementById("output").textContent;
+    var self = this, old = self.textContent;
+    function done(){ self.textContent = "Copied!"; setTimeout(function(){ self.textContent = old; }, 1400); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done, done);
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = t; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta); done();
+    }
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", function(){
+    document.getElementById("input").value = "";
+    convert();
+    document.getElementById("input").focus();
+  });
+
+  document.getElementById("swapBtn").addEventListener("click", function(){
+    document.getElementById("input").value = document.getElementById("output").textContent;
+    convert();
+  });
+
+  // Prefill output on load
+  convert();
+})();
 </script>
-
-    <footer style="text-align:center;padding:2rem 1rem;margin-top:2rem;border-top:1px solid #334155;color:#94a3b8;font-size:0.85rem;">
-        <p>&copy; 2025 paraphrasetool.org &mdash; Free online tool. No data stored.</p>
-    </footer>
-<div style="margin:20px auto;max-width:728px;text-align:center">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-<div style="margin:30px auto;max-width:728px;text-align:center;padding:18px 24px;background:linear-gradient(135deg,#0f172a,#1e293b);border:1px solid #334155;border-radius:10px">
-<p style="margin:0 0 6px;color:#94a3b8;font-size:0.85rem">Recommended by our team</p>
-<a href="https://www.belikenative.com?ref=satellite" target="_blank" rel="noopener" style="color:#38bdf8;font-weight:600;font-size:1.05rem;text-decoration:none">BeLikeNative.com</a>
-<p style="margin:6px 0 0;color:#cbd5e1;font-size:0.9rem">The #1 AI writing tool for freelancers — perfect grammar in any language, instantly.</p>
-</div>
 </body>
 </html>

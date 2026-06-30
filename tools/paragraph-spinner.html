@@ -1,398 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paragraph Spinner — Rewrite Paragraphs Uniquely</title>
-  <meta name="description" content="Spin any paragraph into 3 unique versions with word, phrase & sentence reordering. Uniqueness score, diff & spintax view.">
-  <link rel="canonical" href="https://paraphrasetool.org/paragraph-spinner">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Paragraph Spinner",
-    "url": "https://paraphrasetool.org/paragraph-spinner",
-    "description": "Rewrite paragraphs uniquely with word-level spinning, phrase alternatives, and sentence reordering.",
-    "browserRequirements": "Requires JavaScript",
-    "applicationCategory": "Text Processing",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How does the paragraph spinner work?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "It uses word-level synonym replacement, phrase-level mapping, and sentence reordering to generate unique versions."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I adjust the spinning intensity?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, use the intensity slider to choose light, medium, or aggressive spinning."
-        }
-      }
-    ]
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paragraph Spinner - Free Online Text Rewriter Tool</title>
+<meta name="description" content="Free paragraph spinner that rewrites text instantly using a synonym dictionary. Spin sentences and paragraphs client-side with adjustable strength. No">
+<link rel="canonical" href="https://paraphrasetool.org/tools/paragraph-spinner">
+<meta property="og:title" content="Paragraph Spinner - Free Online Text Rewriter Tool">
+<meta property="og:description" content="Free paragraph spinner that rewrites text instantly using a synonym dictionary. Spin sentences and paragraphs client-side with adjustable strength.">
+<meta property="og:url" content="https://paraphrasetool.org/tools/paragraph-spinner">
+<meta property="og:type" content="website">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Paragraph Spinner",
+  "url": "https://paraphrasetool.org/tools/paragraph-spinner",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "Michael Lip", "url": "https://zovo.one" },
+  "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://paraphrasetool.org/" },
-      { "@type": "ListItem", "position": 2, "name": "Paragraph Spinner", "item": "https://paraphrasetool.org/paragraph-spinner" }
+      { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://paraphrasetool.org/tools/" },
+      { "@type": "ListItem", "position": 3, "name": "Paragraph Spinner", "item": "https://paraphrasetool.org/tools/paragraph-spinner" }
     ]
   }
-  </script>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0a0a0a; color: #e0e0e0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; line-height: 1.5; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-    .container { max-width: 1200px; width: 100%; }
-    header, footer { text-align: center; padding: 1.5rem 0; }
-    header h1 { font-size: 2.2rem; font-weight: 600; letter-spacing: -0.5px; color: #f0f0ff; }
-    header p { color: #aaa; margin-top: 0.3rem; }
-    .card { background: #151515; border-radius: 20px; padding: 1.8rem; margin: 1.5rem 0; box-shadow: 0 8px 20px rgba(0,0,0,0.7); border: 1px solid #2a2a2a; }
-    .flex-row { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; }
-    .input-area textarea { width: 100%; padding: 1rem; background: #1e1e1e; border: 1px solid #333; border-radius: 14px; color: #e0e0e0; font-size: 1rem; resize: vertical; min-height: 120px; }
-    .input-area textarea:focus { outline: 2px solid #7c4dff; border-color: transparent; }
-    .btn { background: #7c4dff; color: white; border: none; padding: 0.7rem 1.8rem; border-radius: 40px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.2s; letter-spacing: 0.3px; }
-    .btn:hover { background: #9b7aff; transform: scale(1.02); }
-    .btn-outline { background: transparent; border: 1px solid #7c4dff; color: #7c4dff; }
-    .btn-outline:hover { background: #7c4dff22; }
-    .slider-group { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-    .slider-group label { font-weight: 500; }
-    input[type="range"] { width: 140px; accent-color: #7c4dff; background: #2a2a2a; height: 4px; border-radius: 10px; }
-    .intensity-label { background: #2a2a2a; padding: 0.2rem 1rem; border-radius: 40px; font-size: 0.9rem; color: #ccc; }
-    .versions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
-    .version-card { background: #1a1a1a; border-radius: 18px; padding: 1.2rem; border: 1px solid #2e2e2e; transition: 0.2s; }
-    .version-card:hover { border-color: #7c4dff55; }
-    .version-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
-    .version-header h3 { font-size: 1.1rem; font-weight: 500; }
-    .badge { background: #2a2a2a; padding: 0.2rem 0.8rem; border-radius: 40px; font-size: 0.75rem; color: #b0b0b0; }
-    .uniqueness { color: #7c4dff; font-weight: 600; }
-    .diff-box { background: #111; padding: 0.8rem; border-radius: 12px; font-size: 0.9rem; max-height: 160px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; border: 1px solid #2a2a2a; margin: 0.5rem 0; }
-    .diff-added { background: #1e3a2a; color: #a0e0a0; }
-    .diff-removed { background: #3a1e1e; color: #e0a0a0; text-decoration: line-through; }
-    .wordcount { font-size: 0.8rem; color: #888; margin-top: 0.3rem; }
-    .action-buttons { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.8rem; }
-    .spintax-view { background: #111; border-radius: 14px; padding: 1rem; margin-top: 1rem; font-family: 'Courier New', monospace; font-size: 0.9rem; border: 1px solid #333; max-height: 120px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
-    .footer-links a { color: #7c4dff; text-decoration: none; }
-    .footer-links a:hover { text-decoration: underline; }
-    hr { border: 0.5px solid #222; margin: 1.5rem 0; }
-    @media (max-width: 600px) { .versions-grid { grid-template-columns: 1fr; } }
-  </style>
+}
+</script>
+<style>
+:root{--bg:#0f1115;--panel:#181b22;--panel2:#1f232c;--ink:#e7eaf0;--muted:#9aa3b2;--accent:#6ea8fe;--accent2:#7ee0c0;--border:#2a2f3a}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+nav{display:flex;gap:18px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--panel);font-size:.95rem}
+.wrap{max-width:880px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:1.8rem;line-height:1.25;margin:18px 0 8px}
+h2{font-size:1.25rem;margin:34px 0 10px}
+p.intro{color:var(--muted);font-size:1.05rem}
+section#tool{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px;margin:22px 0}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:.95rem}
+textarea{width:100%;min-height:150px;resize:vertical;background:var(--panel2);color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:1rem;font-family:inherit}
+.controls{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin:16px 0}
+.controls .field{display:flex;flex-direction:column;gap:4px;font-size:.85rem;color:var(--muted)}
+input[type=range]{width:180px}
+button{background:var(--accent);color:#0b1020;border:none;border-radius:10px;padding:11px 18px;font-size:1rem;font-weight:700;cursor:pointer}
+button.alt{background:var(--panel2);color:var(--ink);border:1px solid var(--border)}
+button:hover{opacity:.92}
+.out{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px;min-height:80px;white-space:pre-wrap}
+.out ins{color:var(--accent2);text-decoration:none;font-weight:600}
+.stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;margin-top:10px}
+.stats b{color:var(--ink)}
+.chk{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:.9rem}
+footer{border-top:1px solid var(--border);padding:24px 20px;color:var(--muted);font-size:.9rem;text-align:center}
+footer a{margin:0 8px}
+.related a{display:inline-block;background:var(--panel2);border:1px solid var(--border);border-radius:999px;padding:7px 14px;margin:6px 6px 0 0}
+code{background:var(--panel2);padding:2px 6px;border-radius:6px}
+</style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <h1>✎ Paragraph Spinner</h1>
-    <p>Rewrite any paragraph into 3 unique versions — word, phrase & sentence level</p>
-  </header>
+<nav>
+  <a href="/">Home</a>
+  <a href="/tools/">Tools</a>
+</nav>
+<div class="wrap">
+  <h1>Spin Paragraphs Into Fresh, Reworded Text</h1>
+  <p class="intro">Paste a paragraph and this client-side spinner swaps eligible words for synonyms, giving you an instantly reworded version. Adjust the spin strength, then copy the result. Everything runs in your browser - nothing is uploaded.</p>
 
-  <!-- Breadcrumb (visual) -->
-  <nav style="font-size:0.85rem; color:#666; margin-bottom:0.5rem;"> <a href="https://paraphrasetool.org/" style="color:#7c4dff;">Home</a> / <span style="color:#ccc;">Paragraph Spinner</span> </nav>
+  <section id="tool">
+    <label for="input">Your text</label>
+    <textarea id="input" placeholder="Type or paste a paragraph here...">A good writer can quickly produce clear and helpful content. Strong sentences make big ideas easy to understand, and a smart plan helps you create useful work fast.</textarea>
 
-  <div class="card input-area">
-    <textarea id="inputParagraph" placeholder="Paste your paragraph here... (at least 10 words)">The quick brown fox jumps over the lazy dog. This is a simple example to demonstrate spinning. Technology evolves rapidly and changes our daily life.</textarea>
-    <div class="flex-row" style="justify-content: space-between; margin-top: 1rem;">
-      <div class="slider-group">
-        <label for="intensitySlider">Intensity</label>
-        <input type="range" id="intensitySlider" min="0" max="2" value="1" step="1">
-        <span id="intensityLabel" class="intensity-label">Medium</span>
+    <div class="controls">
+      <div class="field">
+        <span>Spin strength: <b id="strengthLbl">60%</b></span>
+        <input type="range" id="strength" min="10" max="100" value="60" step="5">
       </div>
-      <button class="btn" id="spinButton">⟳ Spin Now</button>
+      <label class="chk"><input type="checkbox" id="highlight" checked> Highlight changes</label>
+      <button id="spinBtn">Spin again</button>
+      <button id="copyBtn" class="alt">Copy result</button>
     </div>
-  </div>
 
-  <div id="resultsArea">
-    <div class="versions-grid" id="versionsContainer"></div>
-    <div class="card" id="spintaxCard" style="margin-top:0;">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="font-weight:500;">🔀 Spintax view</h3>
-        <button class="btn btn-outline" id="copySpintaxBtn" style="padding:0.4rem 1.2rem;">📋 Copy</button>
-      </div>
-      <div id="spintaxContent" class="spintax-view">Click "Spin Now" to generate spintax.</div>
+    <label>Spun output</label>
+    <div class="out" id="output" aria-live="polite"></div>
+    <div class="stats">
+      <span>Words: <b id="wc">0</b></span>
+      <span>Words changed: <b id="cc">0</b></span>
+      <span>Uniqueness: <b id="uq">0%</b></span>
     </div>
-  </div>
+  </section>
 
-  <footer style="margin-top: 2rem; border-top: 1px solid #222; padding-top: 1.5rem;">
-    <div class="footer-links">
-      <a href="https://paraphrasetool.org/">paraphrasetool.org</a> — free online text tools
-    </div>
-    <p style="font-size:0.8rem; color:#555; margin-top:0.5rem;">© Paragraph Spinner • all processing client‑side</p>
-  </footer>
+  <h2>How the paragraph spinner works</h2>
+  <p>This tool is a rule-based, dictionary-driven spinner. It reads your text, breaks it into individual tokens, and checks each word against a built-in thesaurus of more than 180 common English words. When a word has one or more synonyms, the spinner decides whether to replace it using a simple probability test: a random number between 0 and 1 is compared against your chosen <b>spin strength</b>. At 60% strength, roughly six out of ten eligible words are rewritten; at 100% nearly every eligible word changes, and at 10% the output stays very close to the original.</p>
+  <p>Replacement is case-aware. If the original word is capitalised (for example at the start of a sentence) the chosen synonym is capitalised to match, so the spun paragraph still reads naturally. Punctuation attached to a word - commas, periods, question marks - is detached before lookup and reattached afterward, which keeps sentence structure intact. The uniqueness score is computed as <code>changed_words / total_eligible_words</code> expressed as a percentage, giving you a quick estimate of how far the spin has moved from the source.</p>
+  <p>Because everything is dictionary and rule based rather than AI generation, the spinner is fully offline, instant, and private. There is no API call, no account, and no rate limit. The trade-off is that you should always reread the output: synonym swapping can occasionally pick a word that shifts nuance, so the spinner is best used as a fast first draft that you then polish. Press <b>Spin again</b> to roll new random choices, or lower the strength for a lighter, more conservative rewrite.</p>
+
+  <h2>Related Tools</h2>
+  <div class="related">
+    <a href="/tools/sentence-rewriter">Sentence Rewriter</a>
+    <a href="/tools/word-counter">Word Counter</a>
+    <a href="/tools/synonym-finder">Synonym Finder</a>
+  </div>
 </div>
 
-<script>
-  (function() {
-    // ---------- SYNONYM DATABASE (300+ common words) ----------
-    const synonyms = {
-      'quick': ['fast', 'swift', 'rapid', 'speedy', 'brisk'],
-      'brown': ['tan', 'copper', 'chestnut', 'chocolate', 'umber'],
-      'fox': ['vixen', 'canine', 'slyboots', 'tod'],
-      'jumps': ['leaps', 'springs', 'bounds', 'vaults', 'hops'],
-      'lazy': ['idle', 'sluggish', 'indolent', 'lethargic', 'inactive'],
-      'dog': ['hound', 'canine', 'pooch', 'mutt', 'puppy'],
-      'simple': ['easy', 'basic', 'straightforward', 'elementary', 'plain'],
-      'example': ['instance', 'sample', 'illustration', 'case', 'demonstration'],
-      'demonstrate': ['show', 'illustrate', 'display', 'exhibit', 'indicate'],
-      'spinning': ['rewriting', 'paraphrasing', 'rephrasing', 'twisting', 'reworking'],
-      'technology': ['tech', 'engineering', 'innovation', 'science', 'digital'],
-      'evolves': ['develops', 'progresses', 'advances', 'grows', 'changes'],
-      'rapidly': ['quickly', 'swiftly', 'fast', 'speedily', 'briskly'],
-      'changes': ['alters', 'modifies', 'transforms', 'shifts', 'evolves'],
-      'daily': ['everyday', 'routine', 'day-to-day', 'common', 'regular'],
-      'life': ['existence', 'living', 'lifestyle', 'world', 'reality'],
-      'over': ['above', 'across', 'beyond', 'past', 'through'],
-      'the': ['the'], // keep as is
-      'a': ['a', 'an'],
-      'an': ['an', 'a'],
-      'and': ['and', 'plus', 'as well as', 'together with'],
-      'but': ['but', 'yet', 'however', 'though', 'still'],
-      'is': ['is', 'remains', 'continues', 'stays'],
-      'are': ['are', 'remain', 'continue'],
-      'was': ['was', 'had been', 'used to be'],
-      'were': ['were', 'had been'],
-      'this': ['this', 'that', 'the present'],
-      'that': ['that', 'which', 'this'],
-      'to': ['to', 'in order to', 'so as to'],
-      'our': ['our', 'our own', 'the'],
-      'new': ['novel', 'fresh', 'modern', 'current', 'latest'],
-      'old': ['ancient', 'aged', 'former', 'previous', 'classic'],
-      'good': ['excellent', 'fine', 'superb', 'quality', 'positive'],
-      'bad': ['poor', 'negative', 'unfavorable', 'inferior', 'substandard'],
-      'big': ['large', 'huge', 'enormous', 'massive', 'great'],
-      'small': ['tiny', 'little', 'compact', 'miniature', 'petite'],
-      'many': ['numerous', 'multiple', 'countless', 'various', 'several'],
-      'much': ['a lot', 'plenty', 'considerable', 'substantial'],
-      'very': ['extremely', 'highly', 'remarkably', 'exceptionally', 'intensely'],
-      'important': ['crucial', 'vital', 'essential', 'significant', 'key'],
-      'different': ['distinct', 'various', 'diverse', 'dissimilar', 'unique'],
-      'same': ['identical', 'equivalent', 'alike', 'matching', 'twin'],
-      'first': ['initial', 'primary', 'earliest', 'opening', 'premier'],
-      'last': ['final', 'ultimate', 'closing', 'end', 'latest'],
-      'next': ['following', 'subsequent', 'upcoming', 'coming', 'later'],
-      'previous': ['prior', 'earlier', 'former', 'preceding', 'past'],
-      'also': ['too', 'as well', 'additionally', 'furthermore', 'besides'],
-      'always': ['constantly', 'continually', 'perpetually', 'forever', 'ever'],
-      'never': ['not ever', 'at no time', 'none', 'nevermore'],
-      'often': ['frequently', 'regularly', 'commonly', 'repeatedly', 'many times'],
-      'sometimes': ['occasionally', 'now and then', 'from time to time', 'periodically'],
-      'usually': ['generally', 'normally', 'typically', 'ordinarily', 'habitually'],
-      'really': ['truly', 'genuinely', 'actually', 'indeed', 'honestly'],
-      'just': ['only', 'simply', 'merely', 'barely', 'exactly'],
-      'like': ['similar to', 'akin to', 'comparable', 'resembling', 'such as'],
-      'make': ['create', 'produce', 'build', 'construct', 'form'],
-      'use': ['utilize', 'employ', 'apply', 'operate', 'harness'],
-      'get': ['obtain', 'acquire', 'receive', 'gain', 'secure'],
-      'go': ['proceed', 'move', 'travel', 'advance', 'head'],
-      'come': ['arrive', 'approach', 'appear', 'reach', 'show up'],
-      'take': ['grasp', 'seize', 'capture', 'accept', 'receive'],
-      'give': ['provide', 'offer', 'supply', 'grant', 'donate'],
-      'find': ['discover', 'locate', 'uncover', 'detect', 'come across'],
-      'know': ['understand', 'comprehend', 'realize', 'recognize', 'be aware'],
-      'think': ['believe', 'consider', 'suppose', 'deem', 'judge'],
-      'want': ['desire', 'wish', 'crave', 'long for', 'yearn'],
-      'need': ['require', 'necessitate', 'demand', 'call for', 'be in need'],
-      'see': ['observe', 'view', 'perceive', 'witness', 'spot'],
-      'look': ['gaze', 'glance', 'stare', 'peer', 'examine'],
-      'say': ['state', 'declare', 'mention', 'utter', 'express'],
-      'tell': ['inform', 'notify', 'advise', 'relate', 'recount'],
-      'ask': ['inquire', 'question', 'query', 'interrogate', 'request'],
-      'work': ['labor', 'toil', 'operate', 'function', 'perform'],
-      'help': ['assist', 'aid', 'support', 'serve', 'facilitate'],
-      'try': ['attempt', 'endeavor', 'strive', 'seek', 'undertake'],
-      'leave': ['depart', 'exit', 'abandon', 'quit', 'withdraw'],
-      'keep': ['maintain', 'retain', 'preserve', 'hold', 'continue'],
-      'put': ['place', 'set', 'position', 'lay', 'deposit'],
-      'set': ['arrange', 'establish', 'fix', 'determine', 'adjust'],
-      'start': ['begin', 'commence', 'initiate', 'launch', 'embark'],
-      'end': ['finish', 'conclude', 'terminate', 'cease', 'complete'],
-      'show': ['display', 'exhibit', 'present', 'reveal', 'demonstrate'],
-      'mean': ['signify', 'denote', 'indicate', 'imply', 'represent'],
-      'keep': ['maintain', 'retain', 'preserve', 'sustain', 'continue'],
-      'allow': ['permit', 'let', 'authorize', 'enable', 'grant'],
-      'add': ['include', 'append', 'incorporate', 'supplement', 'increase'],
-      'move': ['shift', 'transfer', 'relocate', 'transport', 'displace'],
-      'live': ['dwell', 'reside', 'inhabit', 'exist', 'survive'],
-      'stay': ['remain', 'linger', 'wait', 'continue', 'abide'],
-      'grow': ['expand', 'increase', 'develop', 'enlarge', 'flourish'],
-      'become': ['turn into', 'grow into', 'develop into', 'transform', 'change into'],
-      'seem': ['appear', 'look', 'sound', 'come across', 'give impression'],
-      'feel': ['sense', 'experience', 'perceive', 'detect', 'notice'],
-      'bring': ['carry', 'fetch', 'deliver', 'transport', 'convey'],
-      'run': ['sprint', 'dash', 'hurry', 'race', 'rush'],
-      'stand': ['rise', 'get up', 'position', 'place', 'set upright'],
-      'sit': ['seat', 'rest', 'settle', 'perch', 'be seated'],
-      'eat': ['consume', 'devour', 'dine', 'feed', 'ingest'],
-      'drink': ['sip', 'gulp', 'consume', 'swallow', 'imbibe'],
-      'write': ['compose', 'draft', 'pen', 'author', 'inscribe'],
-      'read': ['peruse', 'scan', 'study', 'browse', 'examine'],
-      'speak': ['talk', 'converse', 'chat', 'communicate', 'discourse'],
-      'hear': ['listen', 'perceive', 'catch', 'overhear', 'detect'],
-      'love': ['adore', 'cherish', 'treasure', 'admire', 'care for'],
-      'hate': ['detest', 'loathe', 'abhor', 'despise', 'dislike'],
-      'hope': ['wish', 'desire', 'aspire', 'long', 'expect'],
-      'play': ['engage', 'participate', 'compete', 'frolic', 'amuse'],
-      'walk': ['stroll', 'hike', 'march', 'stride', 'amble'],
-      'stop': ['halt', 'cease', 'discontinue', 'pause', 'terminate'],
-      'wait': ['delay', 'linger', 'hold', 'stay', 'pause'],
-      'turn': ['rotate', 'spin', 'twist', 'revolve', 'change direction'],
-      'pay': ['compensate', 'remunerate', 'settle', 'disburse', 'reward'],
-      'buy': ['purchase', 'acquire', 'obtain', 'procure', 'shop for'],
-      'sell': ['vend', 'trade', 'market', 'auction', 'retail'],
-      'call': ['phone', 'ring', 'summon', 'contact', 'dial'],
-      'plan': ['arrange', 'schedule', 'design', 'devise', 'prepare'],
-      'build': ['construct', 'erect', 'assemble', 'create', 'make'],
-      'break': ['shatter', 'fracture', 'damage', 'ruin', 'demolish'],
-      'carry': ['transport', 'bear', 'convey', 'bring', 'move'],
-      'catch': ['capture', 'seize', 'grab', 'snare', 'trap'],
-      'choose': ['select', 'pick', 'opt', 'decide', 'elect'],
-      'close': ['shut', 'seal', 'lock', 'block', 'near'],
-      'cut': ['slice', 'sever', 'trim', 'chop', 'reduce'],
-      'draw': ['sketch', 'depict', 'illustrate', 'portray', 'trace'],
-      'dream': ['fantasize', 'imagine', 'envision', 'daydream', 'aspire'],
-      'enjoy': ['like', 'love', 'relish', 'savor', 'delight in'],
-      'expect': ['anticipate', 'foresee', 'predict', 'await', 'hope'],
-      'fall': ['drop', 'descend', 'plunge', 'tumble', 'collapse'],
-      'fill': ['stuff', 'pack', 'load', 'occupy', 'saturate'],
-      'follow': ['pursue', 'track', 'trail', 'chase', 'shadow'],
-      'forget': ['overlook', 'neglect', 'disregard', 'omit', 'ignore'],
-      'happen': ['occur', 'transpire', 'take place', 'come about', 'arise'],
-      'have': ['possess', 'own', 'hold', 'contain', 'include'],
-      'hide': ['conceal', 'cover', 'mask', 'disguise', 'secrete'],
-      'hold': ['grasp', 'clutch', 'grip', 'retain', 'keep'],
-      'introduce': ['present', 'propose', 'suggest', 'submit', 'bring up'],
-      'join': ['connect', 'link', 'unite', 'attach', 'combine'],
-      'lead': ['guide', 'direct', 'steer', 'conduct', 'escort'],
-      'learn': ['study', 'master', 'grasp', 'understand', 'acquire'],
-      'leave': ['depart', 'quit', 'abandon', 'exit', 'vacate'],
-      'lose': ['misplace', 'forfeit', 'drop', 'squander', 'waste'],
-      'mark': ['label', 'tag', 'stamp', 'brand', 'identify'],
-      'meet': ['encounter', 'greet', 'face', 'confront', 'gather'],
-      'miss': ['skip', 'omit', 'avoid', 'fail', 'long for'],
-      'open': ['unlock', 'unseal', 'unfold', 'expand', 'reveal'],
-      'pass': ['exceed', 'surpass', 'cross', 'go beyond', 'overtake'],
-      'pick': ['choose', 'select', 'opt', 'gather', 'harvest'],
-      'post': ['place', 'put', 'position', 'publish', 'display'],
-      'pull': ['tug', 'drag', 'haul', 'draw', 'yank'],
-      'push': ['shove', 'thrust', 'press', 'propel', 'drive'],
-      'raise': ['lift', 'elevate', 'hoist', 'boost', 'increase'],
-      'reach': ['arrive', 'attain', 'achieve', 'gain', 'stretch'],
-      'remember': ['recall', 'recollect', 'retain', 'memorize', 'reminisce'],
-      'repeat': ['reiterate', 'restate', 'echo', 'reprise', 'duplicate'],
-      'report': ['announce', 'state', 'disclose', 'reveal', 'notify'],
-      'return': ['come back', 'go back', 'revert', 'reappear', 'send back'],
-      'save': ['rescue', 'preserve', 'conserve', 'store', 'protect'],
-      'search': ['seek', 'hunt', 'scour', 'explore', 'look for'],
-      'send': ['dispatch', 'transmit', 'ship', 'forward', 'transmit'],
-      'serve': ['assist', 'attend', 'help', 'provide', 'supply'],
-      'share': ['divide', 'split', 'distribute', 'allocate', 'partake'],
-      'shoot': ['fire', 'launch', 'blast', 'propel', 'discharge'],
-      'sign': ['endorse', 'approve', 'ratify', 'subscribe', 'autograph'],
-      'sing': ['chant', 'vocalize', 'croon', 'warble', 'serenade'],
-      'sleep': ['slumber', 'doze', 'nap', 'snooze', 'rest'],
-      'smile': ['grin', 'beam', 'smirk', 'simper', 'radiate'],
-      'solve': ['resolve', 'unravel', 'decipher', 'clarify', 'work out'],
-      'sort': ['classify', 'categorize', 'arrange', 'organize', 'order'],
-      'spend': ['expend', 'consume', 'use', 'disburse', 'splurge'],
-      'spread': ['extend', 'expand', 'distribute', 'scatter', 'disseminate'],
-      'stand': ['rise', 'endure', 'tolerate', 'withstand', 'bear'],
-      'start': ['begin', 'commence', 'initiate', 'launch', 'kick off'],
-      'stay': ['remain', 'linger', 'continue', 'abide', 'sojourn'],
-      'step': ['pace', 'stride', 'move', 'walk', 'tread'],
-      'stop': ['halt', 'cease', 'discontinue', 'quit', 'terminate'],
-      'study': ['learn', 'review', 'examine', 'analyze', 'scrutinize'],
-      'succeed': ['prosper', 'thrive', 'flourish', 'prevail', 'triumph'],
-      'suggest': ['propose', 'recommend', 'advise', 'advocate', 'submit'],
-      'support': ['back', 'uphold', 'sustain', 'bolster', 'advocate'],
-      'take': ['seize', 'grasp', 'capture', 'acquire', 'obtain'],
-      'talk': ['speak', 'converse', 'chat', 'discuss', 'communicate'],
-      'teach': ['instruct', 'educate', 'train', 'tutor', 'coach'],
-      'tell': ['inform', 'narrate', 'recount', 'relate', 'describe'],
-      'think': ['believe', 'consider', 'ponder', 'contemplate', 'reflect'],
-      'throw': ['toss', 'hurl', 'fling', 'launch', 'project'],
-      'touch': ['feel', 'contact', 'brush', 'stroke', 'caress'],
-      'travel': ['journey', 'tour', 'voyage', 'trek', 'roam'],
-      'trust': ['rely', 'depend', 'confide', 'believe', 'entrust'],
-      'try': ['attempt', 'endeavor', 'strive', 'test', 'experiment'],
-      'turn': ['rotate', 'spin', 'twist', 'revolve', 'change'],
-      'understand': ['comprehend', 'grasp', 'perceive', 'realize', 'follow'],
-      'use': ['utilize', 'employ', 'apply', 'operate', 'harness'],
-      'wait': ['delay', 'linger', 'pause', 'hold', 'stay'],
-      'walk': ['stroll', 'hike', 'march', 'stride', 'amble'],
-      'want': ['desire', 'wish', 'crave', 'yearn', 'long for'],
-      'warn': ['caution', 'alert', 'advise', 'notify', 'forewarn'],
-      'watch': ['observe', 'view', 'see', 'monitor', 'scrutinize'],
-      'win': ['triumph', 'prevail', 'conquer', 'succeed', 'beat'],
-      'wish': ['desire', 'hope', 'yearn', 'aspire', 'long'],
-      'work': ['labor', 'toil', 'operate', 'function', 'perform'],
-      'worry': ['fret', 'anxiety', 'concern', 'distress', 'trouble'],
-      'write': ['compose', 'draft', 'pen', 'author', 'inscribe'],
-      'wrong': ['incorrect', 'false', 'mistaken', 'erroneous', 'inaccurate'],
-      'young': ['youthful', 'juvenile', 'adolescent', 'fresh', 'new'],
-      'old': ['aged', 'elderly', 'senior', 'ancient', 'mature']
-    };
+<footer>
+  <div>
+    <a href="/">Home</a>
+    <a href="/tools/">All Tools</a>
+    <a href="/tools/sentence-rewriter">Sentence Rewriter</a>
+  </div>
+  <p>&copy; 2026 paraphrasetool.org - client-side text tools.</p>
+</footer>
 
-    // ---------- PHRASE DATABASE ----------
-    const phraseMap = {
-      'a lot of': ['many', 'numerous', 'plenty of', 'countless', 'a great deal of'],
-      'because of': ['due to', 'owing to', 'as a result of', 'on account of'],
-      'in order to': ['to', 'so as to', 'for the purpose of', 'with the aim of'],
-      'as well as': ['and also', 'along with', 'together with', 'plus'],
-      'such as': ['like', 'including', 'for example', 'for instance'],
-      'in spite of': ['despite', 'regardless of', 'notwithstanding', 'even though'],
-      'in addition': ['also', 'furthermore', 'moreover', 'additionally'],
-      'on the other hand': ['however', 'conversely', 'alternatively', 'then again'],
-      'in fact': ['actually', 'indeed', 'in reality', 'truly'],
-      'in other words': ['that is', 'i.e.', 'to put it differently', 'simply put'],
-      'as a result': ['consequently', 'thus', 'therefore', 'hence'],
-      'at the same time': ['simultaneously', 'meanwhile', 'concurrently', 'in parallel'],
-      'in conclusion': ['to sum up', 'finally', 'ultimately', 'in summary'],
-      'for example': ['for instance', 'e.g.', 'such as', 'like'],
-      'in general': ['generally', 'overall', 'broadly', 'mainly'],
-      'in particular': ['particularly', 'especially', 'specifically', 'notably'],
-      'with regard to': ['regarding', 'concerning', 'about', 'in respect of'],
-      'in terms of': ['regarding', 'concerning', 'with respect to', 'in the context of'],
-      'a number of': ['several', 'many', 'various', 'numerous'],
-      'the majority of': ['most', 'the bulk of', 'the greater part', 'more than half'],
-      'in the event of': ['if', 'should', 'in case of', 'when'],
-      'in the meantime': ['meanwhile', 'until then', 'for now', 'temporarily'],
-      'on behalf of': ['representing', 'for', 'in the name of', 'as agent for'],
-      'in accordance with': ['according to', 'following', 'in line with', 'consistent with'],
-      'in addition to': ['besides', 'along with', 'as well as', 'plus'],
-      'in contrast': ['by contrast', 'on the contrary', 'conversely', 'oppositely'],
-      'in turn': ['subsequently', 'then', 'next', 'later'],
-      'as long as': ['provided that', 'if', 'on condition that', 'so long as'],
-      'as soon as': ['once', 'when', 'immediately after', 'the moment'],
-      'by means of': ['using', 'through', 'via', 'with the help of'],
-      'due to the fact that': ['because', 'since', 'as', 'owing to'],
-      'in the case of': ['for', 'regarding', 'concerning', 'in terms of'],
-      'in the process of': ['during', 'while', 'in the course of', 'as part of'],
-      'with the exception of': ['except', 'excluding', 'apart from', 'save for'],
-      'on the whole': ['overall', 'generally', 'all in all', 'for the most part'],
-      'in the long run': ['eventually', 'ultimately', 'in the end', 'finally'],
-      'in the short term': ['temporarily', 'for now', 'initially', 'provisionally'],
-      'as a matter of fact': ['in fact', 'actually', 'indeed', 'really'],
-      'in the same way': ['similarly', 'likewise', 'equally', 'correspondingly'],
-      'in the light of': ['considering', 'given', 'in view of', 'taking into account'],
-      'with respect to': ['regarding', 'concerning', 'about', 'in relation to'],
-      'in the absence of': ['without', 'lacking', 'missing', 'devoid of'],
-      'in the presence of': ['with', 'alongside', 'in front of', 'before'],
-      'in the vicinity of': ['near', 'close to', 'around', 'adjacent to'],
-      'in the wake of': ['after', 'following', 'as a result of', 'in the aftermath of'],
-      'in the interest of': ['for the sake of', 'to benefit', 'in support of', 'on behalf of'],
-      'in the middle of': ['amid', 'among', 'during', 'in the midst of'],
-      'in the course of': ['during', 'over the course of', 'throughout',
+<script>
+(function(){
+  "use strict";
+  var THES = {
+    "good":["great","fine","solid","decent","strong"],
+    "great":["excellent","superb","outstanding","remarkable"],
+    "big":["large","huge","massive","substantial"],
+    "small":["tiny","little","compact","modest"],
+    "fast":["quick","rapid","swift","speedy"],
+    "quickly":["rapidly","swiftly","promptly","speedily"],
+    "slow":["sluggish","gradual","unhurried"],
+    "happy":["glad","pleased","content","cheerful"],
+    "sad":["unhappy","gloomy","downcast"],
+    "important":["crucial","key","vital","significant"],
+    "easy":["simple","effortless","straightforward"],
+    "hard":["difficult","tough","challenging"],
+    "make":["create","build","produce","form"],
+    "makes":["creates","builds","produces"],
+    "create":["produce","generate","build","craft"],
+    "help":["assist","aid","support"],
+    "helps":["assists","aids","supports"],
+    "use":["utilize","employ","apply"],
+    "useful":["helpful","valuable","handy","practical"],
+    "show":["display","reveal","present"],
+    "find":["locate","discover","uncover"],
+    "get":["obtain","acquire","gain"],
+    "give":["provide","offer","supply"],
+    "need":["require","demand"],
+    "want":["desire","wish for","seek"],
+    "think":["believe","consider","reckon"],
+    "know":["understand","grasp","recognize"],
+    "understand":["grasp","comprehend","follow"],
+    "many":["numerous","countless","plenty of"],
+    "much":["plenty","considerable"],
+    "very":["extremely","highly","remarkably"],
+    "really":["truly","genuinely","actually"],
+    "clear":["evident","plain","obvious","lucid"],
+    "smart":["clever","intelligent","sharp"],
+    "strong":["powerful","robust","sturdy"],
+    "weak":["feeble","fragile","frail"],
+    "new":["fresh","modern","novel"],
+    "old":["aged","ancient","former"],
+    "begin":["start","commence","launch"],
+    "start":["begin","launch","initiate"],
+    "end":["finish","conclude","close"],
+    "idea":["concept","notion","thought"],
+    "ideas":["concepts","notions","thoughts"],
+    "plan":["strategy","scheme","blueprint"],
+    "work":["effort","labor","task"],
+    "writer":["author","wordsmith","scribe"],
+    "write":["compose","pen","draft"],
+    "content":["material","text","copy"],
+    "people":["individuals","folks","persons"],
+    "person":["individual","human"],
+    "way":["method","approach","manner"],
+    "ways":["methods","approaches","manners"],
+    "thing":["item","object","element"],
+    "things":["items","objects","elements"],
+    "problem":["issue","challenge","difficulty"],
+    "result":["outcome","effect","consequence"],
+    "results":["outcomes","effects"],
+    "change":["alter","modify","adjust"],
+    "improve":["enhance","boost","refine"],
+    "best":["finest","top","greatest"],
+    "better":["superior","improved","finer"],
+    "bad":["poor","awful","subpar"],
+    "right":["correct","accurate","proper"],
+    "wrong":["incorrect","mistaken","false"],
+    "true":["accurate","valid","genuine"],
+    "real":["genuine","actual","authentic"],
+    "simple":["basic","plain","easy"],
+    "complex":["complicated","intricate","involved"],
+    "different":["distinct","varied","diverse"],
+    "same":["identical","equal","alike"],
+    "next":["following","subsequent","upcoming"],
+    "first":["initial","earliest","leading"],
+    "last":["final","closing","ultimate"],
+    "high":["elevated","tall","lofty"],
+    "low":["minimal","reduced","modest"],
+    "long":["lengthy","extended","prolonged"],
+    "short":["brief","concise","compact"],
+    "often":["frequently","regularly","commonly"],
+    "always":["constantly","perpetually","invariably"],
+    "never":["not ever","at no time"],
+    "now":["currently","presently","today"],
+    "soon":["shortly","before long"],
+    "also":["additionally","as well","too"],
+    "but":["yet","however","though"],
+    "because":["since","as","due to the fact that"],
+    "so":["therefore","thus","hence"],
+    "however":["nevertheless","nonetheless","yet"],
+    "look":["appear","seem","glance"],
+    "feel":["sense","perceive"],
+    "keep":["retain","maintain","hold"],
+    "let":["allow","permit","enable"],
+    "put":["place","set","position"],
+    "take":["grab","seize","accept"],
+    "tell":["inform","notify","relate"],
+    "ask":["inquire","request","question"],
+    "answer":["reply","respond","response"],
+    "learn":["study","master","grasp"],
+    "teach":["instruct","educate","train"],
+    "build":["construct","assemble","develop"],
+    "grow":["expand","increase","develop"],
+    "money":["funds","cash","capital"],
+    "time":["period","span","duration"],
+    "place":["location","spot","site"],
+    "world":["globe","planet","earth"],
+    "kind":["type","sort","variety"],
+    "type":["kind","sort","category"],
+    "amount":["quantity","sum","volume"],
+    "number":["figure","count","quantity"],
+    "part":["portion","section","piece"],
+    "whole":["entire","complete","full"],
+    "main":["primary","chief","principal"],
+    "few":["several","a handful of","some"],
+    "lot":["plenty","abundance","heap"],
+    "more":["additional","extra","further"],
+    "less":["fewer","reduced","diminished"],
+    "able":["capable","competent","fit"],
+    "sure":["certain","confident","positive"],
+    "great":["fantastic","wonderful","terrific"],
+    "nice":["pleasant","lovely","agreeable"],
+    "fun":["enjoyable","entertaining","amusing"],
+    "interesting":["intriguing","fascinating","engaging"],
+    "boring":["dull","tedious","monotonous"],
+    "quick":["fast","rapid","speedy"],
+    "open":["unlock","unfold","reveal"],
+    "close":["shut","seal","fasten"],
+    "add":["include","insert","append"],
+    "remove":["delete","eliminate","strip"],
+    "list":["catalog","roster","index"],
+    "value":["worth","merit","benefit"],
+    "data":["information","figures","records"],
+    "tool":["utility","instrument","device"],
+    "tools":["utilities","instruments","devices"],
+    "online":["on the web","digital","internet-based"]
+  };
+
+  var inp = document.getElementById("input");
+  var out = document.getElementById("output");
+  var strength = document.getElementById("strength");
+  var strengthLbl = document.getElementById("strengthLbl");
+  var highlight = document.getElementById("highlight");
+  var wc = document.getElementById("wc");
+  var cc = document.getElementById("cc");
+  var uq = document.getElementById("uq");
+
+  function escapeHtml(s){
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  function matchCase(orig, repl){
+    if(orig.length && orig[0] === orig[0].toUpperCase() && orig[0] !== orig[0].toLowerCase()){
+      return repl.charAt(0).toUpperCase() + repl.slice(1);
+    }
+    return repl;
+  }
+
+  function spin(){
+    var text = inp.value;
+    var p = parseInt(strength.value,10)/100;
+    var doHi = highlight.checked;
+    // split keeping whitespace as delimiters
+    var tokens = text.split(/(\s+)/);
+    var eligible = 0, changed = 0, totalWords = 0;
+    var html = "";
+    for(var i=0;i<tokens.length;i++){
+      var tok = tokens[i];
+      if(/^\s+$/.test(tok) || tok === ""){ html += escapeHtml(tok); continue; }
+      totalWords++;
+      // separate leading/trailing punctuation
+      var m = tok.match(/^([^A-Za-z]*)([A-Za-z][A-Za-z'-]*)([^A-Za-z]*)$/);
+      if(!m){ html += escapeHtml(tok); continue; }
+      var pre = m[1], core = m[2], post = m[3];
+      var key = core.toLowerCase();
+      var syns = THES[key];
+      if(syns && syns.length){
+        eligible++;
+        if(Math.random() < p){
+          var choice = syns[Math.floor(Math.random()*syns.length)];
+          choice = matchCase(core, choice);
+          changed++;
+          var rep = escapeHtml(pre) + (doHi ? "<ins>"+escapeHtml(choice)+"</ins>" : escapeHtml(choice)) + escapeHtml(post);
+          html += rep;
+          continue;
+        }
+      }
+      html += escapeHtml(tok);
+    }
+    out.innerHTML = html;
+    wc.textContent = totalWords;
+    cc.textContent = changed;
+    uq.textContent = (eligible ? Math.round(changed/eligible*100) : 0) + "%";
+  }
+
+  strength.addEventListener("input", function(){
+    strengthLbl.textContent = strength.value + "%";
+    spin();
+  });
+  inp.addEventListener("input", spin);
+  highlight.addEventListener("change", spin);
+  document.getElementById("spinBtn").addEventListener("click", spin);
+  document.getElementById("copyBtn").addEventListener("click", function(){
+    var t = out.textContent;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t);
+    }
+    var b = this; var old = b.textContent;
+    b.textContent = "Copied!";
+    setTimeout(function(){ b.textContent = old; }, 1200);
+  });
+
+  // prefill on load
+  spin();
+})();
+</script>
+</body>
+</html>
