@@ -33,6 +33,19 @@ p{margin:0 0 12px}
 [data-support-cta] a.sc-btn:focus-visible,[data-support-cta] a.sc-link:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 [data-support-cta] a.sc-link{color:inherit!important;text-decoration:underline!important;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
 [data-support-cta] .sc-small{margin:10px 0 0;font-size:.82rem;opacity:.8}
+[data-support-cta] .sc-maker{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+[data-support-cta] .sc-face{display:block;flex:0 0 auto;width:32px;height:32px;border-radius:50%;object-fit:cover}
+[data-support-cta] .sc-face-l{width:44px;height:44px}
+[data-support-cta] .sc-face-xl{width:64px;height:64px}
+[data-support-cta] a.sc-btn.sc-bmc{flex-direction:column;gap:2px;padding:4px 18px;line-height:1.15}
+[data-support-cta] .sc-bmc-l{display:inline-flex;align-items:center;gap:8px}
+[data-support-cta] .sc-sub{font-size:.72rem;font-weight:400;opacity:.8}
+[data-support-cta] .sc-dismiss{min-height:44px;padding:0 6px;margin:0;border:0;background:none;color:inherit;font:inherit;font-size:.85rem;text-decoration:underline;text-underline-offset:3px;opacity:.75;cursor:pointer;width:auto;box-shadow:none}
+[data-support-cta] .sc-dismiss:hover{opacity:1;background:none}
+[data-support-cta] .sc-dismiss:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+[data-support-cta] .sc-table{border-collapse:collapse;width:100%;margin:0 0 12px;font-size:.95rem}
+[data-support-cta] .sc-table th,[data-support-cta] .sc-table td{text-align:left;padding:8px 6px;border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent);vertical-align:top}
+[data-support-cta] ul{margin:0 0 12px;padding-left:1.2em}
 @media (max-width:420px){[data-support-cta] a.sc-btn{flex:1 1 100%}}
 </style>
 </head>
@@ -42,23 +55,36 @@ p{margin:0 0 12px}
 <p class="kicker"></p>
 <h1>Why I ask for tips</h1>
 <div data-support-cta="support_page" class="sc-inline" style="border:0;padding:0;margin:0">
-<p>I am Michael Lip. I build paraphrasetool.org on my own. I started it in June 2026. It now has 18 free writing tools, including a sentence rephraser, an academic paraphraser, a paragraph spinner and a readability checker. They run in your browser, with no account.</p>
-<h2>What it costs</h2>
-<p>The domain renewal each year, and my hours to fix bugs and grow the word lists. Hosting is free on GitHub Pages. Some pages show Google ads.</p>
-<h2>Where tips go</h2>
-<p>First the domain. Then time to improve the synonym lists and fix what breaks.</p>
+<div class="sc-maker"><picture><source srcset="/assets/michael-128.webp" type="image/webp"><img class="sc-face sc-face-xl" src="/assets/michael-128.jpg" width="64" height="64" decoding="async" alt="Michael Lip"></picture><h2 class="sc-h" style="margin:0">Hi, I&#8217;m Michael.</h2></div>
+<p>I build paraphrasetool.org on my own. I started it in June 2026. It now has 18 free writing tools, including a sentence rephraser, an academic paraphraser, a paragraph spinner and a readability checker. They run in your browser, with no account.</p>
+<h2>What it costs each year</h2>
+<table class="sc-table">
+<thead><tr><th scope="col">Item</th><th scope="col">Cost per year</th></tr></thead>
+<tbody>
+<tr><td>Domain paraphrasetool.org (.org renewal)</td><td>about $11.84</td></tr>
+<tr><td>Hosting on GitHub Pages</td><td>$0</td></tr>
+<tr><td>My hours to fix bugs and grow the word lists</td><td>unpaid</td></tr>
+</tbody>
+</table>
+<p class="sc-small">Domain price: the .org renewal list price at <a href="https://porkbun.com/products/domains" target="_blank" rel="noopener">Porkbun</a>, checked October 2026. The domain is registered at Dynadot. Some pages show Google ads.</p>
+<h2>What tips pay for</h2>
+<ul>
+<li>The domain renewal, first. $3 covers about 3 months of it.</li>
+<li>Hours to grow the synonym and word lists.</li>
+<li>Time to fix what breaks in the 18 tools.</li>
+</ul>
+<p>Tips unlock nothing. Everyone gets the same tools.</p>
 <h2>Leave a tip</h2>
-<div class="sc-row">
-<a class="sc-btn sc-primary" href="https://buymeacoffee.com/michaellip" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>Buy me a coffee</a>
-<a class="sc-btn" href="https://paypal.me/najzzz" target="_blank" rel="noopener">Tip with PayPal</a>
+<div class="sc-row" aria-label="PayPal amounts">
+<a class="sc-btn sc-primary" href="https://paypal.me/najzzz/3USD" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip 3 US dollars with PayPal">$3</a>
+<a class="sc-btn" href="https://paypal.me/najzzz/5USD" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip 5 US dollars with PayPal">$5</a>
+<a class="sc-btn" href="https://paypal.me/najzzz/10USD" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip 10 US dollars with PayPal">$10</a>
+<a class="sc-btn" href="https://buymeacoffee.com/michaellip" target="_blank" rel="noopener" data-rail="bmc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>Buy me a coffee (card, any amount)</a>
 </div>
-<div class="sc-row" style="margin-top:10px" aria-label="PayPal preset amounts">
-<a class="sc-btn" href="https://paypal.me/najzzz/3USD" target="_blank" rel="noopener" aria-label="Tip 3 US dollars with PayPal">$3</a>
-<a class="sc-btn" href="https://paypal.me/najzzz/5USD" target="_blank" rel="noopener" aria-label="Tip 5 US dollars with PayPal">$5</a>
-<a class="sc-btn" href="https://paypal.me/najzzz/10USD" target="_blank" rel="noopener" aria-label="Tip 10 US dollars with PayPal">$10</a>
-</div>
-<p class="sc-small">Card or PayPal. No account needed for card. PayPal shows my legal name, Micha&#322; Lip.</p>
-<p style="margin-top:20px">This is a tip. You get nothing extra, and you owe nothing. The site stays free either way.</p>
+<p class="sc-small">Prefer monthly? On Buy Me a Coffee you can tick &#8216;Make this monthly&#8217;. You can cancel at any time.</p>
+<p class="sc-small">PayPal shows my legal name, Micha&#322; Lip.</p>
+<p class="sc-small">The use count on this site stays in your browser. I never see it.</p>
+<p style="margin-top:20px">It is a tip, not a purchase. You get nothing extra, and you owe nothing. The site stays free either way.</p>
 <p>&mdash; Michael</p>
 </div>
 <p style="margin-top:28px"><a href="/tools/">Back to the tools</a></p>

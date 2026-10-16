@@ -352,6 +352,19 @@
 [data-support-cta] a.sc-btn:focus-visible,[data-support-cta] a.sc-link:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 [data-support-cta] a.sc-link{color:inherit!important;text-decoration:underline!important;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
 [data-support-cta] .sc-small{margin:10px 0 0;font-size:.82rem;opacity:.8}
+[data-support-cta] .sc-maker{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+[data-support-cta] .sc-face{display:block;flex:0 0 auto;width:32px;height:32px;border-radius:50%;object-fit:cover}
+[data-support-cta] .sc-face-l{width:44px;height:44px}
+[data-support-cta] .sc-face-xl{width:64px;height:64px}
+[data-support-cta] a.sc-btn.sc-bmc{flex-direction:column;gap:2px;padding:4px 18px;line-height:1.15}
+[data-support-cta] .sc-bmc-l{display:inline-flex;align-items:center;gap:8px}
+[data-support-cta] .sc-sub{font-size:.72rem;font-weight:400;opacity:.8}
+[data-support-cta] .sc-dismiss{min-height:44px;padding:0 6px;margin:0;border:0;background:none;color:inherit;font:inherit;font-size:.85rem;text-decoration:underline;text-underline-offset:3px;opacity:.75;cursor:pointer;width:auto;box-shadow:none}
+[data-support-cta] .sc-dismiss:hover{opacity:1;background:none}
+[data-support-cta] .sc-dismiss:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+[data-support-cta] .sc-table{border-collapse:collapse;width:100%;margin:0 0 12px;font-size:.95rem}
+[data-support-cta] .sc-table th,[data-support-cta] .sc-table td{text-align:left;padding:8px 6px;border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent);vertical-align:top}
+[data-support-cta] ul{margin:0 0 12px;padding-left:1.2em}
 @media (max-width:420px){[data-support-cta] a.sc-btn{flex:1 1 100%}}
 </style>
 </head>
@@ -417,7 +430,7 @@
     </div>
 
     
-<aside data-support-cta="footer" aria-label="Support this site"><h2 class="sc-h">Made by one person, free to use.</h2><p>I started paraphrasetool.org in June 2026 and have built 18 writing tools here. I pay for the domain and the hours myself. If a tool saved you a rewrite, a $3 coffee helps me keep improving them. The tools stay free either way. &mdash; Michael</p><div class="sc-row"><a class="sc-btn sc-primary" href="https://buymeacoffee.com/michaellip" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>Buy me a coffee</a><a class="sc-btn" href="https://paypal.me/najzzz" target="_blank" rel="noopener">Tip with PayPal</a><a class="sc-link" href="/support/">Why I ask</a></div></aside>
+<aside data-support-cta="footer" aria-label="Support this site"><div class="sc-maker"><picture><source srcset="/assets/michael-128.webp" type="image/webp"><img class="sc-face sc-face-l" src="/assets/michael-128.jpg" width="44" height="44" loading="lazy" decoding="async" alt="Michael Lip"></picture><h2 class="sc-h" style="margin:0">paraphrasetool.org is one person&#8217;s side project.</h2></div><p>I&#8217;m Michael. I started it in June 2026 and built its 18 writing tools alone. The domain costs about $12 a year; GitHub Pages hosting is free. A tip pays for the domain first, then hours to grow the word lists. The tools stay free either way. &mdash; Michael</p><div class="sc-row"><a class="sc-btn sc-primary" href="https://paypal.me/najzzz/3USD" target="_blank" rel="noopener" data-rail="paypal">Tip $3 with PayPal</a><a class="sc-btn sc-bmc" href="https://buymeacoffee.com/michaellip" target="_blank" rel="noopener" data-rail="bmc"><span class="sc-bmc-l"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>Buy me a coffee</span><span class="sc-sub">card, no account</span></a><a class="sc-link" href="/support/">Why I ask</a></div></aside>
 <footer>© 2026 paraphrasetool.org — Writing Tools</footer>
 <div style="margin:20px auto;max-width:728px;text-align:center">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2241192243363112" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
