@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paraphrase Tool - Free Online Text Rephraser & Rewriter</title>
-<meta name="description" content="Free paraphrase tool to rewrite text instantly. Rephrase sentences, paragraphs, and essays with AI-powered paraphrasing.">
+<meta name="description" content="Free paraphrase tool to rewrite text instantly. Rephrase sentences, paragraphs, and essays with a word-list paraphraser that runs in your browser. No sign-up.">
 <link rel="canonical" href="https://paraphrasetool.org/">
 <script type="application/ld+json">
 {
@@ -40,14 +40,262 @@ p{font-size:1.2rem;color:#999;margin-bottom:2rem}
 [data-support-cta] .sc-small{margin:10px 0 0;font-size:.82rem;opacity:.8}
 @media (max-width:420px){[data-support-cta] a.sc-btn{flex:1 1 100%}}
 </style>
+<style id="pt-home-css">
+#pt-home{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--line:#2a3240;--text:#e6edf3;--muted:#9aa7b4;--accent:#5b9dff;--accent2:#3fb68b;width:100%;max-width:880px;margin:0 auto;padding:24px 16px 8px;text-align:left;color:var(--text);line-height:1.6}
+#pt-home h1.pt-h1{font-size:2.2rem;line-height:1.2;margin:0 0 .4rem;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#pt-home p.pt-lead{color:var(--muted);font-size:1.05rem;margin:0 0 12px}
+#pt-home section#tool{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:16px 0}
+#pt-home label{display:block;font-weight:600;margin:14px 0 6px;font-size:.92rem}
+#pt-home textarea{width:100%;min-height:120px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:12px;font-family:inherit;font-size:1rem;resize:vertical}
+#pt-home .controls{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:14px 0}
+#pt-home .controls label{margin:0;font-weight:500;color:var(--muted)}
+#pt-home input[type=range]{vertical-align:middle}
+#pt-home .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+#pt-home button{background:var(--accent);color:#06101f;border:0;border-radius:8px;padding:10px 16px;min-height:44px;font-weight:600;font-size:.95rem;cursor:pointer}
+#pt-home button.alt{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+#pt-home button:hover{opacity:.9}
+#pt-home .out{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:14px;margin-top:14px;min-height:60px;white-space:pre-wrap}
+#pt-home .out .chg{color:var(--accent2);font-weight:600}
+#pt-home .stats{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;margin-top:10px}
+#pt-home .stats b{color:var(--text)}
+#pt-home .grid-h{font-size:1.6rem;margin:0}
+.grid-h{font-size:2rem;margin-bottom:1rem;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+</style>
 </head>
 <body>
+<div id="pt-home">
+<h1 class="pt-h1">Free Paraphrasing Tool</h1>
+<p class="pt-lead">Paste a sentence or paragraph. The tool swaps in synonyms from a built-in word list and reworks common phrases, right in your browser. Nothing is sent to a server.</p>
+<section id="tool" aria-label="Paraphrasing tool">
+  <label for="inp">Your text</label>
+  <textarea id="inp" placeholder="Type or paste a sentence to rephrase...">Many students believe that good writing is very important because it helps them communicate their ideas in a clear and effective way.</textarea>
+
+  <div class="controls">
+    <label>Rewrite strength
+      <input type="range" id="strength" min="1" max="3" step="1" value="2">
+      <span id="strengthLbl">Balanced</span>
+    </label>
+    <label><input type="checkbox" id="caseKeep" checked> Preserve capitalization</label>
+    <label><input type="checkbox" id="highlight" checked> Highlight changes</label>
+  </div>
+
+  <div class="btns">
+    <button id="run">Rephrase</button>
+    <button id="again" class="alt">Try another variation</button>
+    <button id="copy" class="alt">Copy result</button>
+  </div>
+
+  <label for="out" style="margin-top:18px">Rephrased output</label>
+  <div class="out" id="out" aria-live="polite"></div>
+  <div class="stats">
+    <span>Words: <b id="wc">0</b></span>
+    <span>Words changed: <b id="cc">0</b></span>
+    <span>Rewrite rate: <b id="rr">0%</b></span>
+  </div>
+<div data-support-cta="result" class="sc-inline" aria-label="Support this tool"><h2 class="sc-h">Did this help?</h2><p>I built this rephraser on my own, and it runs in your browser. If it saved you a rewrite before a deadline, a $3 coffee helps.</p><div class="sc-row"><a class="sc-btn sc-primary" href="https://buymeacoffee.com/michaellip" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>Buy me a coffee</a><a class="sc-btn" href="https://paypal.me/najzzz" target="_blank" rel="noopener">Tip with PayPal</a></div></div>
+</section>
+</div>
 <div class="container">
-<h1>Tools & Resources</h1>
+<h2 class="grid-h">More writing tools</h2>
 <p>Free online tools — more coming soon.</p>
 <div class="tools-grid" id="tools"><div class="tool-card"><a href="/tools/academic-paraphraser">academic paraphraser</a></div><div class="tool-card"><a href="/tools/formal-informal-converter">formal informal converter</a></div><div class="tool-card"><a href="/tools/paragraph-spinner">paragraph spinner</a></div><div class="tool-card"><a href="/tools/plagiarism-checker">plagiarism checker</a></div><div class="tool-card"><a href="/tools/quote-paraphraser">quote paraphraser</a></div><div class="tool-card"><a href="/tools/sentence-rephraser">sentence rephraser</a></div><div class="tool-card"><a href="/tools/synonym-finder">synonym finder</a></div><div class="tool-card"><a href="/tools/text-simplifier">text simplifier</a></div></div>
 </div>
 
 <aside data-support-cta="footer" aria-label="Support this site"><h2 class="sc-h">Made by one person, free to use.</h2><p>I started paraphrasetool.org in June 2026 and have built 18 writing tools here. I pay for the domain and the hours myself. If a tool saved you a rewrite, a $3 coffee helps me keep improving them. The tools stay free either way. &mdash; Michael</p><div class="sc-row"><a class="sc-btn sc-primary" href="https://buymeacoffee.com/michaellip" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>Buy me a coffee</a><a class="sc-btn" href="https://paypal.me/najzzz" target="_blank" rel="noopener">Tip with PayPal</a><a class="sc-link" href="/support/">Why I ask</a></div></aside>
+<script>
+(function(){
+  "use strict";
+
+  var THES = {
+    "many":["numerous","plenty of","a great deal of"],
+    "students":["learners","pupils","scholars"],
+    "believe":["think","feel","hold"],
+    "good":["strong","solid","fine","sound"],
+    "writing":["composition","prose","wording"],
+    "very":["extremely","highly","particularly"],
+    "important":["essential","crucial","vital","significant"],
+    "because":["since","as","given that"],
+    "helps":["enables","assists","allows"],
+    "communicate":["convey","express","share"],
+    "ideas":["thoughts","concepts","points"],
+    "clear":["plain","simple","lucid"],
+    "effective":["efficient","productive","successful"],
+    "way":["manner","fashion","method"],
+    "big":["large","huge","substantial"],
+    "small":["tiny","minor","modest"],
+    "fast":["quick","rapid","swift"],
+    "slow":["sluggish","gradual","unhurried"],
+    "happy":["glad","pleased","content"],
+    "sad":["unhappy","downcast","gloomy"],
+    "make":["create","produce","build"],
+    "use":["employ","utilize","apply"],
+    "show":["demonstrate","reveal","display"],
+    "get":["obtain","acquire","gain"],
+    "give":["provide","offer","supply"],
+    "need":["require","want","demand"],
+    "help":["aid","assist","support"],
+    "find":["locate","discover","spot"],
+    "think":["consider","reckon","suppose"],
+    "know":["understand","realize","grasp"],
+    "want":["wish","desire","prefer"],
+    "people":["individuals","folks","persons"],
+    "thing":["item","matter","element"],
+    "things":["items","matters","elements"],
+    "really":["truly","genuinely","actually"],
+    "great":["excellent","outstanding","superb"],
+    "bad":["poor","weak","subpar"],
+    "easy":["simple","straightforward","effortless"],
+    "hard":["difficult","challenging","tough"],
+    "new":["fresh","modern","recent"],
+    "old":["aged","former","prior"],
+    "start":["begin","launch","commence"],
+    "end":["finish","conclude","complete"],
+    "improve":["enhance","boost","strengthen"],
+    "increase":["raise","grow","expand"],
+    "reduce":["lower","decrease","cut"],
+    "create":["build","form","generate"],
+    "change":["alter","modify","adjust"],
+    "explain":["clarify","describe","outline"],
+    "understand":["grasp","comprehend","follow"],
+    "ensure":["guarantee","secure","confirm"],
+    "provide":["offer","supply","deliver"],
+    "allow":["permit","enable","let"],
+    "result":["outcome","effect","consequence"],
+    "however":["nevertheless","yet","still"],
+    "therefore":["thus","hence","consequently"],
+    "also":["additionally","too","likewise"],
+    "often":["frequently","commonly","regularly"],
+    "always":["consistently","invariably","constantly"]
+  };
+
+  var PHRASES = [
+    ["in order to","to"],
+    ["a lot of","many"],
+    ["a number of","several"],
+    ["due to the fact that","because"],
+    ["in spite of","despite"],
+    ["in the event that","if"],
+    ["at this point in time","now"],
+    ["for the most part","mostly"],
+    ["with regard to","regarding"],
+    ["as a result of","because of"],
+    ["in addition to","besides"],
+    ["the majority of","most"],
+    ["a great deal of","much"]
+  ];
+
+  var S1=String.fromCharCode(1), S2=String.fromCharCode(2);
+
+  var inp=document.getElementById("inp"),
+      out=document.getElementById("out"),
+      strength=document.getElementById("strength"),
+      strengthLbl=document.getElementById("strengthLbl"),
+      caseKeep=document.getElementById("caseKeep"),
+      highlight=document.getElementById("highlight"),
+      wc=document.getElementById("wc"),cc=document.getElementById("cc"),rr=document.getElementById("rr");
+
+  var seed=1;
+  function rand(){ seed=(seed*9301+49297)%233280; return seed/233280; }
+  function pick(arr){ return arr[Math.floor(rand()*arr.length)]; }
+
+  function matchCase(src,rep){
+    if(!caseKeep.checked) return rep;
+    if(src.length && src[0]===src[0].toUpperCase() && src[0]!==src[0].toLowerCase()){
+      return rep.charAt(0).toUpperCase()+rep.slice(1);
+    }
+    return rep;
+  }
+
+  function strengthLabel(s){ return s==="1"?"Light":s==="3"?"Strong":"Balanced"; }
+
+  function escapeHtml(s){
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
+
+  function rephrase(){
+    var text=inp.value;
+    var p=parseInt(strength.value,10)/3;
+
+    // Phrase pass — wrap replaced phrases in sentinels
+    PHRASES.forEach(function(pair){
+      var re=new RegExp("\\b"+escRe(pair[0])+"\\b","gi");
+      text=text.replace(re,function(m){
+        if(rand()>p) return m;
+        return S1+matchCase(m,pair[1])+S2;
+      });
+    });
+
+    // Synonym pass — token by token, skipping sentineled segments
+    var total=0, insideSeg=false;
+    var tokens=text.split(/(\b)/);
+    var out2=tokens.map(function(tok){
+      if(tok.indexOf(S1)>=0) insideSeg=true;
+      var res;
+      if(!insideSeg && /^[A-Za-z]+$/.test(tok)){
+        total++;
+        var key=tok.toLowerCase();
+        res=tok;
+        if(THES[key] && rand()<p){
+          var syns=THES[key].filter(function(x){return x.toLowerCase()!==key;});
+          if(syns.length){
+            var rep=matchCase(tok,pick(syns));
+            if(rep.toLowerCase()!==tok.toLowerCase()) res=S1+rep+S2;
+          }
+        }
+      } else {
+        res=tok;
+      }
+      if(tok.indexOf(S2)>=0) insideSeg=false;
+      return res;
+    }).join("");
+
+    var totalSegs=(out2.split(S1).length-1);
+    if(total<1) total=1;
+
+    // Render with optional highlight
+    var html="", buf="";
+    for(var i=0;i<out2.length;i++){
+      var ch=out2[i];
+      if(ch===S1){ html+=escapeHtml(buf); buf=""; }
+      else if(ch===S2){
+        html+= highlight.checked ? '<span class="chg">'+escapeHtml(buf)+'</span>' : escapeHtml(buf);
+        buf="";
+      } else buf+=ch;
+    }
+    html+=escapeHtml(buf);
+    out.innerHTML=html;
+
+    wc.textContent=String(total);
+    cc.textContent=String(totalSegs);
+    rr.textContent=Math.round(totalSegs/total*100)+"%";
+  }
+
+  function hashSeed(str){
+    var h=5381;
+    for(var i=0;i<str.length;i++){ h=((h*33)+str.charCodeAt(i))%233280; }
+    return Math.abs(h)+1;
+  }
+
+  inp.addEventListener("input",function(){ seed=hashSeed(inp.value); rephrase(); });
+  strength.addEventListener("input",function(){ strengthLbl.textContent=strengthLabel(strength.value); rephrase(); });
+  caseKeep.addEventListener("change",rephrase);
+  highlight.addEventListener("change",rephrase);
+  document.getElementById("run").addEventListener("click",function(){ seed=hashSeed(inp.value); rephrase(); });
+  document.getElementById("again").addEventListener("click",function(){ seed=(seed+Math.floor(Math.random()*9999)+1)%233280+1; rephrase(); });
+  document.getElementById("copy").addEventListener("click",function(){
+    var t=out.textContent||"";
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t); }
+    var b=document.getElementById("copy"), old=b.textContent;
+    b.textContent="Copied!"; setTimeout(function(){b.textContent=old;},1200);
+  });
+
+  // Prefill output on load
+  seed=hashSeed(inp.value);
+  strengthLbl.textContent=strengthLabel(strength.value);
+  rephrase();
+})();
+</script>
 </body>
 </html>
