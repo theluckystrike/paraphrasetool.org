@@ -40,6 +40,9 @@ p{margin:0 0 12px}
 [data-support-cta] a.sc-btn.sc-bmc{flex-direction:column;gap:2px;padding:4px 18px;line-height:1.15}
 [data-support-cta] .sc-bmc-l{display:inline-flex;align-items:center;gap:8px}
 [data-support-cta] .sc-sub{font-size:.72rem;font-weight:400;opacity:.8}
+[data-support-cta] a.sc-btn.sc-quiet{border-color:transparent;background:transparent;font-weight:500}
+[data-support-cta] a.sc-btn.sc-quiet:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
+[data-support-cta] a.sc-btn.sc-quiet .sc-bmc-l{text-decoration:underline;text-underline-offset:3px}
 [data-support-cta] .sc-dismiss{min-height:44px;padding:0 6px;margin:0;border:0;background:none;color:inherit;font:inherit;font-size:.85rem;text-decoration:underline;text-underline-offset:3px;opacity:.75;cursor:pointer;width:auto;box-shadow:none}
 [data-support-cta] .sc-dismiss:hover{opacity:1;background:none}
 [data-support-cta] .sc-dismiss:focus-visible{outline:2px solid currentColor;outline-offset:3px}
@@ -55,7 +58,7 @@ p{margin:0 0 12px}
 <p class="kicker"></p>
 <h1>Why I ask for tips</h1>
 <div data-support-cta="support_page" class="sc-inline" style="border:0;padding:0;margin:0">
-<div class="sc-maker"><picture><source srcset="/assets/michael-128.webp" type="image/webp"><img class="sc-face sc-face-xl" src="/assets/michael-128.jpg" width="64" height="64" decoding="async" alt="Michael Lip"></picture><h2 class="sc-h" style="margin:0">Hi, I&#8217;m Michael.</h2></div>
+<div class="sc-maker"><picture><source srcset="/assets/michael-128.webp" type="image/webp"><img class="sc-face sc-face-xl" src="/assets/michael-128.jpg" width="64" height="64" decoding="async" alt="Michael Lip"></picture><h2 class="sc-h" style="margin:0">Hi, I&#8217;m Michael. Thank you for being here.</h2></div>
 <p>I build paraphrasetool.org on my own, and I started it in June 2026. It now has 18 writing tools, including a sentence rephraser, an academic paraphraser, a paragraph spinner and a readability checker. They run in your browser, with no account.</p>
 <h2>What it costs each year</h2>
 <table class="sc-table">
@@ -69,17 +72,19 @@ p{margin:0 0 12px}
 <p class="sc-small">The domain price is the .org renewal list price at <a href="https://porkbun.com/products/domains" target="_blank" rel="noopener">Porkbun</a>, checked in October 2026; the domain itself is registered at Dynadot. Some pages show Google ads.</p>
 <h2>What tips pay for</h2>
 <ul>
-<li>The domain renewal comes first, and $3 covers three months of it.</li>
+<li>The domain renewal comes first, and $5 covers about five months of it.</li>
 <li>Then the hours I spend growing the synonym and word lists.</li>
 <li>And the time it takes to fix whatever breaks in the 18 tools.</li>
 </ul>
 <p>Tips unlock nothing, and everyone gets the same tools.</p>
 <h2>Leave a tip</h2>
 <div class="sc-row" aria-label="PayPal amounts">
-<a class="sc-btn sc-primary" href="https://paypal.me/najzzz/3USD" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip 3 US dollars with PayPal">$3</a>
-<a class="sc-btn" href="https://paypal.me/najzzz/5USD" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip 5 US dollars with PayPal">$5</a>
+<a class="sc-btn sc-primary" href="https://paypal.me/najzzz/5USD" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip 5 US dollars with PayPal">$5</a>
 <a class="sc-btn" href="https://paypal.me/najzzz/10USD" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip 10 US dollars with PayPal">$10</a>
-<a class="sc-btn" href="https://buymeacoffee.com/michaellip" target="_blank" rel="noopener" data-rail="bmc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>Buy me a coffee (card, any amount)</a>
+<a class="sc-btn" href="https://paypal.me/najzzz/20USD" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip 20 US dollars with PayPal">$20</a>
+<a class="sc-btn" href="https://paypal.me/najzzz" target="_blank" rel="noopener" data-rail="paypal" aria-label="Tip any other amount with PayPal">Other amount</a>
+<a class="sc-btn" href="https://buymeacoffee.com/michaellip" target="_blank" rel="noopener" data-rail="bmc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></svg>Card, any amount or monthly</a>
+<a class="sc-btn sc-bmc sc-quiet" href="https://github.com/sponsors/theluckystrike" target="_blank" rel="noopener" data-rail="github"><span class="sc-bmc-l">Sponsor on GitHub</span><span class="sc-sub">monthly or one-time</span></a>
 </div>
 <p class="sc-small">Prefer monthly? On Buy Me a Coffee you can tick &#8216;Make this monthly&#8217;. You can cancel at any time.</p>
 <p class="sc-small">PayPal shows my legal name, Micha&#322; Lip.</p>
