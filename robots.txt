@@ -1,3 +1,36 @@
+# Search and answer-engine crawlers: explicitly allowed.
+# The wildcard group below already allows every crawler. These named groups
+# make the policy legible, and they list the search/answer bots that earn
+# referral traffic.
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
 User-agent: *
 Allow: /
+
 Sitemap: https://paraphrasetool.org/sitemap.xml
